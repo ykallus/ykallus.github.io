@@ -1,0 +1,907 @@
+<html lang="en">
+<head>
+<title>Pessimal Packing Shapes</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="images/article.css" type="text/css" />
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+    tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]},
+    TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+<script type="text/javascript" src="MathJax/MathJax.js"></script>
+</head>
+<body>
+  <div id="header">
+     <h1 id="atitle">Pessimal Packing Shapes</h1>
+     <h2 id="aauthors"><a href="http://tuvalu.santafe.edu/~yoav/">Yoav Kallus</a></h2>
+     <p><a href="http://dx.doi.org/10.2140/gt.2015.19.343">Geometry &amp; Topology <strong>19</strong> (2015) 343&ndash;363</a>; <a href="http://arxiv.org/abs/1305.0289">arXiv:1305.0289</a></p>
+  </div>
+  <blockquote>
+We address the question of which convex shapes, when packed as densely as possible under certain restrictions,
+fill the least space and leave the most empty space.
+In each different dimension and under each different set of restrictions, this question is expected
+to have a different answer or perhaps no answer at all. As the problem of identifying global minima in most cases
+appears to be beyond current reach, in this paper we focus on local minima. We review some known results
+and prove these new results: in two dimensions, the regular heptagon is a local minimum of the double-lattice packing density,
+and in three dimensions, the directional derivative (in the sense of Minkowski addition) of the double-lattice packing density
+at the point in the space of shapes corresponding to the ball is in every direction positive. 
+  </blockquote>
+  <h2>I. Introduction</h2>
+<aside>[<a href="#OCGro861" name="RFGro86">Gro86</a>] Groemer H (1986), <a href="http://dx.doi.org/10.1007/BF02187693" target="_blank"><em>"Some basic properties of packing and covering constants"</em></a>, Discrete Comput Geom. <strong>1</strong> (1), 183&ndash;193.</aside>
+<aside>[<a href="#OCMac511" name="RFMac51">Mac51</a>] Macbeath AM (1951), <a href="http://dx.doi.org/10.4153/CJM-1951-008-7" target="_blank"><em>"A compactness theorem for affine equivalence-classes of convex regions"</em></a>, Journal canadien de math&eacute;matiques. <strong>3</strong>, 54&ndash;61.</aside>
+<aside>[<a href="#OCKK901" name="RFKK90">KK90</a><sup><a href="#OCKK902">2</a><a href="#OCKK903">3</a><a href="#OCKK904">4</a></sup>] Kuperberg G and Kuperberg W (1990), <a href="http://link.springer.com/article/10.1007/BF02187800" target="_blank"><em>"Double-lattice packings of convex bodies in the plane"</em></a>, Discrete Comput. Geom. <strong>5</strong> (1), 389-397.</aside>
+<aside>[<a href="#OCBK131" name="RFBK13">BK13</a><sup><a href="#OCBK132">2</a></sup>] Bezdek A and Kuperberg W (2013), <a href="http://arxiv.org/abs/1008.2398" target="_blank"><em>"Dense packing of space with various convex solids"</em></a>, In Geometry -- intuitive, discrete, and convex. Budapest Bolyai Soc. Math. Stud. 24, J&aacute;nos Bolyai Math. Soc.</aside>
+<aside>[<a href="#OCBMP05h1" name="RFBMP05h">BMP05h</a>] Brass P, Moser WOJ and Pach J (2005), <a href="http://dx.doi.org/10.1007/0-387-29929-7" target="_blank"><em>"Research problems in discrete geometry"</em></a>  Springer New York.</aside>
+  <p>
+  An $n$-dimensional convex body is a convex, compact, subset of $\mathbb{R}^n$ with nonempty interior. 
+The space of convex bodies, denoted $\mathcal{K}^n$, can be endowed with
+the Hausdorff metric:
+$$\mathrm{dist}(K,K') = \min \{\varepsilon:K'\subseteq K_\varepsilon\text{ and } K\subseteq K'_\varepsilon\}\text,$$
+where $K_\varepsilon = \{\mathbf{x}+\mathbf{y}:\mathbf{x}\in K, ||\mathbf{y}||\le\varepsilon\}$ is the $\varepsilon$-parallel body
+of $K$.
+</p>
+<p>
+A set of isometries $\Xi$
+is said to be admissible for $K$ if the interiors of $\xi(K)$ and $\xi'(K)$
+are disjoint for all distinct $\xi,\xi'\in\Xi$. The <em> (lower) mean volume</em> of $\Xi$ can be defined
+as $d(\Xi) = \liminf_{r\to\infty} (4\pi r^3/3) / |\{\xi\in\Xi : ||\xi(0)||&lt;r\}|$.
+The collection $\{\xi(K) : \xi \in \Xi\}$ for an admissible $\Xi$ is called a packing of $K$
+and said to be produced by $\Xi$.
+Its density is the fraction of space it fills: $\mathrm{vol}(K)/d(\Xi)$.
+The packing density of a body $K$, denoted $\delta(K)$ is the supremum of $\mathrm{vol}(K)/d(\Xi)$ over all
+admissible sets of isometries. Groemer proves some basic results about packing densities,
+including the fact that the supremum is actually achieved by some packing and the fact that
+$\delta(K)$ is continuous [<a href="#RFGro86" name="OCGro861">Gro86</a>]. Groemer's result apply also to the restricted
+packing densities which we define below.
+</p>
+<aside>[<a href="#OCFar501" name="RFFar50">Far50</a><sup><a href="#OCFar502">2</a></sup>] F&aacute;ry I (1950), <a href="http://eudml.org/doc/86838" target="_blank"><em>"Sur la densit&eacute; des r&eacute;seaux de domaines convexes"</em></a>, Bulletin de la Soci&eacute;t&eacute; Math&eacute;matique de France <strong>78</strong>, 152-161.</aside>
+<aside>[<a href="#OCCou651" name="RFCou65">Cou65</a><sup><a href="#OCCou652">2</a></sup>] Courant R (1965), <a href="http://dx.doi.org/10.1002/cpa.3160180125" target="_blank"><em>"The least dense lattice packing of two-dimensional convex bodies"</em></a>, Comm. Pure Appl. Math. <strong>18</strong>, 339&ndash;343.</aside>
+<aside>[<a href="#OCFej501" name="RFFej50">Fej50</a><sup><a href="#OCFej502">2</a></sup>] Fejes T&oacute;th LF (1950), <a href="http://acta.fyx.hu/acta/showCustomerArticle.action?id=4708&dataObjectType=article&returnAction=showCustomerVolume&sessionDataSetId=675a64dc5359a1e4&style=" target="_blank"><em>"Some packing and covering theorems"</em></a>, Acta Sci. Math. Szegediensis <strong>12</strong>, 62&ndash;67.</aside>
+<aside>[<a href="#OCRog511" name="RFRog51">Rog51</a>] Rogers CA (1951), <a href="http://dx.doi.org/10.1007/BF02392671" target="_blank"><em>"The closest packing of convex two-dimensional domains"</em></a>, Acta Math.. <strong>86</strong> (1), 309&ndash;321.</aside>
+<p>
+An inversion about a point $\mathbf{x}$ is the isometry $I_\mathbf{x}:\mathbf{y}\mapsto2\mathbf{x}-\mathbf{y}$.
+While the group of isometries of $\mathbb{R}^n$ is not preserved under conjugation by 
+an affine transformation of $\mathbb{R}^n$, the subgroup made of all translations and inversions about points is invariant.
+It is interesting to consider packings
+produced by sets of only translations and inversions. The supremum of $\mathrm{vol}(K)/d(\Xi)$ over 
+packings restricted in this way, denoted $\delta_{T^*}(K)$, is preserved
+under affine transformations of $K$ and therefore we may say that the domain of
+$\delta_{T^*}(K)$ is the space of affine equivalence classes of convex bodies.
+Macbeath showed that this space (with the induced topology) is compact [<a href="#RFMac51" name="OCMac511">Mac51</a>],
+and so $\delta_{T^*}$ achieves a global minimum.
+</p>
+<aside>[<a href="#OCRei341" name="RFRei34">Rei34</a>] Reinhardt K (1934), <a href="http://dx.doi.org/10.1007/BF02940676" target="_blank"><em>"&Uuml;ber die dichteste gitterf&ouml;rmige Lagerung kongruenter Bereiche in der Ebene und eine besondere Art konvexer Kurven"</em></a>, Abh. Math. Semin. Univ. Hambg.. <strong>10</strong> (1), 216&ndash;230.</aside>
+<aside>[<a href="#OCMah471" name="RFMah47">Mah47</a><sup><a href="#OCMah472">2</a></sup>] Mahler K (1947), <a href="http://oldweb.cecm.sfu.ca/Mahler/" target="_blank"><em>"On the minimum determinant and the circumscribed hexagons of a convex domain"</em></a>, In Proc. Kon. Ned. Akad. Wet.  Vol. 50, pp. 692-703.</aside>
+<p>
+Similarly, we may restrict to packings produced only by a set of translations, produced only
+by the set of elements of a group of translations (namely a Bravais lattice, or simply <em> lattice</em> hence), or produced only by
+the set of elements of a group of translations and inversions (namely a <em> double lattice</em>,
+after G. Kuperberg and W. Kuperberg [<a href="#RFKK90" name="OCKK901">KK90</a>]),
+and define respectively $\delta_T(K)$, $\delta_L(K)$, and $\delta_{L^*}(K)$ in the obvious way.
+By the same argument as for $\delta_{T^*}(K)$, all these functions must also achieve a
+global minimum. The following problem has been suggested, for example by A. Bezdek and
+W. Kuperberg [<a href="#RFBK13" name="OCBK131">BK13</a>] (but see also Ref. [<a href="#RFBMP05" name="OCBMP051">BMP05</a>]):
+</p><p>
+<strong><a name="PRBTTsLLs"></a>Problem 1.</strong> <em>In $n$ dimensions, what are the minima of $\delta_T$, $\delta_{T^*}$, $\delta_L$,
+    and $\delta_{L^*}$? Which bodies achieve these minima?</em>
+</p>
+<p>
+F&aacute;ry showed that in two dimensions, triangles are the unique minimum of $\delta_L$ [<a href="#RFFar50" name="OCFar501">Far50</a>, <a href="#RFCou65" name="OCCou651">Cou65</a>].
+Also, due to a result of L. Fejes T&oacute;th, $\delta_L=\delta_T$ in two dimensions,
+so triangles also minimize $\delta_T$ [<a href="#RFFej50" name="OCFej501">Fej50</a>, <a href="#RFRog51" name="OCRog511">Rog51</a>].
+</p><p>
+A body $K$ is said to be centrally symmetric (c.s.) if there is a point
+$\mathbf{x}$ such that $I_{\mathbf{x}}(K)=K$.
+It is reasonable to restrict the functions $\delta_T$ and $\delta_L$
+to the space $\mathcal K^n_0$ of c.s. bodies and ask for the minima of these restricted functions,
+since these bodies correspond to unit balls in finite-dimensional Banach spaces.
+Therefore the following question is natural to ask:
+</p><p>
+<strong><a name="PRBcs"></a>Problem 2.</strong> <em>In $n$ dimensions, what are the minima of $\delta_T$ and $\delta_L$
+    among c.s. bodies? Which bodies achieve these minima?</em>
+</p>
+<p>
+In two dimensions, Reinhardt conjectured that a certain smoothed octagon &ndash; a regular octagon
+whose corners are rounded off by arcs of hyperbolas &ndash; minimizes $\delta_L$ [<a href="#RFRei34" name="OCRei341">Rei34</a>, <a href="#RFMah47" name="OCMah471">Mah47</a>].
+Due to the same result of L. Fejes T&oacute;th, we have that $\delta(K)=\delta_T(K)=\delta_L(K)$ for c.s.
+bodies $K$ in two dimensions [<a href="#RFFej50" name="OCFej502">Fej50</a>].
+</p><!--p style="height:370px;width:100%;overflow:hidden;"--!>
+<aside><hr>
+<strong>Figure 1:</strong> Densest packing structure of pessimal packing shapes. The Reinhardt octagon
+has a one-parameter family of optimal lattices, each of which fills $0.90241\ldots$ of the plane,
+which is conjectured to be less than is filled by the densest lattice packing of any other
+c.s. shape (top, interactive). The densest lattice packing of triangles
+(bottom left) fills $2/3$ of the plane and is less dense than the densest lattice packing
+of any other shape. The densest double-lattice packing of regular heptagons (bottom right)
+fills $0.89269\ldots$ of the plane and is conjectured to be less dense than the densest
+double-lattice packing of any other shape.
+</aside><a name="FGRpackfig"></a>
+    <div style="width:720;height:370;overflow:hidden;" id="svg1">
+	<input type="range" min="0" max="500" id="angle" value="0" style="width:720;">
+    </div>
+<!--img src="gt2014-images/worst-1.png" style="width:310px;">
+<img src="gt2014-images/worst-2.png" style="width:310px;">
+<img src="gt2014-images/worst-3.png" style="width:310px;">
+</p--!><p style="height:280px;width:640px;overflow:hidden;">
+<img src="gt2014-images/worst-4.png" style="width:310px;">
+<img src="gt2014-images/worst-5.png" style="width:310px;">
+</p>
+<aside>[<a href="#OCGar951" name="RFGar95">Gar95</a><sup><a href="#OCGar952">2</a></sup>] Gardner M (1995), <a href="http://www.amazon.com/New-Mathematical-Diversions-Problems-Spectrum/dp/0883855178%3FSubscriptionId%3D0JYN1NVW651KCA56C102%26tag%3Dtechkie-20%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0883855178" target="_blank"><em>"New Mathematical Diversions: More Puzzles, Problems, Games, and Other Mathematical Diversions (Spectrum Series)"</em></a>  Mathematical Assn of Amer.</aside>
+<p>
+By contrast to the functions considered in Problems 1&ndash;2, $\delta(K)$ is not invariant under
+affinities, but only under isometries and dilations.
+Therefore, its infimum over all bodies (which is bounded from below by the minimum of $\delta_{T^*}$)
+is in theory not necessarily achieved by any particular body. In three dimensions, 
+the claim that the ball is the minimum of $\delta(K)$ has come to be known
+as Ulam's packing conjecture, due to a remark Gardner attributes to Ulam,
+though there is no evidence to confirm that Ulam ever stated it as a conjecture
+[<a href="#RFGar95" name="OCGar951">Gar95</a>]. More generally, it is natural to ask,
+</p><p>
+<strong><a name="PRBdelta"></a>Problem 3.</strong> <em>In $n$ dimensions, what is the infimum of $\delta$?
+    Is this infimum achieved by some body?</em>
+</p>
+<aside>[<a href="#OCEnn611" name="RFEnn61">Enn61</a>] Ennola V (1961), <a href="http://dx.doi.org/10.1112/jlms/s1-36.1.135" target="_blank"><em>"On the Lattice Constant of a Symmetric Convex Domain"</em></a>, Journal of the London Mathematical Society. <strong>s1-36</strong> (1), 135&ndash;138.</aside>
+<aside>[<a href="#OCHal051" name="RFHal05">Hal05</a>] Hales T (2005), <a href="http://dx.doi.org/10.4007/annals.2005.162.1065" target="_blank"><em>"A proof of the Kepler conjecture"</em></a>, Ann. Math.  <strong>162</strong> (3), 1065&ndash;1185.</aside>
+<aside>[<a href="#OCHla431" name="RFHla43">Hla43</a>] Hlawka E (1943), <a href="http://dx.doi.org/10.1007/BF01174201" target="_blank"><em>"Zur Geometrie der Zahlen"</em></a>, Mathematische Zeitschrift <strong>49</strong> (1), 285&ndash;312.</aside>
+<aside>[<a href="#OCKal141" name="RFKal14">Kal14</a><sup><a href="#OCKal142">2</a><a href="#OCKal143">3</a></sup>] Kallus Y (2014), <a href="http://journals.aps.org/pre/abstract/10.1103/PhysRevE.87.063307" target="_blank"><em>"The 3-ball is a local pessimum for packing"</em></a>, Adv. Math. <strong>264</strong>, 355-370.</aside>
+<aside>[<a href="#OCNaz881" name="RFNaz88">Naz88</a><sup><a href="#OCNaz882">2</a></sup>] Nazarov FL (1988), <a href="http://dx.doi.org/10.1007/BF01727653" target="_blank"><em>"Reinhardt's problem of lattice packings of convex domains: Local extremality of the Reinhardt octagon"</em></a>, J Math Sci. <strong>43</strong> (5), 2687&ndash;2693.</aside>
+<aside>[<a href="#OCSmi051" name="RFSmi05">Smi05</a>] Smith EH (2005), <a href="http://dx.doi.org/10.1007/s00454-005-1178-y" target="_blank"><em>"A New Packing Density Bound in 3-Space"</em></a>, Discrete Comput Geom. <strong>34</strong> (3), 537&ndash;544.</aside>
+<p>
+So far, with the exception of the case of $\delta_T$ and $\delta_L$ in two dimensions
+and the trivial case of one dimension, none of the problems 1&ndash;3 have been solved in any dimension.
+There are two kinds of partial answers that have been successfully obtained:
+lower bounds and local minima. In this paper we will focus on the results of the second kind and
+content ourselves with a few references to results of the first kind [<a href="#RFKK90" name="OCKK902">KK90</a>, <a href="#RFSmi05" name="OCSmi051">Smi05</a>, <a href="#RFEnn61" name="OCEnn611">Enn61</a>, <a href="#RFHla43" name="OCHla431">Hla43</a>].
+Each of the problems 1&ndash;3 lends itself to a local variation: which bodies are a local minimum
+of the function in question? In two dimensions, Nazarov showed that Reinhardt's smoothed
+octagon is a local minimum of $\delta_L$ (and therefore also $\delta_T$) among c.s. bodies [<a href="#RFNaz88" name="OCNaz881">Naz88</a>].
+In three dimensions, I showed that the ball is
+a local minimum of $\delta_L$ among c.s. bodies [<a href="#RFKal14" name="OCKal141">Kal14</a>], and therefore also a local minimum of
+$\delta_T$ and $\delta$ among c.s. bodies, due to Hales's confirmation of Kepler's
+conjecture [<a href="#RFHal05" name="OCHal051">Hal05</a>].
+</p><p>
+In this paper we show that the regular heptagon is a local minimum
+of $\delta_{L^*}$. Also, failing to show that the three-dimensional ball is a local minimum
+of $\delta$, we show that the directional derivative at the ball with
+respect to Minkowski addition is positive in all directions.
+</p><h2>
+II. The regular heptagon
+</h2>
+<aside>[<a href="#OCDoh951" name="RFDoh95">Doh95</a>] Doheny KR (1995), <a href="http://www.emis.de/journals/BAG/vol.36/no.1/" target="_blank"><em>"On the lower bound of packing density for convex bodies in the plane"</em></a>, Beitrage zur Algebra und Geometrie <strong>36</strong> (1), 109-118.</aside>
+<p>
+Let $K$ be a two-dimensional convex body (hence, <em> domain</em>) of area $A$. We say that a chord
+is an affine diameter of $K$ if it is at least as long as all parallel chords, and we call its length
+the length of $K$ in its direction. We say an inscribed parallelogram
+is a half-length parallelogram if one pair of sides is half the length of $K$
+in the direction parallel to them. G. Kuperberg and W. Kuperberg have shown that in two dimensions $\delta_{L^*}(K)=A/2\Delta(K)$,
+where $\Delta(K)$ is the area of the half-length parallelogram of least area inscribed in $K$ [<a href="#RFKK90" name="OCKK903">KK90</a>].
+They also show that $\delta_{L^*}(K)\ge\sqrt{3}/2=0.86602\ldots$ for all domains $K$ [<a href="#RFKK90" name="OCKK904">KK90</a>].
+Doheny shows that this bound is not sharp [<a href="#RFDoh95" name="OCDoh951">Doh95</a>]. Here we show that the regular heptagon,
+for which $\delta_{L^*}(M)=0.89269\ldots$ (exact value below), is a local minimum. It
+is reasonable to conjecture that this is also a global minimum.
+</p><p>
+For definiteness, let us fix a regular heptagon $M$ with vertices $\mathbf{m}_i = R^i(1,0)$, $i=0,\ldots,6$
+where $R^i$ is a counter-clockwise rotation by $2\pi i/7$ about the origin
+(we understand the label $i$ to take values in $\mathbb{Z}/7\mathbb{Z}$).
+The coordinates of the vertices are then in the field extension $\mathbb{Q}(u,v)$, where $u=\cos\pi/7$ and $v=\sin\pi/7$,
+and we will give all explicit numbers below in the reduced form $a+bu+cu^2+v(d+eu+fu^2)$.
+The least-area half-length parallelogram inscribed in $M$ (see Figure <a href="#FGRheptfig">2</a>) is the rectangle $\mathbf{p}_1\mathbf{p}_2\mathbf{p}_3\mathbf{p}_4$,
+where $\mathbf{p}_1=(1-a)\mathbf{m}_1+a\mathbf{m}_2$, $\mathbf{p}_2=(1-b)\mathbf{m}_2+b\mathbf{m}_3$, $\mathbf{p}_3=(1-b)\mathbf{m}_5+b\mathbf{m}_4$,
+$\mathbf{p}_4=(1-a)\mathbf{m}_6+a\mathbf{m}_5$, $a=\tfrac{7}{4}-2u^2$, and $b=-\tfrac{1}{2}+u^2$.
+As the area of this rectangle is given by $\Delta=(-19 + 2u +56u^2)v/8$ and the area of the heptagon is given by $A=7uv$,
+the double-lattice packing density of $M$ is $A/2\Delta = \tfrac{2}{97}(-111 + 492 u - 356 u^2) = 0.89269\ldots$.
+This rectangle, of course is one of seven equivalent rectangles $R^i(\mathbf{p}_1\mathbf{p}_2\mathbf{p}_3\mathbf{p}_4)$, $i=0,\ldots,6$.
+</p><aside>
+<strong>Figure 2:</strong> The half-length parallelogram of least area inscribed in the regular heptagon.
+</aside><p style="height:480px;width:640px;overflow:hidden;"><a name="FGRheptfig"></a>
+<img src="gt2014-images/worst-6.png" style="width:480px;">
+</p><p>
+Let us now consider a different domain $M'$, with area $A'$ and least-area half-length parallelogram
+of area $\Delta'$. We will be interested in the limit that $M'$ becomes more and more similar to $M$.
+Therefore, let us assume that $(1-\varepsilon)M\subseteq M'\subseteq(1+\varepsilon)M$, and we will explore what happens
+as we let $\varepsilon$ approach $0$. We wish to prove that there exists $\varepsilon&gt;0$ such that $A'/2\Delta'\ge A/2\Delta$
+for all $M'$. We will prove this in two steps: we first prove that $A'/2\Delta'\ge A/2\Delta$ if $M'$
+is also a heptagon, and then we prove that $M'$ is a heptagon if $A'/2\Delta'\le A/2\Delta$.
+</p><p>
+<strong><a name="THMhept"></a>Theorem 1.</strong> <em> There exists $\varepsilon&gt;0$ such that if $M'$ is a heptagon and $(1-\varepsilon)M\subseteq M'\subseteq(1+\varepsilon)M$
+then $A'/2\Delta'\ge A/2\Delta$, with equality only when $M'$ is affinely equivalent to $M$.</em>
+</p><p>
+<em>Proof.</em> Let the vertices of $M'$ be $\mathbf{m}_i' = R^i (1+x_i,y_i)$, $i=0,\ldots,6$. 
+Denote by $\mathbf{x}$ the vector $(x_0,y_0,x_1,\ldots,x_6,y_6)\in\mathbb{R}^{14}$.
+By the affine invariance of the double-lattice packing density, we may assume
+without loss of generality that $\mathbf{x}$ lies, say, in the 8-dimensional subspace $W\subseteq\mathbb{R}^{14}$, consisting
+of all vectors such that $x_0=x_2=x_5=y_0=y_2=y_5=0$.
+Note that $||\mathbf{x}||\le C \varepsilon$ (here and below, we use $C$ and $c$
+to denote constants, whose exact value is irrelevant to the argument and which may be different from line to line,
+but have no implicit dependence on any variable).
+We will assume that $A'/2\Delta'\le A/2\Delta$,
+and show that we necessarily then have that $M'=M$.
+</p><p>
+Consider the altitude dropped from each vertex $\mathbf{m}_i'$ of $M'$ to the opposite edge $\mathbf m_{i+3}'\mathbf m_{i+4}'$
+and label the point of intersection $\mathbf{k}_i'$.
+The chord $\mathbf{m}_i'\mathbf{k}_i'$ is an affine diameter of $M'$. Consider also for each $i$,
+the two chords parallel to $\mathbf{m}_i'\mathbf{k}_i'$ but of half its length,
+and let the parallelogram formed by them be of area $\Delta_i$. Let $\phi_i = \tfrac{A'/2\Delta_i}{A/2\Delta}-1$.
+By our assumption, $\phi_i\le 0$ for all $i$.
+</p><p>
+Consider $\phi_i$ as a function of $\mathbf{x}$. This function depends analytically
+on $\mathbf{x}$ in a neighborhood of the origin.
+Within this neighborhood, we may bound $\phi_i(\mathbf{x})$ using its Taylor series
+$$\phi_i(\mathbf{x}) \ge \langle \mathbf{f}_i,\mathbf{x}\rangle + \tfrac12 \langle\mathbf{x}, F_i\mathbf{x}\rangle -C ||\mathbf{x}||^3\text,$$
+where the explicit values of $\mathbf{f}_i$ and $F_i$ are given in Tables <a href="#tabfgen">1</a> and <a href="#tabFF1">2</a>.
+</p><p>
+We note that there exist coefficients $c_i&gt;0$ such that $\sum_{i=0}^6 c_i\mathbf{f}_i=0$, namely $c_i=1$ for all $i$.
+It follows from the fundamental theorem of linear algebra that $\langle \mathbf{f}_i,\mathbf{x}\rangle\le 0$
+for all $i$ if and only if
+\begin{equation}\langle \mathbf{f}_i,\mathbf{x}\rangle = 0\text{ for all }i\text.\label{ns}\end{equation}
+The intersection of the space of solutions to \eqref{ns} with $W$
+is the two-dimensional space spanned by the two vectors given in Table <a href="#tabfgen">1</a>.
+We denote the orthogonal projection to this space as $P$. Note that (by a compactness 
+argument) $\langle \mathbf{f}_i,\mathbf{x}\rangle \ge c ||(1-P)\mathbf{x}||$ for at least one $i$, and so
+it follows from the assumption that $\phi_i(\mathbf{x})\le0$ for all $i$
+and the fact that $\phi_i\ge\langle \mathbf{f}_i,\mathbf{x}_i\rangle -C ||\mathbf{x}||^2$
+that $||(1-P)\mathbf{x}|| \le C ||\mathbf{x}||^2$. Therefore we also have that
+$$\phi_i(\mathbf{x}) \ge \langle\mathbf{f}_i,(1-P)\mathbf{x}\rangle + \tfrac12\langle\mathbf{x},P F_i P \mathbf{x}\rangle-C||\mathbf{x}||^3\text.$$
+By direct calculation, we observe that $P F_i P$ is positive definite (when restricted to the image of $P$) for all $i$,
+and so $\tfrac12 \langle\mathbf{x},P F_i P \mathbf{x}\rangle\ge c||P\mathbf{x}||^2$. Therefore,
+$0\ge\phi_i\ge c||(1-P)\mathbf{x}||+c'||P\mathbf{x}||^2-C||\mathbf{x}||^3$ for at least one $i$, and if $\varepsilon$
+is small enough then $\mathbf{x}=0$ necessarily.
+ &#9744;
+</p><p>
+<strong><a name="THMnonh"></a>Theorem 2.</strong> <em>There exists $\varepsilon>0$ such that if $(1-\varepsilon)M\subseteq M'\subseteq(1+\varepsilon)M$
+then $A'/2\Delta'\ge A/2\Delta$, with equality only when $M'$ is affinely equivalent to $M$.</em>
+</p><p>
+<em>Proof.</em> We now allow $M'$ to be an arbitrary domain, not necessarily a heptagon.
+Consider the length of $M$ as a function of direction.
+This function has seven local minima, corresponding to the chords from each vertex $\mathbf{m}_i$ to the midpoint
+of the opposite edge $\mathbf{k}_i$. The corresponding function for $M'$ must also, when $\varepsilon$ is sufficiently
+small, have at least seven local minima realized by chords $\mathbf{m}_i'\mathbf{k}_i'$, where
+$||\mathbf{m}_i'-\mathbf{m}_i||,||\mathbf{k}_i'-\mathbf{k}_i||&lt; C\varepsilon$ for all $i$. As in the previous proof,
+let us denote $\mathbf{m}_i' = R^i (1+x_i,v y_i)$. Additionally, let
+$\mathbf{k}_i''$ be the nearest point on the chord $\mathbf{m}_{i+3}'\mathbf{m}_{i+4}'$ to the point $\mathbf{m}_i'$
+and let $\mathbf{k}_i' = \mathbf{k}_i'' + R^i (x_i',y_i')$ (see Figure <a href="#FGRlenfig">3</a>).
+</p><aside>
+<strong>Figure 3:</strong> For a given domain $M'$ in the proof of Theorem <a href="#THMnonh">2</a>, we identify
+directions for which the length of $M'$ is a local minimum. For
+example, in the illustration $\mathbf{m}_0'\mathbf{k}_0'$ is an affine diameter associated with
+one of these directions. Other such affine diameters
+originate at $\mathbf{m}_3'$ and $\mathbf{m}_4'$. To build more directly on the result for non-regular
+heptagons of Theorem <a href="#THMhept">1</a>, we give the coordinates of $(x_0',y_0')$ of $\mathbf{k}_0'$
+in reference to $\mathbf{k}_0''$, the point closest to $\mathbf{m}_0'$ on the chord $\mathbf{m}_3'\mathbf{m}_4'$
+(see text).
+</aside><p style="height:360px;width:640px;overflow:hidden;"><a name="FGRlenfig"></a>
+<img src="gt2014-images/worst-7.png" style="width:640px;">
+</p><p>
+For each chord $\mathbf{m}_i'\mathbf{m}_{i+1}'$ consider the arc of the boundary between
+$\mathbf{m}_i'$ and $\mathbf{m}_{i+1}'$ as the graph of a
+function $h_i(t)$, where $2vh_i(t)$ is the height of the boundary above the chord at the point
+$(1-t)\mathbf{m}_i'+t\mathbf{m}_{i+1}'$ on the chord (see Figure <a href="#FGRhgtfig">4</a>).
+Denote the corresponding boundary point $\mathbf{p}_i(t)$. The domain $M'$ is fully specified
+by the points $\mathbf{m}_i'$ and $\mathbf{k}_i'$ and the functions $h_i(t)$, $i=0,\ldots,6$. However, we 
+intend to use only the points $\mathbf{m}_i'$ and $\mathbf{k}_i'$ and the values $h_i(a)$, $h_i(b)$, $h_i(1-b)$,
+and $h_i(1-a)$. Note that given the value of, say, $h_i(t_0)$, we can bound near-by values from convexity:
+\begin{equation}\label{hbound}
+\min\left(\frac{t}{t_0},\frac{1-t}{1-t_0}\right)\le \frac{h_i(t)}{h_i(t_0)}\le \max \left(\frac{t}{t_0},\frac{1-t}{1-t_0}\right)\text.
+\end{equation}
+</p>
+<p style="height:280px;width:100%;overflow:hidden;"><a name="FGRhgtfig"></a>
+<img src="gt2014-images/worst-8.png" style="width:720x;">
+</p><aside><strong>Figure 4:</strong> The arc of the boundary of $M'$ between the points $\mathbf{m}_i'$ and
+$\mathbf{m}_{i+1}'$ is given by the graph of the function $h_i(t)$. The highlighted
+gray area marks the region where the boundary must lie according to \eqref{hbound}.
+</aside><p>
+Consider now the two chords parallel to $\mathbf{m}_i'\mathbf{k}_i'$ and half of its length. It is impossible
+to determine the distance between them based on only the values we have decided to use. However,
+we can bound it from above by replacing the actual boundary of $M'$ with the graph of the upper
+bound given by \eqref{hbound}. Specifically, we replace the boundary above $\mathbf{m}_{i+1}\mathbf{m}_{i+2}$,
+$\mathbf{m}_{i+2}\mathbf{m}_{i+3}$, $\mathbf{m}_{i+4}\mathbf{m}_{i+5}$, and $\mathbf{m}_{i+5}\mathbf{m}_{i+6}$, respectively with
+the upper bound given by $t_0=a,b,(1-b),$ and $(1-a)$. We then find the chords of the replacement boundary arcs
+that are parallel to $\mathbf{m}_i'\mathbf{k}_i'$ and half of its length, and call the area of the resulting
+parallelogram $\Delta_i$. Note that $\Delta_i\ge\Delta'$, since $\Delta_i$ is no smaller than the area
+of an actual half-length parallelogram inscribed in $M'$, which is in turn no smaller than
+the smallest such area. Let $A''$ be the area of the polygon
+$\mathbf{m}_0'\mathbf{p}_0(a)\mathbf{p}_0(b)\mathbf{k}_4'\mathbf{p}_0(1-b)\mathbf{p}_0(1-a)\mathbf{m}_1'\ldots\mathbf{p}_6(1-b)\mathbf{p}_6(1-a)$, so we
+have $A''\le A'$. We will assume that $A'/2\Delta'\le A/2\Delta$, and show that this necessarily
+implies that $M'$ is affinely equivalent to $M$. Since $A''/2\Delta_i\le A'/2\Delta'$, then
+$\phi_i=\tfrac{A''/2\Delta_i}{A/2\Delta}-1\le 0$.
+</p><p>
+Let us consider $\phi_i$ as a function of $\mathbf{x}=(x_0,y_0,x_1,y_1,\ldots,y_6)\in\mathbb{R}^{14}$, and
+$\mathbf{x}'=(x_0',y_0',x_1',y_1',\ldots,y_6',h_0(a),h_0(b),h_0(1-b),
+ h_0(1-a),h_1(a),\ldots,h_6(1-a))\in\mathbb{R}^{42}$.
+In contrast to the last proof, here $\phi_i$ is not analytic in any neighborhood of
+the origin in $\mathbb{R}^{14}\times\mathbb{R}^{42}$. However,
+it does, everywhere in such a neighborhood, take the value of one of 16 analytic functions
+(let us call them $\phi_{ij}(\mathbf{x},\mathbf{x}')$, $j=1,\ldots,16$),
+based on whether $t&gt;t_0$ or not at the point of contact of the paralellogram with each of
+the four replacement boundary arcs. When $\mathbf{x}'=0$ all sixteen functions
+agree. Also, the first derivatives of $\phi_{ij}$ with respect to any component
+taken at the origin are independent of $j$. Therefore, we have that 
+Note that $\phi_i(\mathbf{x},0)\ge \tfrac{A_0/2\Delta_0}{A/2\Delta}-1$, where $A_0/2\Delta_0$ is the
+double-lattice packing density of the heptagon $M_0=\mathbf{m}_0'\mathbf{m}_1'\ldots\mathbf{m}_6'$.
+From Theorem <a href="#THMhept">1</a> it then follows that $\phi_i(\mathbf{x},0)\ge0$.
+For explicit values of $\mathbf{f}_i'$, see Table <a href="#tabfgp">3</a>.
+</p><p>
+We now consider additional functions $\psi_i(\mathbf{x},\mathbf{x}')$, $i=1,\ldots,42$ given by
+(in each of the definitions that follow $i=1\ldots,7$)
+$$\begin{aligned}
+\psi_i &amp;= \langle\mathbf{k}_{i+4}'-\mathbf{m}_{i+4}',\mathbf{k}_{i+4}'-\mathbf{p}_{i}(b)\rangle \\ 
+\psi_{i+7} &amp;= \langle\mathbf{k}_{i+4}'-\mathbf{m}_{i+4}',\mathbf{k}_{i+4}'-\mathbf{p}_{i}(1-b)\rangle  \\ 
+\psi_{i+14} &amp;= \alpha(\mathbf{p}_i(a),\mathbf{p}_i(b),\mathbf{k}_{i+4}')  \\ 
+\psi_{i+21} &amp;= \alpha(\mathbf{k}_{i+4}',\mathbf{p}_i(1-b),\mathbf{p}_i(1-a))  \\ 
+\psi_{i+28} &amp;= \alpha(\mathbf{m}_i',\mathbf{p}_i(a),\mathbf{p}_i(b))  \\ 
+\psi_{i+35} &amp;= \alpha(\mathbf{p}_i(1-b),\mathbf{p}_i(1-a),\mathbf{m}_{i+1}') \text, 
+\end{aligned}$$
+where
+$$\alpha(\mathbf{p},\mathbf{p}',\mathbf{p}'') = \mathbf{p}\wedge\mathbf{p}' + \mathbf{p}'\wedge\mathbf{p}'' + \mathbf{p}''\wedge\mathbf{p}$$
+is the oriented area of the triangle $\mathbf{p}\mathbf{p}'\mathbf{p}''$.
+From the fact that $\mathbf{m}_i'\mathbf{k}_{i}'$ is a locally shortest length, we have that a line through $\mathbf{k}_i'$
+perpendicular to this length is tangent to $M'$, and therefore $\psi_i\ge0$ for $i=1,\ldots,14$.
+That $\psi_i\ge0$ for $i=15,\ldots,42$ simply follows from convexity. These functions are all
+analytic in a neighborhood of the origin, and therefore we have that 
+$$\psi_i(\mathbf{x},\mathbf{x}') \le \psi_i(\mathbf{x},0) + \langle \mathbf{g}_i',\mathbf{x}'\rangle + C||\mathbf x'||(||\mathbf x||+||\mathbf x'||)\text.$$
+Moreover, note that $\psi_i(\mathbf{x},0)=0$ for all $i=1,\ldots,42$.
+For explicit values of $\mathbf{g}_i'$, see Table <a href="#tabfgp">3</a>.
+</p><p>
+There exist coefficients $c_i&gt;0$, $i=0,\ldots,6$, and $d_i&gt;0$, $i=1,\ldots,42$, such
+that $\sum_{i=0}^6 c_i\mathbf{f}_i'-\sum_{i=1}^{42} d_i\mathbf{g}_i'=0$.
+It then follows from the fundamental theorem of linear algebra that if
+$$\begin{aligned}
+\langle \mathbf{f}_i',\mathbf{x}'\rangle&amp;\le 0\text{ for }i=0,\ldots,6\text{ and }\\
+\langle \mathbf{g}_i',\mathbf{x}'\rangle&amp;\ge 0\text{ for }i=1,\ldots,42\text,
+\end{aligned}$$
+then we have equality for all of the above. The solution space turns out to be trivial.
+From compactness there must be a constant $C$ such that at least one of the following equations holds for at least one $i$
+$$\begin{aligned}
+\langle \mathbf{f}_i',\mathbf{x}'\rangle&amp;\ge C||\mathbf{x}'||\text{ or}\\
+\langle \mathbf{g}_i',\mathbf{x}'\rangle&amp;\le -C||\mathbf{x}'||\text.
+\end{aligned}$$
+Therefore, it follows from the fact that $\phi_i\le0$ and $\psi_i\ge0$ for all $i$,
+that there exists $\varepsilon$ such that if $||\mathbf{x}||,||\mathbf{x}'||&lt;\varepsilon$ then $\mathbf{x}'=0$.
+If $\mathbf{x}'=0$, then from convexity $h_i(t)=0$ for all $i=0,\ldots,6$ and $0\le t\le1$,
+and $M'$ is a heptagon. From Theorem <a href="#THMhept">1</a> $M'$ is affinely equivalent to $M$.
+ &#9744;
+</p><p>
+<strong>Conjecture.</strong>The regular heptagon is an absolute minimum of $\delta_{L^*}$ in
+two dimensions.
+</p><p>
+If, as might very well be the case, $\delta(M)=\delta_{L^*}(M)$, then
+the conjecture would also imply that $M$ is a minimum of $\delta$.
+</p><h2>
+III. The 3-ball
+</h2>
+<aside>[<a href="#OCGM001" name="RFGM00">GM00</a>] Giannopoulos AA and Milman VD (2000), <a href="http://dx.doi.org/10.1007/BF02773562" target="_blank"><em>"Extremal problems and isotropic positions of convex bodies"</em></a>, Israel Journal of Mathematics. <strong>117</strong> (1), 29&ndash;60.</aside>
+<aside>[<a href="#OCSch931" name="RFSch93">Sch93</a>] Schneider R (1993), <a href="http://dx.doi.org/10.1017/CBO9780511526282" target="_blank"><em>"Convex Bodies: The Brunn&ndash;Minkowski Theory"</em></a>  Cambridge University Press.</aside>
+<p>
+Let $K$ and $K'$ be convex bodies and let $\lambda,\lambda'\ge0$ not both equal to $0$, then
+the set $\lambda K+\lambda' K' = \{\lambda\mathbf{x}+\lambda'\mathbf{x}': \mathbf{x}\in K, \mathbf{x}\in K'\}$
+is also a convex body. This operation is known as the Minkowski sum.
+A convex body $K\subseteq\mathbb{R}^n$ can be specified by its support height function $h_K:S^{n-1}\to\mathbb{R}$,
+given by $h_K(\mathbf{x}) = \max_{\mathbf{y}\in K} \langle\mathbf{x},\mathbf{y}\rangle$. Minkowski addition corresponds
+to addition of the support height functions: $h_{\lambda K+\lambda' K'}(\mathbf{x}) = \lambda h_K(\mathbf{x}) + \lambda' h_{K'}(\mathbf{x})$.
+The mean width of a body $K$ is the average length of its projection onto
+a randomly chosen axis. It is given by 
+$$w = \frac{2\int_{S^{n-1}} h_K d\sigma}{\sigma(S^{n-1})}\text,$$
+where $\sigma$ is the Lebesgue measure on $S^{n-1}$.
+Out of all linear images $TK$ of a body $K$, there
+is a unique one up to rotation which minimizes $w$
+while preserving the volume [<a href="#RFGM00" name="OCGM001">GM00</a>]. This is known as the minimal-mean-width
+position of $K$, and a body is in its minimal-mean-width position
+if and only if
+$$\int_{S^{n-1}} h_K(\mathbf{x}) \langle\cdot,\mathbf{x}\rangle^2 d\sigma(\mathbf{x}) = (w/2n)\sigma(S^{n-1})||\cdot||^2\text.$$
+Steiner's formula gives the volume of the body $K_\lambda = (1-\lambda)B+\lambda K$,
+interpolating between the unit ball $B$ ($\lambda=0$) and the body $K$ ($\lambda=1$).
+In three dimensions, Steiner's formula can be written as
+\begin{equation}\label{steineq}
+\mathrm{vol}(K) = \tfrac{4\pi}{3} (1-\lambda)^3 + 2\pi w \lambda + S(K) \lambda^2(1-\lambda) + \lambda^3 \mathrm{vol}(K)\text,
+\end{equation}
+where $S(K)$ is the surface area of $K$ [<a href="#RFSch93" name="OCSch931">Sch93</a>].
+</p><p>
+In this section we prove the following result about the unit ball
+and the double-lattice packing density of nearly spherical bodies:
+</p><p>
+<strong><a name="THMb3"></a>Theorem 3.</strong> <em>Let $K$ be a three-dimensional body in minimal-mean-width position.
+If $K$ is not a ball,
+then there exist numbers $\lambda_0(K)>0$ and $\beta(K)>0$ such that
+$$\delta_{L^*}\left((1-\lambda)B+\lambda K\right) -\delta_{L^*}(B) > \beta(K) \lambda\text,$$ 
+for all $0&lt;\lambda&lt;\lambda_0(K)$.</em>
+</p><p>
+The double-lattice packing density of $B$ is $\pi/\sqrt{18}$. It is realized,
+for example, by its optimal lattice packing, the face-centered cubic lattice (f.c.c.),
+which can be described degenerately as a double lattice. It is also realized
+by the hexagonally closed packed structure (h.c.p.), which is not a Bravais
+lattice. We fix a realization of the h.c.p. structure in which the unit ball
+centered at the origin shares the following twelve boundary points with neighboring balls:
+$\mathbf{x}_1=(1,0,0)$, $\mathbf{x}_2=(1/2,\sqrt{3}/2,0)$,
+$\mathbf{x}_3=\mathbf{x}_2-\mathbf{x}_1$, $\mathbf{x}_4=-\mathbf{x}_1$, $\mathbf{x}_5=-\mathbf{x}_2$, $\mathbf{x}_6=\mathbf{x}_1-\mathbf{x}_2$,
+$\mathbf{x}_7=(1/2,1/\sqrt{12},\sqrt{2/3})$, $\mathbf{x}_8=\mathbf{x}_7-\mathbf{x}_1$, $\mathbf{x}_{9}=\mathbf{x}_7-\mathbf{x}_2$
+$\mathbf{x}_{10}=(1/2,1/\sqrt{12},-\sqrt{2/3})$, $\mathbf{x}_{11}=\mathbf{x}_{10}-\mathbf{x}_1$, and $\mathbf{x}_{12}=\mathbf{x}_{10}-\mathbf{x}_2$.
+The double lattice $\Xi$, of mean volume $d(\Xi)=4\sqrt{2}$, is generated by translations by
+$2\mathbf{x}_1$ and $2\mathbf{x}_2$ and by
+inversions about $\mathbf{x}_7$ and $\mathbf{x}_{10}$.
+Let $P$ be the polyhedron
+$\{\mathbf{x}\in\mathbb{R}^3:\langle\mathbf{x},\mathbf{x}_i\rangle\le1\text{ for all }i=1,\ldots,12\}$,
+then $P$ is the Voronoi cell of the h.c.p. structure.
+</p><p>
+The double lattice $\Xi$
+is admissible for $P$ too, producing a packing of density 1, namely a tiling. Specifically,
+this is a face-to-face tiling in the strong sense that every two cells share a face or do not
+touch at all. We show now that if $K$ is a nearly spherical convex body,
+we can bound its double-lattice packing density using the values $h_K(\mathbf{x}_i)$, $i=1,\ldots,12$.
+</p><p>
+<strong><a name="LEMcns"></a>Lemma 1.</strong> <em> Let $K$ be a convex body satisfying $(1-\varepsilon)B\subseteq K\subseteq(1+\varepsilon) B$.
+For sufficiently small $\varepsilon$, a double-lattice $\Xi'$ exists, admissible for $K$, such that
+$d(\Xi')\le d(\Xi) \eta(K)^3$, where $\eta(K)=\tfrac{1}{12}\sum_{i=1}^{12} h_K(\mathbf{x}_i)$.</em>
+</p><p>
+<em>Proof.</em> Without loss of generality, let us assume that $\sum_{i=1}^{12} h_K(\mathbf{x}_i)=12$.
+Let us label $h_i=h_K(\mathbf{x}_i)$ and
+consider be the polyhedron $P'=\{\mathbf{x}\in\mathbb{R}^3:\langle\mathbf{x},\mathbf{x}_i\rangle\le h_i\text{ for all }i=1,\ldots,12\}$.
+The projection of $P'$ onto the $xy$-plane is a hexagon. Let $\mathbf{a}_1$ and $\mathbf{a}_2$
+be the vectors in the $xy$-plane generating the densest lattice packing of this hexagon.
+In particular, for $\varepsilon$ small enough, there is a unique choice such that $||\mathbf{a}_1-2\mathbf{x}_2||,||\mathbf{a}_2-2\mathbf{x}_2||&lt;C\varepsilon$.
+Now, let $\mathbf{x}_7'$, $\mathbf{x}_8'$, and $\mathbf{x}_9'$, be the unique points satisfying
+$\langle\mathbf{x}_i',\mathbf{x}_i\rangle=h_i$ for $i=7,8,9$,
+$\mathbf{x}_8' = \mathbf{x}_7' - \tfrac{1}{2}\mathbf{a}_1$, and
+$\mathbf{x}_9' = \mathbf{x}_7' - \tfrac{1}{2}\mathbf{a}_2$.
+Similarly, let $\mathbf{x}_{10}'$, $\mathbf{x}_{11}'$, and $\mathbf{x}_{12}'$, be the unique points satisfying
+$\langle\mathbf{x}_i',\mathbf{x}_i\rangle=h_i$ for $i={10},{11},{12}$,
+$\mathbf{x}_{11}' = \mathbf{x}_{10}' - \tfrac{1}{2}\mathbf{a}_1$, and
+$\mathbf{x}_{12}' = \mathbf{x}_{10}' - \tfrac{1}{2}\mathbf{a}_2$.
+Now let $\Xi'$ be the double lattice generated by translations by $\mathbf{a}_1$
+and $\mathbf{a}_2$ and by inversions about $\mathbf{x}_7'$ and $\mathbf{x}_{10}'$.
+We note that for each face of $P'$ there is a neighbor $\xi'(P')$, $\xi'\in\Xi'$,
+such that $P'$ and $\xi'(P')$ touch along this face. For small enough
+$\varepsilon$, this is enough to conclude that $\Xi'$ is admissible for $P'$,
+since in the packing $\Xi(P)$ there are only face-to-face contacts. <em>A
+    fortiori</em>, $\Xi'$ is also admissible for $K$.
+</p><p>
+As $\mathbf{a}_1$, $\mathbf{a}_2$, $\mathbf{x}_7'$ and $\mathbf{x}_{10}'$ may be
+determined explicitly as a function of $h_i$, $i=1,\ldots,12$,
+we calculate the mean volume of $\Xi'$ to be
+$$\begin{aligned}d(\Xi') =&amp; 4\sqrt{2} - \tfrac{\sqrt{2}}{9} (\eta_1+\eta_2+\eta_3)^2 - \tfrac{2\sqrt{2}}{3} (\eta_1^2+\eta_2^2+\eta_3^2)\\
+&amp;+\tfrac{\sqrt{2}}{9}(\eta_1+\eta_2+\eta_3)\left(2(\eta_1^2+\eta_2^2+\eta_3^2)-(\eta_1+\eta_2+\eta_3)^2\right)\text,\end{aligned}$$
+where $\eta_1=h_1+h_4-2$, $\eta_2=h_2+h_5-2$, and $\eta_3=h_3+h_6-2$. Note that the quadratic term
+is negative unless $\eta_1=\eta_2=\eta_3=0$, in which case the quadratic and cubic term both vanish.
+Therefore, when $\varepsilon$ is small enough $d(\Xi')\le 4\sqrt{2}$.
+ &#9744;
+</p><p>
+<strong><a name="LEMcl"></a>Lemma 2.</strong> <em>Let 
+$$c_l=P_l(1)+4P_l(\tfrac{1}{2})+2P_l(0)+P_l(-\tfrac{1}{3})+2P_l(-\tfrac{1}{2})+2P_l(-\tfrac{5}{6})\text,$$
+where $P_l(t)$ is the Legendre polynomial of degree $l$. Then $c_l=0$ if and only if $l=1$ or $l=2$. </em>
+<em>Proof.</em> We introduce the following rescaled Legendre polynomials:
+$Q_l(t) = 6^l l! P_l(t)$. From their recurrence relation&ndash;-given by
+$Q_{l+1}(t) = (2l+1) (6t) Q_l(t) - 36 l^2 Q_{l-1}(t)$&mdash;and the base cases&mdash;$Q_0(t)=1$ and $Q_1(t)=6t$&mdash;
+it is clear that the values of $Q_l(t)$ at $t=k/6$ for $k=-6,\ldots,6$ are integers.
+If $Q_l(k/6)\equiv Q_{l+1}(k/6)\equiv0\pmod{8}$ for some $k$ and $l$ then for all $l'\ge l$,
+$Q_{l'}(k/6)\equiv0\pmod{8}$.
+This is the case for $k=0,2,6$ and $l=3$, as can be easily checked.
+</p><p>
+For $k=3$ and $k=5$ it is easy to show by induction that
+the residue of $Q_l(k/6)$ modulo $8$ depends only on $k$ and the residue of $l$ modulo $4$ and
+takes the following values:
+$$\begin{aligned}
+Q_l(1/2) &amp;\equiv&amp; 1,3,7, 1 \pmod{8}\\
+Q_l(5/6) &amp;\equiv&amp; 1,5,7, 7 \pmod{8}\\
+\text{ resp. for } l&amp;\equiv&amp; 0,1,2, 3 \pmod{4}\text.
+\end{aligned}$$
+Therefore, when $l\ge3$ is odd, then
+$6^l l! c_l = Q_l(1)-2Q_l(\tfrac{5}{6})+2Q_l(\tfrac{1}{2})-Q_l(\tfrac{1}{3})\equiv 4 \pmod{8}$,
+and therefore cannot vanish. When $l\ge3$ is even,
+then $6^l l! c_l = Q_l(1)+2Q_l(\tfrac{5}{6})+6Q_l(\tfrac{1}{2})+Q_l(\tfrac{1}{3})+2Q_l(0)\equiv 8 \pmod{16}$,
+and again cannot vanish. This leaves
+only the cases $c_0=12$, $c_1=0$, and $c_2=0$ to be calculated manually.
+ &#9744;
+</p><p>
+<strong><a name="LEMnoname"></a>Lemma 3.</strong> <em>Let $K$ be a three-dimensional body in minimal-mean-width position. If $K$ is not a ball
+then there is a body $K'$, isometric to $K$, such that
+$\eta(K')&lt;\tfrac{1}{2}w$, where $w$ is the mean width of $K$.</em>
+<em>Proof.</em> Note that if $K'=R(K)$ is a rotation of $K$ about the origin, then $h_{K'}(\mathbf{x})=h_K(R^T\mathbf{x})$.
+Let us pick a point $\mathbf{y}\in S^2$, and let $R_0$ be some rotation such that $R_0(\mathbf{y})=\mathbf{x}_7$.
+Let $R_\theta$ be the rotation obtained by composing $R_0$ with a rotation by $\theta$ about
+the axis through $\mathbf{x}_7$, so that $R_\theta(\mathbf{y})=\mathbf{x}_7$ for all $0\le\theta\le2\pi$.
+Now let $g(\mathbf{y}) = (1/2\pi)\int_0^{2\pi}\eta(R_\theta(K))d\theta$, and repeat this
+definition for all $\mathbf{y}\in S^2$.
+</p>
+<aside>[<a href="#OCSch071" name="RFSch07">Sch07</a><sup><a href="#OCSch072">2</a></sup>] Schuster FE (2007), <a href="http://dx.doi.org/10.1090/S0002-9947-07-04270-5" target="_blank"><em>"Convolutions and multiplier transformations of convex bodies"</em></a>, Trans. Amer. Math. Soc. <strong>359</strong> (11), 5567&ndash;5591.</aside>
+<p>
+The function $g(\mathbf{y})$ is given by integrating $h_K(\mathbf{x})$ over
+a measure $\mu_\mathbf{y}(\mathbf{x})$. The measures $\mu_\mathbf{y}(\mathbf{x})$ are
+each invariant under rotations about the axis through $\mathbf{y}$, and are
+related to each other by rotations. Such an operation $h_K(\mathbf{x})\mapsto g(\mathbf{y})$
+is known as a convolution by the zonal measure $\mu_\mathbf{p}(\mathbf{x})$,
+where $\mathbf{p}$ is some arbitrary pole.
+(see Ref. [<a href="#RFSch07" name="OCSch071">Sch07</a>] for results about convolutions with
+zonal measures). The measure $\mu_\mathbf{p}$ is given by
+$$12 \mu_\mathbf{p}(\lbrace\mathbf{x}:\langle\mathbf p,\mathbf x\rangle \in (t_1,t_2)\rbrace) =
+\left|\lbrace i\in\lbrace1,2,\ldots,12\rbrace : \langle\mathbf{x}_7,\mathbf{x}_i\rangle\in(t_1,t_2)\rbrace\right|\text.$$
+</p><p>
+We can expand $\mu_\mathbf{p}(\mathbf x)$ into spherical harmonics to
+obtain $$\mu_\mathbf{p}(\mathbf{x}) = \tfrac{1}{12}\sum_{l=0}^{\infty} c_l P_l(\langle \mathbf{x},\mathbf{p}\rangle)\text,$$
+where $c_l$ are the coefficients of Lemma <a href="#LEMcl">2</a>.
+It follows that if $h_K(\mathbf{x}) = \sum_{l=0}^{\infty} h_l(\mathbf{x})$ is
+the expansion of $h_K$ into spherical harmonics, then
+$g(\mathbf{x}) = \tfrac{1}{12}\sum_{l=0}^{\infty} c_l h_l(\mathbf{x})$ [<a href="#RFSch07" name="OCSch072">Sch07</a>].
+The $l=0$ term of $g(\mathbf{x})$, giving its average value, is equal
+to that of $h_K(\mathbf{x})$, namely $w/2$. Because $K$ is in minimal-mean-width
+position, $h_2=0$. Therefore, by Lemma <a href="#LEMcl">2</a>, $g(\mathbf{x})$
+is constant if and only if the spherical harmonics expansion of $h_K$
+terminates at $l=1$, which in turn is equivalent to $K$ being a ball.
+Since we assume $K$ is not a ball, then $g(\mathbf{x})$ is not constant
+and must achieve a value below its average. Since this value corresponds
+in turn to an average of values of $\eta(R (K))$ over a set of
+rotations $R$, it must be no smaller than the minimum value
+among these rotations. Therefore, there is a rotation $R$
+such that $\eta(R(K))&lt;w/2$.
+ &#9744;
+</p><p>
+We now prove Theorem <a href="#THMb3">3</a>.
+</p><p>
+<em>Proof.</em> Without loss of generality, we may assume that $\mathrm{vol}(K)=\mathrm{vol}(B)$
+and that $K$ is rotated such that $\eta(K)&lt;w/2$. Let $K_\lambda = (1-\lambda)B+\lambda K$, then
+$\eta(K_\lambda) = 1+(\eta(K)-1)\lambda$. The isoperimetric inequality, $S(K)&gt;S(B)$,
+and Steiner's formula \eqref{steineq} give
+$$\frac{\mathrm{vol}(K_\lambda)}{\mathrm{vol}(B)}\ge 1+3(\tfrac{w}{2}-1)\lambda(1-\lambda)^2\text.$$
+The claim of the theorem now follows immediately from Lemma <a href="#LEMcns">1</a>. &#9744;
+</p><p>
+<strong>Conjecture.</strong> 
+The ball is a local minimum of $\delta_{L^*}$ in two dimensions.
+</p>
+<aside>[<a href="#OCKEG101" name="RFKEG10">KEG10</a>] Kallus Y, Elser V and Gravel S (2010), <a href="http://dx.doi.org/10.1007/s00454-010-9254-3" target="_blank"><em>"Dense periodic packings of tetrahedra with small repeating units"</em></a>, Discrete Comput. Geom. <strong>44</strong> (2), 245&ndash;252.</aside>
+<p>
+It does not seem that the ball is a global minimum
+of $\delta_{L^*}$. For example, the densest-known double-lattice packing
+of the tetrahedron $T$ has a density of only $\tfrac{1}{369}(139+40\sqrt{10})=0.71948\ldots$,
+so probably $\delta_{L^*}(T)&lt;\delta_{L^*}(B)$ [<a href="#RFKEG10" name="OCKEG101">KEG10</a>]. Still, if the conjecture
+holds, then the ball would also be a local minimum of $\delta$, verifying
+a local version of Ulam's conjecture.
+</p><h2>
+IV. Discussion
+</h2><p>
+We conclude with a summary of known results and open problems.
+Recall from the introduction that problems 1&ndash;3 ask for
+bodies that minimize the functions $\delta$, $\delta_{L}$,
+$\delta_{L^*}$, $\delta_{T}$, or $\delta_{T^*}$ either
+among all convex bodies or among only c.s. bodies.
+There are only two case that are solved: the minimum
+of $\delta_L$ and $\delta_T$ in two dimensions among
+all convex bodies is
+$2/3$, as realized by triangles alone [<a href="#RFFar50" name="OCFar502">Far50</a>, <a href="#RFCou65" name="OCCou652">Cou65</a>].
+A. Bezdek and W. Kuperberg comment that determining
+the minima in the unsolved cases "seems to be a very challenging
+problem, perhaps too difficult to expect to be solved in
+foreseeable future" [<a href="#RFBK13" name="OCBK132">BK13</a>]. Determining local minima
+seems to be a more approachable problem, and so far the following
+local minima have been identified:
+</p>
+<ul>
+<li> Reinhardt's smoothed octagon is a local minimum of $\delta_{L}$
+and of $\delta_{T}$ among c.s. bodies in two dimensions [<a href="#RFNaz88" name="OCNaz882">Naz88</a>].
+</li>
+<li> The ball is a local minimum of $\delta_{L}$ and of $\delta_{T}$
+among c.s. bodies in three dimensions [<a href="#RFKal14" name="OCKal142">Kal14</a>].
+</li>
+<li> The regular heptagon is a local minimum of $\delta_{L^*}$
+among all convex bodies in two dimensions (Section 2).
+</li></ul>
+<p>
+Note that the present work is the only case in the list above
+of a local minimum among all convex bodies. Reinhardt's smoothed
+octagon possesses the property that its lattice packing density
+is achieved simultaneously by a one-parameter family of lattices (see Figure
+<a href="#FGRpackfig">1</a>).
+In fact this property, common to all so-called irreducible
+domains (domains all of whose proper subdomains have
+admissible lattices of lower mean area), has long been a central
+organizing idea in the study
+of Reinhardt's conjecture [<a href="#RFMah47" name="OCMah472">Mah47</a>]. Therefore, it might be surprising
+to some that the heptagon, despite being irreducible
+with respect to double lattices, does not have a one parameter
+family of optimal admissible double lattices.
+</p><p>
+We end with three open problems:
+</p>
+<ul>
+<li> The conjecture that the ball is a global minimum of $\delta$ among
+convex bodies in three dimensions has
+been attributed to Ulam [<a href="#RFGar95" name="OCGar952">Gar95</a>]. A weaker claim,
+that the ball is a local minimum of $\delta$, is open. It is also possible
+that the ball is a local minimum of $\delta_{T^*}$ or of $\delta_{L^*}$,
+as we conjecture here (Section 3). Either
+of these possibilities necessarily imply that the ball is a local minimum of $\delta$,
+but they do not necessarily follow from Ulam's conjecture.
+</li>
+<li> The regular heptagon is conjectured to be a local minimum
+of $\delta$ among convex bodies in two dimensions. This would
+follow immediately if the packing density of the regular heptagon
+is shown to be equal to its double-lattice packing density.
+</li>
+<li> In four dimensions, it is known that the ball is not a minimum of $\delta_L$
+among c.s. bodies [<a href="#RFKal14" name="OCKal143">Kal14</a>]. It would be interesting to identify a body which
+is such a minimum.
+</p><p>
+</ul><p>
+<strong>Acknowledgments.</strong> I would like to thank Wlodzimierz Kuperberg for his helpful comments.
+</p>
+<table>
+<tr><td style="width:50px"></td><td style="width:250px"><a name="tabfgen"></a> $\mathbf{f}_0$ </td><td style="width:250px"> $\mathbf{u}_1$ </td><td style="width:250px">$\mathbf{u}_2$ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, \mathbf{e}_{1}\rangle$ </td><td style="width:250px"> $-\tfrac{2}{679}( 419 - 452 u + 40 u^2) $ </td><td style="width:250px"> $ 0 $ </td><td style="width:250px"> $ 0 $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, \mathbf{e}_{2}\rangle$ </td><td style="width:250px"> $0 $ </td><td style="width:250px"> $ 0 $ </td><td style="width:250px"> $ 0 $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, \mathbf{e}_{3}\rangle$ </td><td style="width:250px"> $\tfrac{1}{1358}( 587 -  148 u - 732 u^2) $ </td><td style="width:250px"> $ \tfrac{1}{1609} (-1171 + 1296 u + 3652 u^2) v $ </td><td style="width:250px"> $ \tfrac{1}{3218}    (2631 - 194 u - 60 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, \mathbf{e}_{4}\rangle$ </td><td style="width:250px"> $ -\tfrac{4}{679}( -81 - 8 u +  199 u^2) v $ </td><td style="width:250px"> $ \tfrac{1}{3218}    (2631 - 194 u - 60 u^2) $ </td><td style="width:250px"> $ -\tfrac{1}{11263} (-13669 + 13864 u + 19084 u^2)    v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, \mathbf{e}_{5}\rangle$ </td><td style="width:250px"> $ \tfrac{3}{679}( -39 + 68 u +  6 u^2) $ </td><td style="width:250px"> $ 0 $ </td><td style="width:250px"> $ 0 $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, \mathbf{e}_{6}\rangle$ </td><td style="width:250px"> $ \tfrac{6}{679}( 76 - 135 u + 48 u^2) v $ </td><td style="width:250px"> $ 0 $ </td><td style="width:250px"> $ 0 $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, \mathbf{e}_{7}\rangle$ </td><td style="width:250px"> $ \tfrac{1}{14}( 5 -  12 u + 8 u^2) $ </td><td style="width:250px"> $ \tfrac{1}{1609} (-1911 + 2104 u + 4300 u^2) v $ </td><td style="width:250px"> $ \tfrac{1}{3218} (-1241 - 454 u + 1452 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, \mathbf{e}_{8}\rangle$ </td><td style="width:250px"> $ \tfrac{2}{97}( -46 + 23 u +  22 u^2) v $ </td><td style="width:250px"> $ \tfrac{1}{3218} (-295 + 670 u - 1916 u^2) $ </td><td style="width:250px"> $ -\tfrac{1}{11263} (-10219 + 6792 u +     19020 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, \mathbf{e}_{9}\rangle$ </td><td style="width:250px"> $ \tfrac{1}{14}( 5 - 12 u + 8 u^2) $ </td><td style="width:250px"> $ -\tfrac{2}{1609} (-930 + 885 u +     2032 u^2)    v $ </td><td style="width:250px"> $ \tfrac{1}{1609} (561 - 456 u + 622 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, \mathbf{e}_{10}\rangle$ </td><td style="width:250px"> $ -\tfrac{2}{97}( -46 +  23 u + 22 u^2) v $ </td><td style="width:250px"> $ -\tfrac{2}{1609} (-140 - 282 u +     427 u^2) $ </td><td style="width:250px"> $ \tfrac{2}{11263} (-5336 + 6583 u + 7908 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, \mathbf{e}_{11}\rangle$ </td><td style="width:250px">$ \tfrac{3}{679}( -39 + 68 u +  6 u^2) $ </td><td style="width:250px"> $ 0 $ </td><td style="width:250px"> $ 0 $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, \mathbf{e}_{12}\rangle$ </td><td style="width:250px">$ -\tfrac{6}{679}( 76 - 135 u +  48 u^2) v $ </td><td style="width:250px"> $ 0 $ </td><td style="width:250px"> $ 0 $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, \mathbf{e}_{13}\rangle$ </td><td style="width:250px">$ \tfrac{1}{1358}( 587 - 148 u -  732 u^2) $ </td><td style="width:250px"> $ 0 $ </td><td style="width:250px"> $ 1 $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, \mathbf{e}_{14}\rangle$ </td><td style="width:250px">$ \tfrac{4}{679}( -81 - 8 u + 199 u^2) v $ </td><td style="width:250px"> $ 1 $ </td><td style="width:250px"> $ 0 $</td></tr>
+</table>
+<p><strong>Table 1:</strong> The left column gives the elements of $\mathbf{f}_0$ in the standard basis of $\mathbb{R}^{14}$. The elements of $\mathbf{f}_i$
+are obtained by a cyclic permutation of the indices by $2i$. The other two columns give the elements of vectors such that
+$a_1\mathbf{u}_1+a_2\mathbf{u}_2$ is the general solution satisfying the equations \eqref{ns} and $x_0=x_2=x_5=y_0=y_2=y_5=0$.</p>
+<table>
+<tr><td style="width:50px"><a name="tabFF1"></a></td><td style="width:250px">$\mathbf{e}_1$</td><td style="width:250px">$\mathbf{e}_2$</td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{1}\rangle$ </td><td style="width:250px"> $ (8/461041) (194143 - 526054 u + 360624 u^2) $ </td><td style="width:250px">	$ 0 $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{2}\rangle$ </td><td style="width:250px"> $ 0 $ </td><td style="width:250px">	$ 0 $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{3}\rangle$ </td><td style="width:250px"> $ -(2/461041)    (72529 - 63570 u + 30298 u^2) $ </td><td style="width:250px">	$ -(4/49)( -4 - u + 10 u^2 )v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{4}\rangle$ </td><td style="width:250px"> $ (4/   461041) (-60408 - 31391 u + 115516 u^2) v $ </td><td style="width:250px">	$ 1/7 $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{5}\rangle$ </td><td style="width:250px"> $ (2/461041)    (19669 - 35394 u + 47802 u^2) $ </td><td style="width:250px">	$ 0 $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{6}\rangle$ </td><td style="width:250px"> $ -(4/461041)    (88155 - 230075 u + 174752 u^2) v $ </td><td style="width:250px">	$ 0 $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{7}\rangle$ </td><td style="width:250px"> $ (1/   679) (-569 + 2564 u - 2136 u^2) $ </td><td style="width:250px">	$ (4/679) (31 - 258 u + 40 u^2)    v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{8}\rangle$ </td><td style="width:250px"> $ (4/65863)    (33298 - 78729 u + 50406 u^2) v $ </td><td style="width:250px">	$ -(4/679)    (129 - 113 u + 10 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{9}\rangle$ </td><td style="width:250px"> $ (1/   679) (-569 + 2564 u - 2136 u^2) $ </td><td style="width:250px">	$ -(4/679) (31 - 258 u + 40 u^2)    v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{10}\rangle$ </td><td style="width:250px"> $ -(4/65863) (33298 - 78729 u + 50406 u^2)    v $ </td><td style="width:250px">	$ -(4/679) (129 - 113 u + 10 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{11}\rangle$ </td><td style="width:250px"> $ (2/461041)    (19669 - 35394 u + 47802 u^2) $ </td><td style="width:250px">	$ 0 $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{12}\rangle$ </td><td style="width:250px"> $ (4/461041)    (88155 - 230075 u + 174752 u^2) v $ </td><td style="width:250px">	$ 0 $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{13}\rangle$ </td><td style="width:250px"> $ -(2/461041)    (72529 - 63570 u + 30298 u^2) $ </td><td style="width:250px">	$ (4/49) (-4 - u + 10 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{14}\rangle$ </td><td style="width:250px"> $ -(4/461041) (-60408 - 31391 u + 115516 u^2) v $ </td><td style="width:250px">	$ 1/7 $ </td></tr>
+<tr><td style="width:50px"></td><td style="width:250px">$\mathbf{e}_{3}$</td><td style="width:250px">$\mathbf{e}_{4}$</td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{1}\rangle$ </td><td style="width:250px"> $ -(2/461041)    (72529 - 63570 u + 30298 u^2) $ </td><td style="width:250px">	$ (4/   461041) (-60408 - 31391 u + 115516 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{2}\rangle$ </td><td style="width:250px"> $ -(4/49) (-4 - u + 10 u^2) v $ </td><td style="width:250px">	$ 1/   7 $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{3}\rangle$ </td><td style="width:250px"> $ (1/   461041) (-20089 - 45197 u - 24338 u^2) $ </td><td style="width:250px">	$ -(1/461041)    (15943 + 262998 u + 380160 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{4}\rangle$ </td><td style="width:250px"> $ -(1/461041)    (15943 + 262998 u + 380160 u^2) v $ </td><td style="width:250px">	$ (1/   65863) (-23109 - 25645 u + 18926 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{5}\rangle$ </td><td style="width:250px"> $ (1/461041)    (759 + 107533 u + 100614 u^2) $ </td><td style="width:250px">	$ (3/461041)    (8985 + 89258 u + 119032 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{6}\rangle$ </td><td style="width:250px"> $ (1/   461041) (-149167 - 245274 u + 634392 u^2) v $ </td><td style="width:250px">	$ (1/65863)    (20449 + 1367 u - 33410 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{7}\rangle$ </td><td style="width:250px"> $ (1/9506) (-1347 + 2080 u + 13444 u^2) $ </td><td style="width:250px">	$ (2/   4753) (-439 + 1432 u + 3082 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{8}\rangle$ </td><td style="width:250px"> $ (2/65863) (-7673 + 14458 u + 17178 u^2)    v $ </td><td style="width:250px">	$ (1/131726) (66455 + 40832 u - 105836 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{9}\rangle$ </td><td style="width:250px"> $ -(3/9506) (-587 + 2088 u + 3060 u^2) $ </td><td style="width:250px">	$ -(2/4753) (-583 +     1116 u + 3134 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{10}\rangle$ </td><td style="width:250px"> $ (2/65863)    (7479 + 13866 u + 26278 u^2) v $ </td><td style="width:250px">	$ (1/131726)    (65465 + 43752 u - 88164 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{11}\rangle$ </td><td style="width:250px"> $ (1/   922082) (-166195 + 68402 u + 95304 u^2) $ </td><td style="width:250px">	$ (1/   461041) (-96429 - 46894 u + 182108 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{12}\rangle$ </td><td style="width:250px"> $ -(3/461041)    (41199 - 45674 u + 5436 u^2) v $ </td><td style="width:250px">	$ (3/   131726) (-14829 - 8154 u + 26800 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{13}\rangle$ </td><td style="width:250px"> $ (1/   461041)    (28120 + 29493 u - 21622 u^2) $ </td><td style="width:250px">	$ -(1/461041) (-79117 - 84650 u +     70536 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{14}\rangle$ </td><td style="width:250px"> $ (1/   461041) (-79117 - 84650 u + 70536 u^2) v $ </td><td style="width:250px">	$ (1/   65863) (-21996 - 12961 u + 35782 u^2) $ </td></tr>
+<tr><td style="width:50px"></td><td style="width:250px">$\mathbf{e}_{5}$</td><td style="width:250px">$\mathbf{e}_{6}$</td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{1}\rangle$ </td><td style="width:250px"> $ (2/461041)    (19669 - 35394 u + 47802 u^2) $ </td><td style="width:250px">	$ -(4/461041)    (88155 - 230075 u + 174752 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{2}\rangle$ </td><td style="width:250px"> $ 0 $ </td><td style="width:250px">	$ 0 $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{3}\rangle$ </td><td style="width:250px"> $ (1/461041)    (759 + 107533 u + 100614 u^2) $ </td><td style="width:250px">	$ (1/   461041) (-149167 - 245274 u + 634392 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{4}\rangle$ </td><td style="width:250px"> $ (3/461041)    (8985 + 89258 u + 119032 u^2) v $ </td><td style="width:250px">	$ (1/65863)    (20449 + 1367 u - 33410 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{5}\rangle$ </td><td style="width:250px"> $ (1/922082)    (213769 - 567974 u - 163748 u^2) $ </td><td style="width:250px">	$ -(3/461041)    (68953 - 192732 u + 128460 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{6}\rangle$ </td><td style="width:250px"> $ -(3/461041)    (68953 - 192732 u + 128460 u^2) v $ </td><td style="width:250px">	$ (1/18818)    (12903 - 44330 u + 35636 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{7}\rangle$ </td><td style="width:250px"> $ (1/1358)    (245 - 656 u - 948 u^2) $ </td><td style="width:250px">	$ (4/679) (109 - 200 u + 125 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{8}\rangle$ </td><td style="width:250px"> $ -(4/461041)    (61800 - 34586 u + 543 u^2) v $ </td><td style="width:250px">	$ (1/   131726) (-41951 + 80776 u - 28660 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{9}\rangle$ </td><td style="width:250px"> $ (2/679) (-102 + 342 u + 53 u^2) $ </td><td style="width:250px">	$ (6/4753)    (320 - 1033 u + 488 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{10}\rangle$ </td><td style="width:250px"> $ -(2/65863)    (13272 - 6927 u + 26312 u^2) v $ </td><td style="width:250px">	$ (30/65863)    (662 - 622 u + 25 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{11}\rangle$ </td><td style="width:250px"> $ (3/922082)    (47265 - 111466 u + 50436 u^2) $ </td><td style="width:250px">	$ -(3/461041)    (68953 - 192732 u + 128460 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{12}\rangle$ </td><td style="width:250px"> $ (3/461041)    (68953 - 192732 u + 128460 u^2) v $ </td><td style="width:250px">	$ -(9/131726)    (11911 - 36462 u + 25820 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{13}\rangle$ </td><td style="width:250px"> $ (1/922082) (-166195 + 68402 u + 95304 u^2) $ </td><td style="width:250px">	$ (3/   461041) (41199 - 45674 u + 5436 u^2)    v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{14}\rangle$ </td><td style="width:250px"> $ -(1/461041) (-96429 -     46894 u + 182108 u^2) v $ </td><td style="width:250px">	$ (3/   131726) (-14829 - 8154 u + 26800 u^2) $ </td></tr>
+<tr><td style="width:50px"></td><td style="width:250px">$\mathbf{e}_7$</td><td style="width:250px">$\mathbf{e}_{8}$</td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{1}\rangle$ </td><td style="width:250px"> $ (1/   679) (-569 + 2564 u - 2136 u^2) $ </td><td style="width:250px">	$ (4/65863)    (33298 - 78729 u + 50406 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{2}\rangle$ </td><td style="width:250px"> $ (4/679) (31 - 258 u + 40 u^2) v $ </td><td style="width:250px">	$ -(4/679)    (129 - 113 u + 10 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{3}\rangle$ </td><td style="width:250px"> $ (1/   9506) (-1347 + 2080 u + 13444 u^2) $ </td><td style="width:250px">	$ (2/   65863) (-7673 + 14458 u + 17178 u^2)    v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{4}\rangle$ </td><td style="width:250px"> $ (2/4753) (-439 + 1432 u + 3082 u^2)    v $ </td><td style="width:250px">	$ (1/131726)    (66455 + 40832 u - 105836 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{5}\rangle$ </td><td style="width:250px"> $ (1/1358)    (245 - 656 u - 948 u^2) $ </td><td style="width:250px">	$ -(4/461041) (61800 - 34586 u + 543 u^2)    v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{6}\rangle$ </td><td style="width:250px"> $ (4/679) (109 - 200 u + 125 u^2)    v $ </td><td style="width:250px">	$ (1/131726) (-41951 + 80776 u - 28660 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{7}\rangle$ </td><td style="width:250px"> $ (1/9506)    (4441 - 13812 u - 8488 u^2) $ </td><td style="width:250px">	$ -(6/679) (-27 - 229 u + 422 u^2)    v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{8}\rangle$ </td><td style="width:250px"> $ -(6/679) (-27 - 229 u +     422 u^2) v $ </td><td style="width:250px">	$ (1/131726)    (120805 - 361636 u + 219960 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{9}\rangle$ </td><td style="width:250px"> $ (1/9506)    (857 - 14736 u + 33848 u^2) $ </td><td style="width:250px">	$ -(2/4753) (1709 - 5171 u + 722 u^2)    v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{10}\rangle$ </td><td style="width:250px"> $ (2/4753) (1709 - 5171 u + 722 u^2) v $ </td><td style="width:250px">	$ (1/   131726) (-103345 + 33000 u + 84232 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{11}\rangle$ </td><td style="width:250px"> $ (2/   679) (-102 + 342 u + 53 u^2) $ </td><td style="width:250px">	$ (2/65863) (13272 - 6927 u + 26312 u^2)    v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{12}\rangle$ </td><td style="width:250px"> $ -(6/4753) (320 - 1033 u + 488 u^2)    v $ </td><td style="width:250px">	$ (30/65863) (662 - 622 u + 25 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{13}\rangle$ </td><td style="width:250px"> $ -(3/9506) (-587 + 2088 u + 3060 u^2) $ </td><td style="width:250px">	$ -(2/65863)    (7479 + 13866 u + 26278 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{14}\rangle$ </td><td style="width:250px"> $ (2/   4753) (-583 + 1116 u + 3134 u^2) v $ </td><td style="width:250px">	$ (1/131726)    (65465 + 43752 u - 88164 u^2) $</td></tr>
+<tr><td style="width:50px"></td><td style="width:250px">$\mathbf{e}_9$</td><td style="width:250px">$\mathbf{e}_{10}$</td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{1}\rangle$ </td><td style="width:250px"> $ (1/   679) (-569 + 2564 u - 2136 u^2) $ </td><td style="width:250px">	$ -(4/65863)    (33298 - 78729 u + 50406 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{2}\rangle$ </td><td style="width:250px"> $ -(4/679) (31 - 258 u + 40 u^2)    v $ </td><td style="width:250px">	$ -(4/679) (129 - 113 u + 10 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{3}\rangle$ </td><td style="width:250px"> $ -(3/9506) (-587 + 2088 u + 3060 u^2) $ </td><td style="width:250px">	$ (2/65863)    (7479 + 13866 u + 26278 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{4}\rangle$ </td><td style="width:250px"> $ -(2/4753) (-583 + 1116 u +     3134 u^2) v $ </td><td style="width:250px">	$ (1/131726) (65465 + 43752 u - 88164 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{5}\rangle$ </td><td style="width:250px"> $ (2/679) (-102 + 342 u + 53 u^2) $ </td><td style="width:250px">	$ -(2/65863)    (13272 - 6927 u + 26312 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{6}\rangle$ </td><td style="width:250px"> $ (6/4753)    (320 - 1033 u + 488 u^2) v $ </td><td style="width:250px">	$ (30/65863)    (662 - 622 u + 25 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{7}\rangle$ </td><td style="width:250px"> $ (1/9506) (857 - 14736 u + 33848 u^2) $ </td><td style="width:250px">	$ (2/4753)    (1709 - 5171 u + 722 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{8}\rangle$ </td><td style="width:250px"> $ -(2/4753)    (1709 - 5171 u + 722 u^2) v $ </td><td style="width:250px">	$ (1/   131726) (-103345 + 33000 u + 84232 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{9}\rangle$ </td><td style="width:250px"> $ (1/9506) (4441 - 13812 u - 8488 u^2) $ </td><td style="width:250px">	$ (6/   679) (-27 - 229 u + 422 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{10}\rangle$ </td><td style="width:250px"> $ (6/   679) (-27 - 229 u + 422 u^2) v $ </td><td style="width:250px">	$ (1/131726)    (120805 - 361636 u + 219960 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{11}\rangle$ </td><td style="width:250px"> $ (1/1358) (245 - 656 u - 948 u^2) $ </td><td style="width:250px">	$ (4/461041)    (61800 - 34586 u + 543 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{12}\rangle$ </td><td style="width:250px"> $ -(4/679)    (109 - 200 u + 125 u^2) v $ </td><td style="width:250px">	$ (1/   131726) (-41951 + 80776 u - 28660 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{13}\rangle$ </td><td style="width:250px"> $ (1/   9506) (-1347 + 2080 u + 13444 u^2) $ </td><td style="width:250px">	$ -(2/65863) (-7673 + 14458 u +     17178 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{14}\rangle$ </td><td style="width:250px"> $ -(2/4753) (-439 + 1432 u + 3082 u^2)    v $ </td><td style="width:250px">	$ (1/131726) (66455 + 40832 u - 105836 u^2) $ </td></tr>
+<tr><td style="width:50px"></td><td style="width:250px">$\mathbf{e}_{11}$</td><td style="width:250px">$\mathbf{e}_{12}$</td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{1}\rangle$ </td><td style="width:250px"> $ (2/461041)    (19669 - 35394 u + 47802 u^2) $ </td><td style="width:250px">	$ (4/461041)    (88155 - 230075 u + 174752 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{2}\rangle$ </td><td style="width:250px"> $ 0 $ </td><td style="width:250px">	$ 0 $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{3}\rangle$ </td><td style="width:250px"> $ (1/   922082) (-166195 + 68402 u + 95304 u^2) $ </td><td style="width:250px">	$ -(3/461041)    (41199 - 45674 u + 5436 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{4}\rangle$ </td><td style="width:250px"> $ (1/   461041) (-96429 - 46894 u + 182108 u^2) v $ </td><td style="width:250px">	$ (3/   131726) (-14829 - 8154 u + 26800 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{5}\rangle$ </td><td style="width:250px"> $ (3/922082)    (47265 - 111466 u + 50436 u^2) $ </td><td style="width:250px">	$ (3/461041)    (68953 - 192732 u + 128460 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{6}\rangle$ </td><td style="width:250px"> $ -(3/461041) (68953 - 192732 u + 128460 u^2)    v $ </td><td style="width:250px">	$ -(9/131726) (11911 - 36462 u + 25820 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{7}\rangle$ </td><td style="width:250px"> $ (2/   679) (-102 + 342 u + 53 u^2) $ </td><td style="width:250px">	$ -(6/4753) (320 - 1033 u + 488 u^2)    v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{8}\rangle$ </td><td style="width:250px"> $ (2/65863)    (13272 - 6927 u + 26312 u^2) v $ </td><td style="width:250px">	$ (30/65863)    (662 - 622 u + 25 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{9}\rangle$ </td><td style="width:250px"> $ (1/1358)    (245 - 656 u - 948 u^2) $ </td><td style="width:250px">	$ -(4/679) (109 - 200 u + 125 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{10}\rangle$ </td><td style="width:250px"> $ (4/461041)    (61800 - 34586 u + 543 u^2) v $ </td><td style="width:250px">	$ (1/   131726) (-41951 + 80776 u - 28660 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{11}\rangle$ </td><td style="width:250px"> $ (1/922082)    (213769 - 567974 u - 163748 u^2) $ </td><td style="width:250px">	$ (3/461041)    (68953 - 192732 u + 128460 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{12}\rangle$ </td><td style="width:250px"> $ (3/461041)    (68953 - 192732 u + 128460 u^2) v $ </td><td style="width:250px">	$ (1/18818)    (12903 - 44330 u + 35636 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{13}\rangle$ </td><td style="width:250px"> $ (1/461041)    (759 + 107533 u + 100614 u^2) $ </td><td style="width:250px">	$ -(1/461041) (-149167 - 245274 u +     634392 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{14}\rangle$ </td><td style="width:250px"> $ -(3/461041)    (8985 + 89258 u + 119032 u^2) v $ </td><td style="width:250px">	$ (1/65863)    (20449 + 1367 u - 33410 u^2) $ </td></tr>
+<tr><td style="width:50px"></td><td style="width:250px">$\mathbf{e}_{13}$</td><td style="width:250px">$\mathbf{e}_{14}$</td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{1}\rangle$ </td><td style="width:250px"> $ -(2/461041)    (72529 - 63570 u + 30298 u^2) $ </td><td style="width:250px">	$ -(4/461041) (-60408 - 31391 u +     115516 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{2}\rangle$ </td><td style="width:250px"> $ (4/   49) (-4 - u + 10 u^2) v $ </td><td style="width:250px">	$ (1/7) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{3}\rangle$ </td><td style="width:250px"> $ (1/461041)    (28120 + 29493 u - 21622 u^2) $ </td><td style="width:250px">	$ (1/   461041) (-79117 - 84650 u + 70536 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{4}\rangle$ </td><td style="width:250px"> $ -(1/461041) (-79117 -     84650 u + 70536 u^2) v $ </td><td style="width:250px">	$ (1/   65863) (-21996 - 12961 u + 35782 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{5}\rangle$ </td><td style="width:250px"> $ (1/   922082) (-166195 + 68402 u + 95304 u^2) $ </td><td style="width:250px">	$ -(1/461041) (-96429 -     46894 u + 182108 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{6}\rangle$ </td><td style="width:250px"> $ (3/461041)    (41199 - 45674 u + 5436 u^2) v $ </td><td style="width:250px">	$ (3/   131726) (-14829 - 8154 u + 26800 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{7}\rangle$ </td><td style="width:250px"> $ -(3/9506) (-587 + 2088 u + 3060 u^2) $ </td><td style="width:250px">	$ (2/   4753) (-583 + 1116 u + 3134 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{8}\rangle$ </td><td style="width:250px"> $ -(2/65863) (7479 + 13866 u + 26278 u^2)    v $ </td><td style="width:250px">	$ (1/131726) (65465 + 43752 u - 88164 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{9}\rangle$ </td><td style="width:250px"> $ (1/   9506) (-1347 + 2080 u + 13444 u^2) $ </td><td style="width:250px">	$ -(2/4753) (-439 + 1432 u +     3082 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{10}\rangle$ </td><td style="width:250px"> $ -(2/65863) (-7673 +     14458 u + 17178 u^2) v $ </td><td style="width:250px">	$ (1/131726)    (66455 + 40832 u - 105836 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{11}\rangle$ </td><td style="width:250px"> $ (1/461041)    (759 + 107533 u + 100614 u^2) $ </td><td style="width:250px">	$ -(3/461041)    (8985 + 89258 u + 119032 u^2) v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{12}\rangle$ </td><td style="width:250px"> $ -(1/461041) (-149167 - 245274 u +     634392 u^2) v $ </td><td style="width:250px">	$ (1/65863)    (20449 + 1367 u - 33410 u^2) $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{13}\rangle$ </td><td style="width:250px"> $ (1/461041) (-20089 - 45197 u - 24338 u^2) $ </td><td style="width:250px">	$ (1/   461041) (15943 + 262998 u + 380160 u^2)    v $ </td></tr>
+<tr><td style="width:50px">$\langle \cdot, F_0 \mathbf{e}_{14}\rangle$ </td><td style="width:250px"> $ (1/461041)    (15943 + 262998 u + 380160 u^2) v $ </td><td style="width:250px">	$ (1/   65863) (-23109 - 25645 u + 18926 u^2) $</td></tr>
+</table>
+<p><strong>Table 2:</strong> Elements of $F_0$ in the standard basis of $\mathbb{R}^{14}$. The elements of $F_i$
+    are obtained by a cyclic permutation of the indices by $2i$</p>
+<table>
+    <tr><td><a name="tabfgp"></a>
+\begin{align*}
+\langle\mathbf{f}_0',\mathbf{e}_i\rangle =  & \tfrac{2}{679}(128 - 743 u + 816 u^2) && \text{for } i=1 \\
+\langle\mathbf{f}_0',\mathbf{e}_i\rangle =  & 0 && \text{for } i=2,4,6,8,10,12,14 \\
+\langle\mathbf{f}_0',\mathbf{e}_i\rangle =  & \tfrac{2}{7}(-4 - 3 u + 8 u^2) && \text{for } i=3,5,7,9,11,13 \\
+\langle\mathbf{f}_0',\mathbf{e}_i\rangle =  & \tfrac{2}{7}(-2 - u + 4 u^2)v && \text{for } i=15,18,22,23,26,27,30,31,34,35,39,42 \\
+\langle\mathbf{f}_0',\mathbf{e}_i\rangle =  & \tfrac{2}{7}(-5 - 3 u + 10 u^2)v && \text{for } i=16,17,20,21,25,28,29,32,36,37,40,41 \\
+\langle\mathbf{f}_0',\mathbf{e}_i\rangle =  & \tfrac{2}{679}(-618 - 273 u + 692 u^2)v && \text{for } i=19,38 \\
+\langle\mathbf{f}_0',\mathbf{e}_i\rangle =  & \tfrac{2}{679}(-649 - 1179 u + 2010 u^2)v && \text{for } i=24,33
+\end{align*}
+    </td></tr><tr><td>
+\begin{align*}
+\langle\mathbf{g}_1',\mathbf{e}_1\rangle =  \langle\mathbf{g}_8',\mathbf{e}_1\rangle =  & -1-u \\
+\langle\mathbf{g}_1',\mathbf{e}_2\rangle =  -\langle\mathbf{g}_8',\mathbf{e}_2\rangle =  & \tfrac{1}{8} (-15 - 2 u + 20 u^2) \\
+\langle\mathbf{g}_1',\mathbf{e}_{28}\rangle =  \langle\mathbf{g}_8',\mathbf{e}_{29}\rangle =  & -2(1+u)v \\
+\langle\mathbf{g}_{15}',\mathbf{e}_1\rangle =  \langle\mathbf{g}_{22}',\mathbf{e}_1\rangle =  & \tfrac{3}{2}(-3+4u^2)v \\
+\langle\mathbf{g}_{15}',\mathbf{e}_{27}\rangle =  \langle\mathbf{g}_{22}',\mathbf{e}_{30}\rangle =  & \tfrac{1}{4}(-15-2u+20u^2) \\
+\langle\mathbf{g}_{15}',\mathbf{e}_{28}\rangle =  \langle\mathbf{g}_{22}',\mathbf{e}_{29}\rangle =  & \tfrac{1}{2}(-9-2u+14u^2) \\
+\langle\mathbf{g}_{29}',\mathbf{e}_{27}\rangle =  \langle\mathbf{g}_{36}',\mathbf{e}_{30}\rangle =  & \tfrac{1}{4}(-7-2u+12u^2) \\
+\langle\mathbf{g}_{29}',\mathbf{e}_{28}\rangle =  \langle\mathbf{g}_{36}',\mathbf{e}_{29}\rangle =  & \tfrac{1}{2}(-13-2u+18u^2) 
+\end{align*}
+    </td></tr>
+</table>
+<p><strong>Table 3:</strong> Elements of $\mathbf{f}_0'$, $\mathbf{g}_1'$, $\mathbf{g}_8'$, $\mathbf{g}_{15}'$, $\mathbf{g}_{22}'$, $\mathbf{g}_{29}'$,
+and $\mathbf{g}_{36}'$ in the
+standard basis of $\mathbb{R}^{14}$. Elements not given explicitly are zero. The elements of $\mathbf{f}_i'$ and $\mathbf{g}_i'$ for other
+values of $i$ are obtained by appropriate permutation of the indices (for example, to obtain $\mathbf{g}_{i+i'}'$ from $\mathbf{g}_i'$,
+cycle the first 14 coordinates by $2i'$ and the last 28 by $4i'$).</p>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="js/2D.js"></script>
+    <script src="js/Intersection.js"></script>
+    <script>
+	//var s = document.getElementById('svg1');
+	var l=Math.sqrt(2.)-1.;
+	var m=Math.sqrt(6.*Math.sqrt(2.)-8.)*(Math.sqrt(2.)+1.)/2.;
+	var x0=(4.+3.*Math.sqrt(2.))/4.;
+	var x1=m/l;
+	var x2=2.+Math.SQRT2;
+	var d=((1./2.)+(3./(2.*Math.SQRT2)));
+	var j,k=0,x,y,xr,yr;
+	var width=720,height=360;
+	var pts=[];
+
+	var s = d3.select("#svg1").append("svg")
+	    .attr("width", width)
+	    .attr("height", height);
+
+	function f(x) {return Math.sqrt(l*l*x*x-m*m);}
+	function xi(i) {return ((100-i)*x1+i*x0)/100;}
+	function rotx(xx,yy) {return (xx - yy)/Math.SQRT2;}
+	function roty(xx,yy) {return (xx + yy)/Math.SQRT2;}
+	var gArc=s.append("defs");
+	var pArc="";
+	x=xi(100)-x2; y=f(xi(100));pts[k++]=new Point2D(x,y)
+	for (j=1;j<100;j++)
+	    {x=xi(100-j)-x2; y=f(xi(100-j));pts[k++]=new Point2D(x,y)}
+	x=xi(0)-x2; pArc+=" L "+x+" 0";
+	for (j=1;j<100;j++)
+	    {x=xi(j)-x2; y=-f(xi(j));pts[k++]=new Point2D(x,y)}
+	x=xi(100)-x2; y=-f(xi(100));pts[k++]=new Point2D(x,y)
+	xr=xi(100)-x2; yr=f(xi(100)); x=rotx(xr,yr); y=roty(xr,yr); pts[k++]=new Point2D(x,y)
+	for (j=1;j<100;j++)
+	    {xr=xi(100-j)-x2; yr=f(xi(100-j)); x=rotx(xr,yr);y=roty(xr,yr); pts[k++]=new Point2D(x,y)}
+	xr=xi(0)-x2; yr=0.; x=rotx(xr,yr);y=roty(xr,yr); pts[k++]=new Point2D(x,y)
+	for (j=1;j<100;j++)
+	    {xr=xi(j)-x2; yr=-f(xi(j));x=rotx(xr,yr); y=roty(xr,yr);pts[k++]=new Point2D(x,y)}
+	x=xi(100)-x2; y=f(xi(100));pts[k++]=new Point2D((-y),x)
+	for (j=1;j<100;j++)
+	    {x=xi(100-j)-x2; y=f(xi(100-j));pts[k++]=new Point2D((-y),x)}
+	x=xi(0)-x2; pArc+=" L 0 "+x;
+	for (j=1;j<100;j++)
+	    {x=xi(j)-x2; y=-f(xi(j));pts[k++]=new Point2D((-y),x)}
+	x=xi(100)-x2; y=-f(xi(100));pts[k++]=new Point2D((-y),x)
+	xr=xi(100)-x2; yr=f(xi(100)); x=rotx(xr,yr); y=roty(xr,yr); pts[k++]=new Point2D((-y),x)
+	for (j=1;j<100;j++)
+	    {xr=xi(100-j)-x2; yr=f(xi(100-j)); x=rotx(xr,yr);y=roty(xr,yr); pts[k++]=new Point2D((-y),x)}
+	xr=xi(0)-x2; yr=0.; x=rotx(xr,yr);y=roty(xr,yr); pts[k++]=new Point2D((-y),x)
+	for (j=1;j<100;j++)
+	    {xr=xi(j)-x2; yr=-f(xi(j));x=rotx(xr,yr); y=roty(xr,yr);pts[k++]=new Point2D((-y),x)}
+	x=xi(100)-x2; y=f(xi(100));pts[k++]=new Point2D((-x),(-y))
+	for (j=1;j<100;j++)
+	    {x=xi(100-j)-x2; y=f(xi(100-j));pts[k++]=new Point2D((-x),(-y))}
+	x=xi(0)-x2; pArc+=" L "+(-x)+" 0";
+	for (j=1;j<100;j++)
+	    {x=xi(j)-x2; y=-f(xi(j));pts[k++]=new Point2D((-x),(-y))}
+	x=xi(100)-x2; y=-f(xi(100));pts[k++]=new Point2D((-x),(-y))
+	xr=xi(100)-x2; yr=f(xi(100)); x=rotx(xr,yr); y=roty(xr,yr); pts[k++]=new Point2D((-x),(-y))
+	for (j=1;j<100;j++)
+	    {xr=xi(100-j)-x2; yr=f(xi(100-j)); x=rotx(xr,yr);y=roty(xr,yr); pts[k++]=new Point2D((-x),(-y))}
+	xr=xi(0)-x2; yr=0.; x=rotx(xr,yr);y=roty(xr,yr); pts[k++]=new Point2D((-x),(-y))
+	for (j=1;j<100;j++)
+	    {xr=xi(j)-x2; yr=-f(xi(j));x=rotx(xr,yr); y=roty(xr,yr);pts[k++]=new Point2D((-x),(-y))}
+	x=xi(100)-x2; y=f(xi(100));pts[k++]=new Point2D((y),(-x))
+	for (j=1;j<100;j++)
+	    {x=xi(100-j)-x2; y=f(xi(100-j));pts[k++]=new Point2D((y),(-x))}
+	x=xi(0)-x2; pArc+=" L 0 "+(-x);
+	for (j=1;j<100;j++)
+	    {x=xi(j)-x2; y=-f(xi(j));pts[k++]=new Point2D((y),(-x))}
+	x=xi(100)-x2; y=-f(xi(100));pts[k++]=new Point2D((y),(-x))
+	xr=xi(100)-x2; yr=f(xi(100)); x=rotx(xr,yr); y=roty(xr,yr); pts[k++]=new Point2D((y),(-x))
+	for (j=1;j<100;j++)
+	    {xr=xi(100-j)-x2; yr=f(xi(100-j)); x=rotx(xr,yr);y=roty(xr,yr); pts[k++]=new Point2D((y),(-x))}
+	xr=xi(0)-x2; yr=0.; x=rotx(xr,yr);y=roty(xr,yr); pts[k++]=new Point2D((y),(-x))
+	for (j=1;j<100;j++)
+	    {xr=xi(j)-x2; yr=-f(xi(j));x=rotx(xr,yr); y=roty(xr,yr);pts[k++]=new Point2D((y),(-x))}
+
+	pArc="M "+pts[0].x+" "+pts[0].y;
+	for (j=1;j<k;j++) pArc+=" L "+pts[j].x+" "+pts[j].y;
+	pArc+=" L "+pts[0].x+" "+pts[0].y;
+
+	var o,r1,a1,la1,c1,c2,c3,a2,a3,ax;
+	update1(0);
+
+	gArc.append("path").attr("d",pArc).attr("id","myArc");
+	var g1=s.append("g").attr("transform","matrix(40,0,0,40,"+(width/2)+","+(height/2)+")");
+	for (j=0;j<ax.length;j++){
+	    g1.append("use")
+		.attr("xlink:href","#myArc")
+		.attr("transform","translate("+(2*ax[j].x)+","+(2*ax[j].y)+")")
+		.attr("fill","#dddddd").attr("stroke","black")
+		.attr("stroke-width","0.02")
+		.attr("id","oct"+j);
+	}
+
+	d3.select("#angle").on("input", function() {update1(+this.value);update2();});
+
+	function update1(val) {
+	    o = new Point2D(0,0);
+	    r1 = new Point2D(4.*Math.cos(val*Math.PI/500.),4.*Math.sin(val*Math.PI/500.));
+	    a1 = Intersection.intersectLinePolygon(o,r1,pts).points.pop();
+	    la1 = a1.x*a1.x + a1.y*a1.y;
+	    c1 = (new Point2D(-a1.y,a1.x)).multiply(d/la1);
+	    c2 = c1.add(a1);
+	    c3 = c1.add(a1.multiply(-1));
+	    a2 = Intersection.intersectLinePolygon(c1,c2,pts).points.pop();
+	    a3 = Intersection.intersectLinePolygon(c1,c3,pts).points.pop();
+	    ax=[
+		o,a1,a2,a3,a1.multiply(-1),a2.multiply(-1),a3.multiply(-1),
+		a1.multiply(2),a2.multiply(2),a3.multiply(2),a1.multiply(-2),a2.multiply(-2),a3.multiply(-2),
+		a1.add(a2),a2.add(a3),a3.add(a1.multiply(-1)),a1.add(a2).multiply(-1),a2.add(a3).multiply(-1),a1.add(a3.multiply(-1))
+	    ];
+	}
+
+	function update2() {
+	    for (j=0;j<ax.length;j++){
+		d3.select("#oct"+j)
+		    .attr("transform","translate("+(2*ax[j].x)+","+(2*ax[j].y)+")");
+	   }
+	}
+    </script> 
+</body>

@@ -1,0 +1,151 @@
+<html lang="en">
+<head>
+<title>Uniform Random Partitions</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../images/article.css" type="text/css" />
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+    tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]},
+    TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+<script type="text/javascript" src="../MathJax/MathJax.js"></script>
+</head>
+<body>
+    <h1>Uniform Random Partitions</h1>
+    <p class="par"> This Markov Chain Monte Carlo simulation converges at large enough times to the uniform
+    distribution over partitions of the number $N$. The limit shape of the distributions for large
+    $N$ is $e^{-x/a}+e^{-y/a}=1$, where $a=\sqrt{6N}/\pi$.</p>
+
+<div id="fig"><svg></svg></div>
+
+    <p>N = <input type="text" value="3200" onkeydown="clearTimeout(nto); nto=setTimeout(changen,1000);" id="inpn" style="width:6em">
+    redraws = <input type="text" value="1000" onkeyup="mxit=this.value;" id="mxit" style="width:6em"></p>
+    <p>MC steps per redraw = <input type="text" value="10000" onkeyup="mcst=this.value;" id="mcst" style="width:6em"></p>
+    <p><input type="checkbox" id="shlm" onchange="ch.lm.attr('visibility',this.checked?'visible':'hidden');"> show limit shape
+    <input type="checkbox" id="shmn" onchange="chshmn=this.checked; ch.update(chshmn?means:ch.data,true); this.checked=chshmn;"> show means</p>
+    <p><button onclick="mcf.iter=0;mcf.max_iter=mxit;d3.timer(mcf)">run</button>
+    <button onclick="mcf.max_iter=-1;">stop</button>
+    <button onclick="init(1,chart.n2,chart.N,ch.data);ch.update(ch.data,true);">init1</button>
+    <button onclick="init(2,chart.n2,chart.N,ch.data);ch.update(ch.data,true);">init2</button>
+    <button onclick="init(3,chart.n2,chart.N,ch.data);ch.update(ch.data,true);">init3</button>
+    <button onclick="denum=0;">clear means</button></p>
+<p>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/us/">Creative Commons Attribution 3.0 United States License</a></p>
+
+<script src="../js/d3.v3.min.js"></script>
+<script>
+
+var nto = null;
+var mxit=1000;
+var mcst=10000;
+var chshmn = false;
+
+function init(mode,n2,N,dt){
+    var counter = N;
+    var n1 = ~~Math.sqrt(N*2.)-1;
+    var ff = function(i) {return Math.max(n1-i,0);};
+    if (mode==2) { n1 = ~~Math.sqrt(N*2)-1; ff = function(i) {return Math.max(n1,0);}; }
+    if (mode==3) { n1 = ~~Math.sqrt(N*0.5)-1; ff = function(i) {return Math.max(n1,0);}; }
+    d3.range(n2).forEach(function(i) { 
+	dt[i] = Math.min(ff(i),counter);
+	counter-=dt[i];
+    });
+}
+
+function partita() {
+    return function my() {
+	var margin = {top: 20, right: 20, bottom: 30, left: 40},
+	    width = 640 - margin.left - margin.right,
+	    height = 500 - margin.top - margin.bottom;
+
+	var xScale = d3.scale.linear().domain([0,my.n2]).range([0,width]),
+	    xAxis = d3.svg.axis().scale(xScale).orient("bottom");
+
+	var yScale = d3.scale.linear().domain([0,my.n2]).range([height,0]),
+	    yAxis = d3.svg.axis().scale(yScale).orient("left");
+
+	var svg=d3.select("#fig").append("svg")
+		.attr("width",width+margin.left+margin.right).attr("height",height+margin.top+margin.bottom)
+		.append("g").attr("transform","translate("+margin.left+","+margin.top+")");
+
+	svg.append("g")
+	    .attr("class","x axis")
+	    .attr("transform","translate(0,"+height+")")
+	    .call(xAxis)
+
+	svg.append("g")
+	    .attr("class","y axis")
+	    .call(yAxis);
+
+	var pm = svg.selectAll("circle").data(d3.range(my.n2));
+
+	var dt = [];
+
+	init(1,my.n2,my.N,dt);
+
+	pm.enter().append("circle").attr("cx",xScale)
+			  .attr("cy",function(i) { return yScale(dt[i]); })
+			  .attr("r","2.5").attr("fill","blue");
+
+	var a = Math.sqrt(6.*my.N)/Math.PI;
+
+	var lineFunction = d3.svg.line().x(function(d) {return xScale(d);})
+			    .y(function(d) {return yScale(-0.-a*Math.log(1.-Math.exp(-(d+0.)/a)));})
+			    .interpolate("cardinal");
+
+	var pathlm=svg.append("path").attr("d", lineFunction(d3.range(0.1,my.n2,0.1))).attr("stroke","black").attr("fill","none").attr("stroke-width","2").attr("visibility","hidden");
+	var upd = function(dtt,tr) {
+	    document.getElementById("shmn").checked = false; 
+	    if(tr) pm.transition().attr("cy",function(i) {return yScale(dtt[i]);});
+	    else pm.attr("cy",function(i) {return yScale(dtt[i]);});
+	};
+
+	return {data: dt, dots: pm, area: svg, update: upd, lm: pathlm};
+    };
+}
+
+var chart = partita();
+var ch, means, denum;
+
+function changen() {
+    d3.select("#fig").select("svg").remove();
+    chart.N = ~~document.getElementById("inpn").value;
+    chart.n2 = ~~(Math.sqrt(chart.N/2.)*Math.log(chart.N));
+    chart.n1 = ~~Math.sqrt(chart.N*2.);
+    ch = chart();
+    means = d3.range(chart.n2).map(function() {return 0.;});
+    denum = 0;
+}
+changen();
+
+function mcmc_callback() {
+    return function my() {
+	var dt = ch.data;
+	var n2 = chart.n2;
+	d3.range(mcst).forEach(function(i) {
+	  var x = ~~(n2*Math.random()); //summand to increment
+	  var y = ~~(n2*Math.random()); //summand to decrement
+	  if ( (( x <= 0 )||(dt[x]<dt[x-1])) && (( y >= n2-1 )||(dt[y]>dt[y+1])) &&
+		  ( dt[y]>0 ) && (dt[x]<n2) && (!((x==y+1) && (dt[y]==dt[x]+1))) ){
+	    dt[x]+=1;
+	    dt[y]-=1;
+	  }
+	});
+	ch.update(dt,false);
+	var j=0;
+	means = means.map(function(d) {return (d*denum+dt[j++])/(denum+1.);});
+	denum++;
+	my.iter++;
+      
+	return (my.iter >= my.max_iter);
+    }
+}
+
+var mcf = mcmc_callback();
+//mcf.max_iter=1000;
+
+</script>
+</body>
+</html>

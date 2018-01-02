@@ -1,0 +1,448 @@
+<html> 
+  <head> 
+    <title>Deformed Spheres</title> 
+    <link rel="stylesheet" href="../images/article.css" type="text/css" />
+    <!--script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+	extensions: ["tex2jax.js"],
+	jax: ["input/TeX","output/HTML-CSS"],
+	tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+      });
+    </script>
+    <script type="text/javascript" src="../../../MathJax/MathJax.js"></script--!>
+    <style> .par {font-size:1.2em} </style>
+
+  </head> 
+  <body> 
+    <script src="../js/three.min.js"></script> 
+    <script src="../js/OrbitControls.js"></script> 
+    <h1>Deformed Spheres</h1>
+    <p>The sphere is a very special shape. For example, it is the only convex solid
+    preserved by a three-dimensional symmetry group. It is conjectured to be a global
+    minimum among convex solids of optimal packing volume fraction, and a local minimum
+    of the random-close-packing volume fraction. I spend a lot of time thinking about
+    how these properties and others vary as the sphere is deformed continuously into
+    other shapes.</p>
+    <p>Here are 12 different ways to continuously deform the sphere. They have
+    different symmetry properties: the first six all have an axis of continuous
+    rotation symmetry. The next three groups of two have the tetrahedral group,
+    the D<sub>3</sub> dihedral group, and the octahedral group as their
+    symmetry groups.</p>
+    <p>I calculated the rate at which the random-close-packing density of these
+    shapes grow as one moves away from the sphere, and I made this javascript
+    demo to make a figure for the <a href="http://arxiv.org/abs/1508.05398">paper</a>
+    I wrote on the calculation.</p>
+    <select onchange="selec(this.value)" value="prolel">
+	<option value="prolel">Prolate Ellipsoid</option>
+	<option value="oblel">Oblate Ellipsoid</option>
+	<option value="sphcyl">Spherocylinder</option>
+	<option value="lens">Lens</option>
+	<option value="sphdisc">Spherodisc</option>
+	<option value="prolens">Spindle</option>
+	<option value="tetrnd">Rounded Tetrahedron</option>
+	<option value="tetpuff">Tetrahedral Puff</option>
+	<option value="trirnd">Rounded Triangular Plate</option>
+	<option value="tripuff">Triangular Puff</option>
+	<option value="supcub">Cubic Superball</option>
+	<option value="supoct">Octahedral Superball</option>
+    </select><br>
+    <input type="range" min="0" max="399" id="param" value="200" style="width:720px" oninput="slide(this.value)">
+    <div id="container1" style="height:720px;width:720x;overflow:hidden;"></div>
+    <!--<p><img onclick="showcap(this);" src="images/header-image.jpg" id="cap" style="height:720px;width:720x;overflow:hidden;"></img></p>--!>
+    <script>
+	var scenex1, camerax1, rendererx1, containerx1, controlsx1, materialx1, lightx1;
+	var g1,m1;
+	var sph1,sph2,sph3,sph4;
+	var cyl1,cyl2,cyl3,cyl4,cyl5,cyl6;
+	var pl1,pl2,pl3,pl4,pl5,pl6;
+
+	var v1,v2,v3,v4,vi,ti,xi,yi,zi;
+	var i,rr,cc,ss,vv,tt,rmax;
+	var shape="prolel", param=0.5;
+
+	function init() {
+
+	   
+	    materialx1 = new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.FlatShading } );
+	    //new THREE.MeshBasicMaterial({ color: new THREE.Color( 0xffffff ), wireframe: true, })
+
+	    v1 = new THREE.Vector3( 1, 1, 1) ;
+	    v2 = new THREE.Vector3( -1, 1, -1) ;
+	    v3 = new THREE.Vector3( 1, -1, -1) ;
+	    v4 = new THREE.Vector3( -1, -1, 1) ;
+	    g1 = new THREE.Geometry();
+	    pl1 = new THREE.Mesh( new THREE.Geometry(), materialx1 );
+	    pl2 = new THREE.Mesh( new THREE.Geometry(), materialx1 );
+	    pl3 = new THREE.Mesh( new THREE.Geometry(), materialx1 );
+	    pl4 = new THREE.Mesh( new THREE.Geometry(), materialx1 );
+	    pl5 = new THREE.Mesh( new THREE.Geometry(), materialx1 );
+	    pl6 = new THREE.Mesh( new THREE.Geometry(), materialx1 );
+	    g1.vertices.push(v4);g1.vertices.push(v2);g1.vertices.push(v3);g1.vertices.push(v1);
+	    pl1.geometry.vertices.push(new THREE.Vector3(-1,-1,1));pl1.geometry.vertices.push(new THREE.Vector3(-1,1,-1));
+            pl1.geometry.vertices.push(new THREE.Vector3(1,-1,-1));pl1.geometry.vertices.push(new THREE.Vector3(1,1,1));
+	    pl2.geometry.vertices.push(new THREE.Vector3(-1,-1,1));pl2.geometry.vertices.push(new THREE.Vector3(-1,1,-1));
+            pl2.geometry.vertices.push(new THREE.Vector3(1,-1,-1));pl2.geometry.vertices.push(new THREE.Vector3(1,1,1));
+	    pl3.geometry.vertices.push(new THREE.Vector3(-1,-1,1));pl3.geometry.vertices.push(new THREE.Vector3(-1,1,-1));
+            pl3.geometry.vertices.push(new THREE.Vector3(1,-1,-1));pl3.geometry.vertices.push(new THREE.Vector3(1,1,1));
+	    pl4.geometry.vertices.push(new THREE.Vector3(-1,-1,1));pl4.geometry.vertices.push(new THREE.Vector3(-1,1,-1));
+            pl4.geometry.vertices.push(new THREE.Vector3(1,-1,-1));pl4.geometry.vertices.push(new THREE.Vector3(1,1,1));
+            pl5.geometry.vertices.push(new THREE.Vector3(1,0,0));pl5.geometry.vertices.push(new THREE.Vector3(-0.5,0,0.5*Math.sqrt(3.)));pl5.geometry.vertices.push(new THREE.Vector3(-0.5,0,-0.5*Math.sqrt(3.)));
+            pl6.geometry.vertices.push(new THREE.Vector3(1,0,0));pl6.geometry.vertices.push(new THREE.Vector3(-0.5,0,0.5*Math.sqrt(3.)));pl6.geometry.vertices.push(new THREE.Vector3(-0.5,0,-0.5*Math.sqrt(3.)));
+	    g1.faces.push( new THREE.Face3(0,2,1) );
+	    pl1.geometry.faces.push( new THREE.Face3(2,0,1) );
+	    g1.faces.push( new THREE.Face3(1,2,3) );
+	    pl2.geometry.faces.push( new THREE.Face3(2,1,3) );
+	    g1.faces.push( new THREE.Face3(2,0,3) );
+	    pl3.geometry.faces.push( new THREE.Face3(0,2,3) );
+	    g1.faces.push( new THREE.Face3(3,0,1) );
+	    pl4.geometry.faces.push( new THREE.Face3(0,3,1) );
+	    pl5.geometry.faces.push( new THREE.Face3(0,1,2) );
+	    pl6.geometry.faces.push( new THREE.Face3(1,0,2) );
+	    pl1.geometry.computeFaceNormals();
+	    pl2.geometry.computeFaceNormals();
+	    pl3.geometry.computeFaceNormals();
+	    pl4.geometry.computeFaceNormals();
+	    pl5.geometry.computeFaceNormals();
+	    pl6.geometry.computeFaceNormals();
+
+	    m1 = new THREE.Mesh( g1,  materialx1);
+	    subdivideGeometry( m1.geometry, 7 );
+	    m1.geometry.dynamic=true;
+
+	    sph1 = new THREE.Mesh( new THREE.SphereGeometry(1,128,128), materialx1 );
+	    sph2 = new THREE.Mesh( new THREE.SphereGeometry(1,128,128), materialx1 );
+	    sph3 = new THREE.Mesh( new THREE.SphereGeometry(1,128,128), materialx1 );
+	    sph4 = new THREE.Mesh( new THREE.SphereGeometry(1,128,128), materialx1 );
+	    cyl1 = new THREE.Mesh( new THREE.CylinderGeometry(1,1,1,128), materialx1 );
+	    cyl2 = new THREE.Mesh( new THREE.CylinderGeometry(1,1,1,128), materialx1 );
+	    cyl3 = new THREE.Mesh( new THREE.CylinderGeometry(1,1,1,128), materialx1 );
+	    cyl4 = new THREE.Mesh( new THREE.CylinderGeometry(1,1,1,128), materialx1 );
+	    cyl5 = new THREE.Mesh( new THREE.CylinderGeometry(1,1,1,128), materialx1 );
+	    cyl6 = new THREE.Mesh( new THREE.CylinderGeometry(1,1,1,128), materialx1 );
+
+	    vi = []; ti=[];
+	    xi = []; yi=[]; zi=[];
+	    v1 = new THREE.Vector3( 1, 0, 0) ;
+	    v2 = new THREE.Vector3( -0.5, 0, Math.sqrt(3.)/2.) ;
+	    v3 = new THREE.Vector3( -0.5, 0, -Math.sqrt(3.)/2.) ;
+	    for( i = 0; i < m1.geometry.vertices.length; i++ ) {
+		vv = m1.geometry.vertices[i];
+		cc = -1. / vv.length() / Math.sqrt(3.);
+		vi.push(cc);
+		xi.push(vv.x/vv.length());
+		yi.push(vv.y/vv.length());
+		zi.push(vv.z/vv.length());
+		ti.push(-Math.max(vv.dot(v1),vv.dot(v2),vv.dot(v3))/vv.length());
+	    }
+	    param = 0.5; shape = "prolel";
+
+	    scenex1 = new THREE.Scene();
+	    camerax1 = new THREE.PerspectiveCamera( 60, 1., 1., 10. );
+	    camerax1.position.set( 2.2/Math.sqrt(3.),2.2/Math.sqrt(3.),2.2/Math.sqrt(3.));
+	    camerax1.up = new THREE.Vector3(0,1,0);
+	    camerax1.lookAt( new THREE.Vector3(0,0,0) );
+	    scenex1.add( m1 );
+	    scenex1.add( sph1 ); scenex1.add( pl1 ); scenex1.add( cyl1 );
+	    scenex1.add( sph2 ); scenex1.add( pl2 ); scenex1.add( cyl2 );
+	    scenex1.add( sph3 ); scenex1.add( pl3 ); scenex1.add( cyl3 );
+	    scenex1.add( sph4 ); scenex1.add( pl4 ); scenex1.add( cyl4 );
+	    scenex1.add( cyl5 ); scenex1.add( cyl6 ); 
+	    scenex1.add( pl5 ); scenex1.add( pl6 ); 
+
+	    lightx1 = new THREE.DirectionalLight( 0xddffdd );
+	    lightx1.position.set( 10, 10, 10 );
+	    scenex1.add( lightx1 );
+	    lightx1 = new THREE.DirectionalLight( 0x002288 );
+	    lightx1.position.set( -10, -10, 10 );
+	    scenex1.add( lightx1 );
+	    lightx1 = new THREE.DirectionalLight( 0x228800 );
+	    lightx1.position.set( -10, 10, -10 );
+	    scenex1.add( lightx1 );
+	    lightx1 = new THREE.DirectionalLight( 0x880022 );
+	    lightx1.position.set( 10, -10, -10 );
+	    scenex1.add( lightx1 );
+	    lightx1 = new THREE.AmbientLight( 0x222222 );
+	    scenex1.add( lightx1 );
+
+	    rendererx1 = new THREE.WebGLRenderer({preserveDrawingBuffer:true});
+	    //rendererx1.setClearColor( 0xddffdd, 1 );
+	    rendererx1.setClearColor( 0xffffff, 1 );
+	    rendererx1.setSize( 720, 720 );
+	    controlsx1 = new THREE.OrbitControls( camerax1, rendererx1.domElement );
+	    controlsx1.damping = 0.2;
+	    controlsx1.addEventListener( 'change', renderx1 );
+	    containerx1 = document.getElementById('container1');
+	    containerx1.appendChild( rendererx1.domElement );
+	    reshape();
+
+	}
+
+	var renderx1 = function () {
+		rendererx1.render( scenex1, camerax1 );
+	}
+
+	var animatex1 = function () {
+	    requestAnimationFrame( animatex1 );
+	    controlsx1.update()
+	}
+
+	function subdivideGeometry( geometry, count ) {
+	    for( var j = 0; j < count; j++ ) {
+		  var new_faces = [];
+	      for( var i = 0; i < geometry.faces.length; i++ ) {
+		var va = geometry.vertices[ geometry.faces[i].a ];
+		var vb = geometry.vertices[ geometry.faces[i].b ];
+		var vc = geometry.vertices[ geometry.faces[i].c ];
+		var va_b = new THREE.Vector3().addVectors( va, vb ).divideScalar( 2 );
+		var va_c = new THREE.Vector3().addVectors( va, vc ).divideScalar( 2 );
+		var vb_c = new THREE.Vector3().addVectors( vb, vc ).divideScalar( 2 );
+		geometry.vertices.push( va_b );
+		geometry.vertices.push( va_c );
+		geometry.vertices.push( vb_c );
+		var vn = geometry.vertices.length;
+	//			console.log( geometry.faces[i] );
+			new_faces.push( new THREE.Face3( geometry.faces[i].a, vn - 2, vn - 3, geometry.faces[i].normal.clone() ) );
+			new_faces.push( new THREE.Face3( geometry.faces[i].b, vn - 3, vn - 1, geometry.faces[i].normal.clone() ) );
+			new_faces.push( new THREE.Face3( geometry.faces[i].c, vn - 1, vn - 2, geometry.faces[i].normal.clone() ) );
+			new_faces.push( new THREE.Face3( vn - 3, vn - 2, vn - 1, geometry.faces[i].normal.clone() ) );
+	//			console.log("NEWNORMALS", new_faces[new_faces.length-4].normal,new_faces[new_faces.length-3].normal,new_faces[new_faces.length-2].normal,new_faces[new_faces.length-1].normal);
+	//			console.log("NEW", new_faces[new_faces.length-4],new_faces[new_faces.length-3],new_faces[new_faces.length-2],new_faces[new_faces.length-1]);
+	      }
+	      geometry.faces = new_faces;
+	      geometry.facesNeedUpdate = true;
+	    }
+	}
+
+	function slide(val) { param = 1. - val/400.; reshape(); }
+	function selec(val) { shape = val; reshape(); }
+
+	function reshape() {
+	    if ( shape == "prolel" ) {
+		invis(); sph1.visible = true;
+		sph1.position.set(0,0,0);
+		sph1.scale.set(param,1,param);
+	    } else if ( shape == "oblel" ) {
+		invis(); sph1.visible = true;
+		sph1.position.set(0,0,0);
+		sph1.scale.set(1,param,1);
+	    } else if ( shape == "sphcyl" ) {
+		invis();
+		sph1.visible = true; sph2.visible = true;
+		cyl1.visible = true;
+		sph1.position.set(0,1.-param,0);
+		sph2.position.set(0,-1.+param,0);
+		cyl1.position.set(0,0,0);
+		cyl1.quaternion.set(0,0,0,0);
+		cyl1.scale.set(param,2.-2.*param,param);
+		cyl1.geometry.computeFaceNormals();
+		sph1.scale.set(param,param,param);
+		sph2.scale.set(param,param,param);
+	    } else if ( shape == "tetpuff" ) {
+		invis(); m1.visible = true;
+		ss = 1.+Math.tan(0.5*Math.PI*param); tt = 0.25*ss - 0.25; 
+		cc = -1. / 3.;
+		rmax =  cc + Math.sqrt(cc*cc+tt);
+		for( i = 0; i < m1.geometry.vertices.length; i++ ) {
+		    cc = vi[i];
+		    rr = cc + Math.sqrt(cc*cc + tt);
+		    m1.geometry.vertices[i].setLength( rr/rmax );
+		}
+		//m1.geometry.computeCentroids();
+		m1.geometry.computeFaceNormals();
+		m1.geometry.computeVertexNormals();
+		m1.geometry.verticesNeedUpdate = true;
+		m1.geometry.normalsNeedUpdate = true;
+	    } else if ( shape == "trirnd" ) {
+		invis();
+		sph1.visible = true; sph2.visible = true; sph3.visible = true;
+		cyl1.visible = true; cyl2.visible = true; cyl3.visible = true;
+		pl5.visible = true; pl6.visible = true;
+		sph1.position.set(1.-param,0,0);
+		sph2.position.set(-0.5+0.5*param,0,(1.-param)*Math.sqrt(3.)*0.5);
+		sph3.position.set(-0.5+0.5*param,0,-(1.-param)*Math.sqrt(3.)*0.5);
+		cyl1.position.set(-0.5*(1.-param),0,0);
+		cyl2.position.set(0.25-0.25*param,0,-(1.-param)*Math.sqrt(3.)*0.25);
+		cyl3.position.set(0.25-0.25*param,0,(1.-param)*Math.sqrt(3.)*0.25);
+		cyl1.quaternion.set(Math.sqrt(0.5),0,0,-Math.sqrt(0.5));
+		cyl2.quaternion.set(Math.sqrt(0.5),Math.sqrt(1.5)*0.5,0,0.5*Math.sqrt(0.5));
+		cyl3.quaternion.set(Math.sqrt(0.5),-Math.sqrt(1.5)*0.5,0,0.5*Math.sqrt(0.5));
+		cyl1.scale.set(param,Math.sqrt(3.)*(1.-param),param);
+		cyl2.scale.set(param,Math.sqrt(3.)*(1.-param),param);
+		cyl3.scale.set(param,Math.sqrt(3.)*(1.-param),param);
+		cyl1.geometry.computeFaceNormals();
+		cyl2.geometry.computeFaceNormals();
+		cyl3.geometry.computeFaceNormals();
+		sph1.scale.set(param,param,param);
+		sph2.scale.set(param,param,param);
+		sph3.scale.set(param,param,param);
+		pl5.position.set(0,-param,0);
+		pl6.position.set(0,param,0);
+		pl5.scale.set(1.-param,1,1.-param)
+		pl6.scale.set(1.-param,1,1.-param)
+	    } else if ( shape == "lens" ) {
+		invis(); m1.visible = true; 
+		//ss = 1.+Math.tan(0.5*Math.PI*(0.25+0.75*param));
+		ss = 1./(0.75-0.75*param)/(0.75-0.75*param); 
+		if (ss > 1e10) { ss = 1e5; }
+		tt = 0.25*ss - 0.25; 
+		cc = 0.;
+		rmax =  cc + Math.sqrt(cc*cc+tt);
+		for( i = 0; i < m1.geometry.vertices.length; i++ ) {
+		    cc = -Math.abs(yi[i]);
+		    rr = cc + Math.sqrt(cc*cc + tt);
+		    m1.geometry.vertices[i].setLength( rr/rmax );
+		}
+		m1.geometry.computeFaceNormals();
+		m1.geometry.computeVertexNormals();
+		m1.geometry.verticesNeedUpdate = true;
+		m1.geometry.normalsNeedUpdate = true;
+	    } else if ( shape == "prolens" ) {
+		invis(); m1.visible = true; 
+		ss = 1./(0.75-0.75*param)/(0.75-0.75*param); 
+		if (ss > 1e10) { ss = 1e5; }
+		tt = 0.25*ss - 0.25; 
+		cc = 0.;
+		rmax =  cc + Math.sqrt(cc*cc+tt);
+		for( i = 0; i < m1.geometry.vertices.length; i++ ) {
+		    cc = -Math.sqrt(1.-yi[i]*yi[i]);
+		    rr = cc + Math.sqrt(cc*cc + tt);
+		    m1.geometry.vertices[i].setLength( rr/rmax );
+		}
+		m1.geometry.computeFaceNormals();
+		m1.geometry.computeVertexNormals();
+		m1.geometry.verticesNeedUpdate = true;
+		m1.geometry.normalsNeedUpdate = true;
+	    } else if ( shape == "sphdisc" ) {
+		invis(); m1.visible = true; cyl1.visible = true;
+		ss = -3.5+1./(1.-1.*param)/(1.-1.*param); 
+		if (ss > 1e10) { ss = 1e5; }
+		tt = 0.25*ss - 0.25; 
+		cc = -1.;
+		rmax =  -cc + Math.sqrt(cc*cc+tt);
+		for( i = 0; i < m1.geometry.vertices.length; i++ ) {
+		    cc = -Math.sqrt(1.-yi[i]*yi[i]);
+		    if (cc*cc+tt>0.) {
+			rr = -cc + Math.sqrt(cc*cc + tt);
+		    }
+		    else rr = Math.sqrt(1.+tt);
+		    m1.geometry.vertices[i].setLength( rr/rmax );
+		}
+		m1.geometry.computeFaceNormals();
+		m1.geometry.computeVertexNormals();
+		m1.geometry.verticesNeedUpdate = true;
+		m1.geometry.normalsNeedUpdate = true;
+		cyl1.position.set(0,0,0);
+		cyl1.quaternion.set(0,0,0,0);
+		rr=1./rmax; cc = 2.*Math.sqrt(1.+tt)/rmax;
+		cyl1.scale.set(rr,cc,rr);
+		cyl1.geometry.computeFaceNormals();
+	    } else if ( shape == "tripuff" ) {
+		invis(); m1.visible = true; 
+		ss = 1.+Math.tan(0.5*Math.PI*(0.25+0.75*param)); tt = 0.25*ss - 0.25; 
+		cc = 0.;
+		rmax =  cc + Math.sqrt(cc*cc+tt);
+		for( i = 0; i < m1.geometry.vertices.length; i++ ) {
+		    cc = ti[i];
+		    rr = cc + Math.sqrt(cc*cc + tt);
+		    m1.geometry.vertices[i].setLength( rr/rmax );
+		}
+		//m1.geometry.computeCentroids();
+		m1.geometry.computeFaceNormals();
+		m1.geometry.computeVertexNormals();
+		m1.geometry.verticesNeedUpdate = true;
+		m1.geometry.normalsNeedUpdate = true;
+	    } else if ( shape == "tetrnd" ) {
+		m1.visible = false;
+		pl1.visible = true; sph1.visible = true; cyl1.visible = true;
+		pl2.visible = true; sph2.visible = true; cyl2.visible = true;
+		pl3.visible = true; sph3.visible = true; cyl3.visible = true;
+		pl4.visible = true; sph4.visible = true; cyl4.visible = true;
+		cyl5.visible = true; cyl6.visible = true;
+                tt = param; ss = (1.-param)/Math.sqrt(3.);
+		cc = tt/Math.sqrt(3.);
+		sph1.scale.set(tt,tt,tt);
+		sph2.scale.set(tt,tt,tt);
+		sph3.scale.set(tt,tt,tt);
+		sph4.scale.set(tt,tt,tt);
+		sph1.position.set(ss,ss,ss);
+		sph2.position.set(-ss,-ss,ss);
+		sph3.position.set(-ss,ss,-ss);
+		sph4.position.set(ss,-ss,-ss);
+		pl1.scale.set(ss,ss,ss);
+		pl2.scale.set(ss,ss,ss);
+		pl3.scale.set(ss,ss,ss);
+		pl4.scale.set(ss,ss,ss);
+		pl1.position.set(-cc,-cc,-cc);
+		pl2.position.set(cc,cc,-cc);
+		pl3.position.set(cc,-cc,cc);
+		pl4.position.set(-cc,cc,cc);
+		cyl1.scale.set(tt,ss*Math.sqrt(8.),tt);
+		cyl2.scale.set(tt,ss*Math.sqrt(8.),tt);
+		cyl3.scale.set(tt,ss*Math.sqrt(8.),tt);
+		cyl4.scale.set(tt,ss*Math.sqrt(8.),tt);
+		cyl5.scale.set(tt,ss*Math.sqrt(8.),tt);
+		cyl6.scale.set(tt,ss*Math.sqrt(8.),tt);
+		cyl1.quaternion.set(Math.sqrt(0.5),Math.sqrt(0.25),0,Math.sqrt(0.25));
+		cyl2.quaternion.set(Math.sqrt(0.5),-Math.sqrt(0.25),0,Math.sqrt(0.25));
+		cyl3.quaternion.set(Math.cos(Math.PI/8.),Math.sin(Math.PI/8.),0,0);
+		cyl4.quaternion.set(Math.cos(Math.PI/8.),-Math.sin(Math.PI/8.),0,0);
+		cyl5.quaternion.set(Math.cos(Math.PI/8.),0,0,Math.sin(Math.PI/8.));
+		cyl6.quaternion.set(Math.cos(Math.PI/8.),0,0,-Math.sin(Math.PI/8.));
+		cyl1.position.set(0,ss,0);
+		cyl2.position.set(0,-ss,0);
+		cyl3.position.set(0,0,-ss);
+		cyl4.position.set(0,0,ss);
+		cyl5.position.set(-ss,0,0);
+		cyl6.position.set(ss,0,0);
+		cyl1.geometry.computeFaceNormals();
+		cyl2.geometry.computeFaceNormals();
+		cyl3.geometry.computeFaceNormals();
+		cyl4.geometry.computeFaceNormals();
+		cyl5.geometry.computeFaceNormals();
+		cyl6.geometry.computeFaceNormals();
+	    } else if ( shape == "supcub" ) {
+		invis(); m1.visible = true; 
+		ss = 2./Math.sqrt(param); 
+		rmax =  Math.exp((0.5-(1./ss))*Math.log(3.));
+		for( i = 0; i < m1.geometry.vertices.length; i++ ) {
+		    rr = Math.exp(-(Math.log(Math.exp(ss*Math.log(Math.abs(xi[i])))+Math.exp(ss*Math.log(Math.abs(yi[i])))+Math.exp(ss*Math.log(Math.abs(zi[i])))))/ss);
+		    m1.geometry.vertices[i].setLength( rr/rmax );
+		}
+		m1.geometry.computeFaceNormals();
+		m1.geometry.computeVertexNormals();
+		m1.geometry.verticesNeedUpdate = true;
+		m1.geometry.normalsNeedUpdate = true;
+	    } else if ( shape == "supoct" ) {
+		invis(); m1.visible = true; 
+		ss = 1.+param; 
+		rmax = 1.;
+		for( i = 0; i < m1.geometry.vertices.length; i++ ) {
+		    rr = Math.exp(-(Math.log(Math.exp(ss*Math.log(Math.abs(xi[i])))+Math.exp(ss*Math.log(Math.abs(yi[i])))+Math.exp(ss*Math.log(Math.abs(zi[i])))))/ss);
+		    m1.geometry.vertices[i].setLength( rr/rmax );
+		}
+		m1.geometry.computeFaceNormals();
+		m1.geometry.computeVertexNormals();
+		m1.geometry.verticesNeedUpdate = true;
+		m1.geometry.normalsNeedUpdate = true;
+	    }
+	    renderx1();
+	}
+        function invis() {
+	    m1.visible = false;
+	    pl1.visible = false; sph1.visible = false; cyl1.visible = false;
+	    pl2.visible = false; sph2.visible = false; cyl2.visible = false;
+	    pl3.visible = false; sph3.visible = false; cyl3.visible = false;
+	    pl4.visible = false; sph4.visible = false; cyl4.visible = false;
+	    cyl5.visible = false; cyl6.visible = false;
+	    pl5.visible = false; pl6.visible = false;
+        }
+        function showcap(img){
+	    img.src = rendererx1.domElement.toDataURL("image/png");
+	}
+
+	init();
+	//renderx1();
+
+    </script> 
+  </body> 
+</html>

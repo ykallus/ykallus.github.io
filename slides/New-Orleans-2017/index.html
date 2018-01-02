@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>The Free Energy of Sticky Sphere Clusters</title>
+
+		<meta name="description" content="The Free Energy of Sticky Sphere Clusters">
+		<meta name="author" content="Yoav Kallus and Miranda Holmes-Cerfon">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="../../reveal.js/css/reveal.css">
+		<link rel="stylesheet" href="../../reveal.js/css/theme/solarized.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="../../reveal.js/lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../../reveal.js/css/print/pdf.css' : '../../reveal.js/css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+
+		<script type="text/javascript">
+		(new Image()).src = "single-n=9-wiggler-anim.gif";
+		(new Image()).src = "tetraTetraSK-120.gif";
+		(new Image()).src = "singudelta.png";
+		(new Image()).src = "hyperdelta.png";
+		</script>
+
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h2>The Free Energy of Sticky Sphere Clusters</h2>
+					<table><tr><td style="vertical-align: middle;">
+					<img src="mimbres.png" width="200" \>
+					</td><td style="vertical-align: middle;">
+					<p><u>Yoav Kallus</u> and Miranda Holmes-Cerfon</p>
+					<p>APS March Meeting<br>New Orleans, March 13, 2017</p>
+					</td></td></table>
+				</section>
+
+				<section>
+					<h3>Colloidal particles with short range interactions</h3>
+					<table><tr><td style="vertical-align: middle;" width="40%">
+					<p><small><img src="depletion-cropped.jpg" width="100%" \>
+					Meng, G., Arkus, N., Brenner, M. P., &amp;
+					Manoharan, V. N., Science (2010)
+					<img src="dna-coat-cropped.jpg" width="80%" \>
+					Angioletti-Uberti, S., Mognetti, B. M. &amp;
+					Frenkel, D., Nature Materials (2012)</small></p>
+					</td><td style="vertical-align: middle;" width="60%">
+					<img src="potential.png" width="100%" \>
+					The sticky sphere limit:<br>
+					E&#10142;&infin;, &#1013;&#10142;0
+					</td></td></table>
+				</section>
+
+				<section>
+					<h3>Energy landscape of a system of sticky spheres</h3>
+					<table><tr><td style="vertical-align: middle;" width="50%">
+					<p>Continuous potential
+					<img src="tent-rocks.jpg" width="100%" \>
+					<small>Kasha-Katuwe Tent Rocks	National Monument</small></p>
+					</td><td style="vertical-align: middle;" width="50%">
+					<p>$U = -(\text{# of bonds})E$
+					<img src="taos-gorge.jpg" width="100%" \>
+					<small>Rio Grande del Norte National Monument</small></p>
+					</td></td></table>
+				</section>
+
+				<section>
+					<h3>Rigid Clusters and Energy Minima</h3>
+					<table><tr><td style="vertical-align: middle;" width="50%">
+					<p> <img src="tetraTetraSK-120-static.gif" width="100%" onmouseover="this.src = 'tetraTetraSK-120.gif'"  onmouseout="this.src = 'tetraTetraSK-120-static.gif'" />
+					Energy minima &asymp; rigid bar frameworks</p>
+					</td><td style="vertical-align: middle;" width="50%">
+					<p> <img src="single-n=9-wiggler-static.gif" width="100%" onmouseover="this.src = 'single-n=9-wiggler-anim.gif'"  onmouseout="this.src = 'single-n=9-wiggler-static.gif'" />
+					Can have infinitesimal flex and still be rigid</p>
+					</td></td></table>
+				</section>
+
+
+				<section>
+					<h3>Cluster Chemistry</h3>
+					<p><small> <img src="microscopy2-5.jpg" width="55%" /><br />
+					Meng, G., Arkus, N., Brenner, M. P., &amp;
+					Manoharan, V. N., Science (2010)</small></p>
+				</section>
+
+				<section>
+					<h3>Cluster Chemistry</h3>
+					<table><tr><td style="vertical-align: middle;" width="50%">
+					<p><small><img src="octahedron.png" width="80%" /><br />
+					$U_1 = -12E$</small></p>
+					</td><td style="vertical-align: middle;" width="50%">
+					<p><small><img src="tritet.png" width="80%" /><br />
+					$U_2 = -12E$</small></p>
+					</td></td></table>
+					<p class="fragment"><small>	$\displaystyle{Z_i = \int_{\mathcal{N}_i\subseteq \mathbb{R}^{3N}} e^{-\beta U(\mathbf{r})}\mathrm{d}^{3N}\mathbf{r}\qquad\qquad Z_2 \approx 20 Z_1}$</small></p>
+				</section>
+
+				<section>
+					<h3>Entropic contributions</h3>
+					<table><tr><td style="vertical-align: middle;" width="50%">
+					<p><small>$Z_\mathrm{rot} = e^{S_\mathrm{rot}} = (\det I)^{1/2}/\sigma$</small></p>
+					</td><td style="vertical-align: middle;" width="50%">
+					<p><small>$Z_\mathrm{vib} = e^{S_\mathrm{vib}} = \prod_{a=1}^{3N-6} (\beta k_a)^{-1/2}$</small></p>
+					</td></td></table>
+					<p class=fragment>
+					<img src="single-n=9-wiggler-static.gif" width="35%" onmouseover="this.src = 'single-n=9-wiggler-anim.gif'"  onmouseout="this.src = 'single-n=9-wiggler-static.gif'" /><br />
+					$Z_\text{vib} \to \infty$</p>
+				</section>
+
+				<section>
+				        <h3>Asymptotically leading term</h3>
+					<p><img src="single-n=9-wiggler-static.gif" width="35%" onmouseover="this.src = 'single-n=9-wiggler-anim.gif'"  onmouseout="this.src = 'single-n=9-wiggler-static.gif'" /><br />
+					$Z_i ~\propto~ \alpha^{f} e^{\beta E B} z_i + O(\cdots)$<br />
+					$\alpha = \left[d^2 \beta V''(d) \right]^{1/4}$, $f=$ # of flexes, $B=$ # of bonds, $z_i =$ geometric factor, independent
+					of the potential</p>
+
+				</section>
+
+				<section>
+				        <h3>N=9 comparison with simulations</h3>
+					<p>$P_1 = Z_1/\sum_{i=1}^{52}Z_i \approx \frac{\alpha}{235+\alpha}$</p>
+					<p><img src="sim.png" width="35%" /><br />
+					exact only for $\alpha\to 0$ (where $P_1\to 1$), but accurate even when $P_1=.08$. </p>
+				</section>
+				
+				<section>
+				        <h3>Baxter's sticky sphere fluid-fluid transition</h3>
+					<p><small>When $0 &lt; \lim_{1/\epsilon,E\to\infty}\epsilon e^{\beta E} &lt; \infty$,<br />
+					$e^{-\beta U(\mathbf{r})} \to \prod_{i,j=1}^N (1 + \kappa\delta(r_{ij}-d)) \theta(r_{ij}-d)$</small></p>
+					<p><small>Based on the second order virial coefficient, Baxter (1968) calculated $\kappa_c$ for a gas-liquid transition</small></p>
+					<table class="fragment"><tr><td style="vertical-align: middle;" width="50%">
+					<p><small>
+					<img src="hypercluster.png" onclick="this.src='hyperdelta.png';document.getElementById('span1').style.visibility = 'visible';" width="70%" /><br />
+					<span id="span1" style="visibility:hidden"> $\int \delta(y)\delta(y-x)\delta(y+x)\,\mathrm{d}x\mathrm{d}y = \infty$</span></small></p>
+					</td><td style="vertical-align: middle;" width="50%">
+					<p><small>
+					<img src="singucluster.png" onclick="this.src='singudelta.png';document.getElementById('span2').style.visibility = 'visible';" width="70%" /><br />
+					<span id="span2" style="visibility:hidden">$\int \delta(y+x^2)\delta(y-x^2)\,\mathrm{d}x\mathrm{d}y = \infty$</span></small></p>
+					</td></td></table>
+				</section>
+
+				<section>
+				        <h3>Sticky spheres and polydispersity</h3>
+					<table><tr><td style="vertical-align: middle;" width="50%">
+					<p><small>
+					<img src="hyperresolve.png" width="70%" /><br />
+					$\lim_{\epsilon\to 0}\int \delta(y+\epsilon \xi_1)\delta(y-x+\epsilon \xi_2)$<br/>$\quad\delta(y+x+\epsilon \xi_3)\,\mathrm{d}x\mathrm{d}y &lt; \infty$</small></p>
+					</td><td style="vertical-align: middle;" width="50%">
+					<p><small>
+					<img src="singuresolve.png" width="70%" /><br />
+					$\lim_{\epsilon\to 0}\int \delta(y+x^2+\epsilon \xi_1)$<br/>$\quad\delta(y-x^2+\epsilon \xi_2)\,\mathrm{d}x\mathrm{d}y = \infty$</small></p>
+					</td></td></table>
+					<p><a href="https://arxiv.org/abs/1605.08678">arXiv:1605.08678</a></p>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="../../reveal.js/lib/js/head.min.js"></script>
+		<script src="../../reveal.js/js/reveal.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'none', // none/fade/slide/convex/concave/zoom
+
+				math: {
+				    // mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js'
+				    config: 'TeX-AMS_HTML-full'
+				},
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: '../../reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../../reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../../reveal.js/plugin/zoom-js/zoom.js', async: true },
+					{ src: '../../reveal.js/plugin/notes/notes.js', async: true },
+					{ src: '../../reveal.js/plugin/math/math.js', async: true }
+				]
+			});
+
+		</script>
+		<!--<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+		      extensions: ["tex2jax.js"],
+		      jax: ["input/TeX","output/HTML-CSS"],
+		      tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]},
+		      TeX: { equationNumbers: { autoNumber: "AMS" } }
+		  });
+		</script>
+		<script type="text/javascript" src="../../MathJax/MathJax.js"></script>--!>
+
+	</body>
+</html>

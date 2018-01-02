@@ -1,0 +1,611 @@
+<html lang="en">
+<head>
+<title>Dense periodic packings of tetrahedra with small repeating units</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="images/article.css" type="text/css" />
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+    tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+  });
+</script>
+<script type="text/javascript" src="MathJax/MathJax.js"></script>
+</head>
+<body>
+    <script src="js/three.min.js"></script> 
+    <script src="js/OrbitControls.js"></script> 
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+  <div id="header">
+     <h1 id="atitle">Dense periodic packings of tetrahedra with small repeating units</h1>
+     <h2 id="aauthors"><a href="http://tuvalu.santafe.edu/~yoav/">Yoav Kallus</a>,
+	 <a href="http://uuuuuu.lassp.cornell.edu/">Veit Elser</a>, and
+	 <a href="http://simongravel.lab.mcgill.ca/Home.html">Simon Gravel</a></h2>
+     <p><a href="http://www.springerlink.com/content/62r8871814286143/">Discrete and Computational Geometry 44, 245 (2010)</a>; <a href="http://arxiv.org/abs/0910.5226">arXiv:0910.5226</a></p>
+  </div>
+  <blockquote>
+We present a one-parameter family of periodic packings of regular tetrahedra, with the packing fraction 100/117&approx;0.8547, that are simple in the sense
+that they are transitive and their repeating units involve only four tetrahedra. The construction of the packings was inspired from results of a numerical
+search that yielded a similar packing. We present an analytic construction of the packings and a description of their properties. We also present a transitive
+packing with a repeating unit of two tetrahedra and a packing fraction (139+40&radic;10)/369&approx;0.7194.
+  </blockquote>
+  <h2>I. Introduction</h2>
+  <aside>[<a href="#CT061" name="CT06">CT06</a>
+      <sup><a href="#CT062">2</a><a href="#CT063" name="#CT06">3</a><a href="#CT064" name="CT06">4</a><a href="#CT065">5</a></sup>
+      ] J. H. Conway and S. Torquato, <a href="http://dx.doi.org/10.1073/pnas.0601389103"><em>Packing, tiling and covering with tetrahedra</em></a>,
+      Proc. Natl. Acad. Sci. USA <strong>103</strong>, 10612 (2006).</aside>
+  <aside>[<a href="#Chen081" name="Chen08">Chen08</a>
+      <sup><a href="#Chen082">2</a></sup>
+] E. R. Chen, <a href="http://dx.doi.org/10.1007/s00454-008-9101-y"><em>A dense packing of regular tetrahedra</em></a>,
+Discrete and Compu. Geom. <strong>5</strong> (2), 214 (2008).</aside>
+  <aside>[<a href="#TY09a1" name="TY09a">TY09a</a>
+      <sup><a href="#TY09a2">2</a><a href="#TY09a3" name="#TY09a">3</a><a href="#TY09a4" name="TY09a">4</a><a href="#TY09a5">5</a></sup>
+      ] S. Torquato and Y. Jiao, <a href="http://dx.doi.org/10.1038/nature08239"><em>Dense packing
+	      of the Platonic and Archimedean solids</em></a>, Nature <strong>460</strong>, 87
+(2009).</aside>
+  <aside>[<a href="#TY09b1" name="TY09b">TY09b</a>
+      <sup><a href="#TY09b2">2</a><a href="#TY09b3" name="#TY09b">3</a><a href="#TY09b4" name="TY09b">4</a></sup>
+      ] S. Torquato and Y. Jiao, <a href="http://dx.doi.org/10.1103/PhysRevE.81.049908"><em>Dense packing
+	      of polyhedra: Platonic and Archimedean solids</em></a>, Phys. Rev. E <strong>80</strong>.
+041104 (2009).</aside>
+  <aside>[<a href="#HEK091" name="HEK09">HEK09</a>
+      <sup><a href="#HEK092">2</a><a href="#HEK093" name="#HEK09">3</a><a href="#HEK094" name="HEK09">4</a></sup>
+      ] A. Haji-Akbari, M. Engel et al., <a href="http://dx.doi.org/10.1038/nature08641"><em>Disordered,
+	      quasicrystalline and crystalline phases of densely packed tetrahedra</em></a>,
+Nature <strong>462</strong>, 773 (2009).</aside>
+  <p>
+The optimization problem of packing regular tetrahedra densely in space
+has seen invigorated interest over the last few years [<a href="#CT06" name="CT061">CT06</a>,
+<a href="#Chen08" name="Chen081">Chen08</a>,
+<a href="#TY09a" name="TY09a1">TY09a</a>,
+<a href="#TY09b" name="TY09b1">TY09b</a>,
+<a href="#HEK09" name="HEK091">HEK09</a>].
+This interest has helped drive up the packing fraction of the densest-known such
+packings from $0.7174$ in 2006 [<a href="#CT06" name="CT062">CT06</a>] to $0.8503$
+[<a href="#HEK09" name="HEK092">HEK09</a>]
+most recently (see Table 3). These improved packing fractions have been obtained
+from more and more complex packings, with larger and larger repeating
+units. This trend has led some to conjecture that the densest packing
+of tetrahedra might have inherent disorder [<a href="#TY09b" name="TY09b2">TY09b</a>]. The more
+restrictive problem of packing tetrahedra transitively --- that
+is, so that all tetrahedra in the packing are equivalent (a more rigorous definition is given
+below) --- has been less extensively studied and the densest previously-reported
+transitive packing of regular tetrahedra fills only $2/3$ of space [<a href="#CT06" name="CT063">CT06</a>].
+Here we present a one-parameter family of transitive but dense packings of tetrahedra
+with the packing fraction $100/117\approx0.8547$.
+  </p><aside>[<a href="#GE081" name="GE08">GE08</a>] S. Gravel and V. Elser, <a href="http://dx.doi.org/10.1103/PhysRevE.78.036706"><em>Divide and concur: a
+	      general approach to constraint satisfaction</em></a>, Phys. Rev. E <strong>78</strong>,
+036706 (2008).
+</aside><p> 
+The discovery of this family of dense packings was inspired by the
+results of a numerical search, which yielded a dense packing with
+similar structural properties to the packing we present.
+The numerical method used was adapted from the <em>divide
+    and concur</em> approach to constraint satisfaction problems [<a href="#GE08" name="GE081">GE08</a>].
+The <em>divide and concur</em> formalism enables us to set up an efficient
+search through the parameter space consisting of the positions and
+orientations of tetrahedra inside the repeating unit and the translation vectors
+governing its lattice repetition, subject to the constraint
+that no two tetrahedra overlap. The dynamics involved in the <em>divide
+    and concur</em> search are highly non-physical, which might explain why
+our method was able to discover this dense packing, while earlier
+methods involving more physical dynamics were not [<a href="#TY09a" name="TY09a2">TY09a</a>,<a href="#TY09b" name="TY09b2">TY09b</a>,<a href="#HEK09" name="HEK092">HEK09</a>].
+In this note we present only the analytically constructed packing
+without a full explication
+of the numerical method, which will be forthcoming.
+<p>
+ 
+<h2>II. One-parameter family of dimer-double-lattice packings</h2>
+<aside>[<a href="#KK901" name="KK90">KK90</a>
+      <sup><a href="#KK902">2</a><a href="#KK903" name="#KK90">3</a></sup>
+    ] G. Kuperberg and W. Kuperberg, <a href="http://dx.doi.org/10.1007/BF02187800"><em>Double-lattice
+	    packings of convex bodies in the plane</em></a>, Discrete and Compu. Geom.
+<strong>5</strong> (1), 389 (1990).</aside>
+<p>
+The first set of packings we report on are naturally described as double lattices
+of bipyramidal dimers. A double lattice is the union of two Bravais
+lattices related to each other by an inversion operation about some
+point. In [<a href="#KK90" name="KK901">KK90</a>], Kuperberg and Kuperberg used the idea of a
+double lattice in the Euclidean plane to show that any planar convex
+body can be packed in an arrangement with a packing fraction no smaller
+than $\sqrt{3}/2$. We naturally extend the idea of the double lattice
+to the three-dimensional Euclidean space. The repeating unit of one
+constituent lattice is a bipyramidal dimer: two regular tetrahedra sharing a
+common face. Two of these dimers with mutually-inverted orientation ---
+a Kuper-pair --- form the repeating unit of the double lattice, which
+thus has four tetrahedra of distinct orientations. We state the existence
+of the packings as Theorem 1.
+</p><aside>[<a href="#Mer921" name="Mer92">Mer92</a>
+      <sup><a href="#Mer922">2</a><a href="#Mer923" name="#Mer92">3</a></sup>
+    ] N. D. Mermin, <a href="http://dx.doi.org/10.1103/RevModPhys.64.3"><em>The space groups of icosahedral quasicrystals and cubic, orthorhombic, monoclinic, and triclinic crystals</em></a>, Rev. Modern Phys. <strong>64</strong>, 3 (1992).</aside>
+<p class="thm">
+<strong>Theorem 1.</strong> <em>There exists a one-parameter family of packings of regular tetrahedra,
+each having packing fraction $110/117$. These packings are
+periodic, with each unit cell of the lattice containing two bipyramidal dimers.
+The group of isometries leaving each packing invariant is a crystallographic space group
+of type $C2/c$ (following the classification and notation of [<a href="#Mer92" name="Mer921">Mer92</a>])
+and acts transitively on the individual tetrahedra of the packing.</em>
+</p><p class="proof">
+<em>Proof.</em> We construct each packing by acting on a single regular tetrahedron
+with a group of isometries. For a coordinate basis we use three pair-wise
+orthogonal vectors $\mathbf{a}$, $\mathbf{b}$, and $\mathbf{c}$, of norms
+$|\mathbf{a}|=2\sqrt{7}/5$, $|\mathbf{b}|=\sqrt{3}/2$, and $|\mathbf{c}|=13\sqrt{3/14}/5$.
+The initial tetrahedron $T_0=\mathrm{conv} \{\mathbf{r}_i \mid i=1,2,3,4\}$ 
+is the convex hull of four vertices whose coordinates are given in Table 1; 
+it is a regular tetrahedron of unit edge length.
+The group of isometries is the group of crystallographic type $C2/c$
+generated by the translations $\mathbf{a}$, $\mathbf{b}$, 
+and $\mathbf{d}_x=\frac{1}{2}\mathbf{b}+\frac{1}{2}\mathbf{c}+x\mathbf{a}$ ($29/56\le x\le9/14$),
+by the inversion about the point $0$, and by the rotation by 180 degrees about the axis
+$\{\frac{1}{4}\mathbf{a}+t\mathbf{b} \mid t \in \mathbb{R}\}$ [<a href="#Mer92" name="Mer922">Mer92</a>].
+This space group has a point group of order 4 and its
+translations generate a centered monoclinic point lattice. The construction is
+summarized in Table 1.
+</p><aside><strong>Table 1</strong>:
+    The construction of the dimer-double-lattice family of packings
+    in terms of the parameter $29/56\le x\le9/14$ in a general monoclinic
+    coordinate basis ($\mathbf{a}\cdot\mathbf{b}=\mathbf{b}\cdot\mathbf{c}=0$).
+    The packing is generated starting from the fundamental tetrahedron by
+    the action of the space group. A packing of regular tetrahedra is
+    obtained when the general monoclinic coordinate basis reduces to the
+    specified orthogonal coordinate basis.
+</aside>
+<table>
+    <tr>
+	<td style="width:220;">fundamental tetrahedron</td>
+	<td style="width:460;">$T_0=\mathrm{conv} \{\mathbf{r}_i \mid i=1,2,3,4\}$<br>
+	    $\mathbf{r}_{1}=\frac{27}{28}\mathbf{a}-\frac{7}{30}\mathbf{b}+\frac{10}{39}\mathbf{c}$<br>
+	    $\mathbf{r}_{2}=\frac{1}{4}\mathbf{a}-\frac{9}{10}\mathbf{b}$<br>
+	    $\mathbf{r}_{3}=\frac{1}{14}\mathbf{a}+\frac{1}{10}\mathbf{b}+\frac{5}{13}\mathbf{c}$<br>
+	    $\mathbf{r}_{4}=\frac{3}{7}\mathbf{a}+\frac{1}{10}\mathbf{b}-\frac{5}{13}\mathbf{c}$</td>
+    </tr><tr>
+	<td style="width:220;">other tetrahedra in the unit cell</td>
+	<td style="width:460;">$T_1=R_2(T_0)=\mathrm{conv} \{\frac{2}{3}(\mathbf{r}_2+\mathbf{r}_3+\mathbf{r}_4)-\mathbf{r}_1,\mathbf{r}_2,\mathbf{r}_3,\mathbf{r}_4\}$<br>
+            $T_2=I(T_0)=-T_0$<br>
+	    $T_3=I(T_1)=-T_1$</td>
+    </tr><tr>
+	<td style="width:220;">space group generators</td>
+	<td style="width:460;">translations by $\mathbf{a}$, $\mathbf{b}$, $\mathbf{d}_x=\frac{1}{2}\mathbf{b}+\frac{1}{2}\mathbf{c}+x\mathbf{a}$<br>
+	    $I=$ inversion about $0$<br>
+	    $R_2=$ two-fold rotation about $\{\frac{1}{4}\mathbf{a}+t\mathbf{b} \mid t \in \mathbb{R}\}$</td>
+    </tr><tr>
+	<td style="width:220;">packing fraction</td><td style="width:460;">$100/117$</td>
+    </tr><tr>
+	<td  style="width:220;">coordinate basis for which tetrahedra are regular with unit edge length</td>
+	<td style="width:460;">$\mathbf{a}=(2\sqrt{7}/5,0,0)$<br>
+	    $\mathbf{b}=(0,\sqrt{3}/2,0)$<br>
+	    $\mathbf{c}=(0,0,13\sqrt{3/14}/5)$</td>
+    </tr>
+</table><p class="proof">
+By construction, each tetrahedron in the packing is the image of $T_0$
+under an isometry in the group. We have immediately then that
+all tetrahedra are congruent with $T_0$,
+that the packing is invariant under the action of the group, and that the group
+acts transitively on individual tetrahedra. As the tetrahedra divide into four
+orbits of the lattice translations, the packing fraction is given by
+$$\phi=\frac{4 \mathrm{vol}(T_0)}{|\det([\mathbf{a},\mathbf{b},\mathbf{d}_x])|}
+=\frac{4 (\sqrt{2}/12)}{|\mathbf{a}||\mathbf{b}||\mathbf{c}|/2}
+=\frac{100}{117}$$
+</p><aside>[<a href="#AEVZ021" name="AEVZ02">AEVZ02</a>] E. Agrell et al.,
+    <a href="http://dx.doi.org/10.1109/TIT.2002.800499"><em>Closest point search in lattices</em></a>,
+    IEEE Trans. Inform. Theory <strong>48</strong>, 2201 (2002).</aside>
+<p class="proof">
+All that is left then to prove the theorem is to verify that the arrangement of tetrahedra thus constructed
+is indeed a packing. As the packing is transitive (in the sense that its symmetry group acts transitively
+on the constituent tetrahedra), it is enough to check that one tetrahedron, $T_0$, does not overlap any
+other tetrahedron. By means of a closest-lattice-point algorithm such as the one in [<a href="#AEVZ02" name="AEVZ021">AEVZ02</a>], we
+generate a list of all tetrahedra whose centroid is, for any $29/56\le x\le9/14$, at a distance less than
+$\sqrt{3/2}$ from the centroid of $T_0$. There are 46 such tetrahedra. All other tetrahedra have
+circumspheres which do not intersect the circumsphere of $T_0$, and therefore
+they do not intersect $T_0$. For each tetrahedron in the list we can establish the existence of a separating plane
+separating it from $T_0$. Two tetrahedra have no overlap if and only if they are separated by a plane,
+and moreover, such a plane always exists which passes through three of the eight vertices of the two tetrahedra. By exhaustively
+verifying that one of the finitely many planes that pass through three of the vertices separates the two tetrahedra,
+we establish that each tetrahedron in the list can be separated from $T_0$. &#9744;
+</p><p>
+Note that the above construction, which uses a specific orthogonal coordinate basis $\{\mathbf{a},\mathbf{b},\mathbf{c}\}$,
+is a special case of a general family of packings of non-regular tetrahedra that can be obtained using
+the same construction, but with a general monoclinic coordinate basis ($\mathbf{a}\cdot\mathbf{b}=\mathbf{b}\cdot\mathbf{c}=0$).
+Each of these more general packings is an image of a packing in the original family under an affine map from a three-parameter
+family (not counting pure dilation). As the lack of overlap
+between tetrahedra and the packing fraction are both affine-invariant,
+these are also transitive packings of the same packing fraction.
+</p><p>
+By the construction of the double lattice, there is an inversion center
+that sends one lattice of dimers into the other. Note that a lattice
+translation composed with an inversion about a point corresponds to
+an inversion about a point related to the original inversion center
+by half the lattice vector. It follows then that in any primitive unit cell
+of the lattice, there are eight such inversion centers. These eight
+inversion centers form the vertices of a parallelepiped one-eighth
+the volume of the primitive unit cell of the lattice. This parallelepiped
+is the equivalent of the ``extensive parallelogram'' described
+in [<a href="#KK90" name="KK902">KK90</a>] whose vertices are the inversion points that generate
+the double lattice. As in [<a href="#KK90" name="KK903">KK90</a>], the parallelepiped is inscribed
+in the body being packed --- the bipyramidal dimer in our case.
+</p><p>
+An interesting feature of the packing is the presence of
+the free parameter $x$. The effect of a change in $x$
+is to slide fixed layers of the packing relative one another
+along the $\mathbf{a}$-direction. These layers are the layer
+generated by the translations $\mathbf{a}$ and $\mathbf{b}$ from
+the four tetrahedra of the primitive unit cell and the layers parallel
+to it. The construction yields a
+valid packing when the small protrusions in one layer
+are staggered to fit into small gaps in the neighboring
+layer, which is the case for all $29/56\le x\le9/14 \pmod{1}$.
+Within this range, each layer can slide against the
+neighboring layer without changing the spacing between
+the two or creating collisions. It is possible then to
+obtain equally dense, non-transitive packings by staggering
+consecutive layers arbitrarily within the allowed range.
+</p>
+<aside><strong>Figure 1</strong>: Small portions of the dimer-double-lattice packing given by $x=4/7$:
+   <input type="radio" name="layers" id="onelayer" checked>one layer; <input type="radio" name="layers" id="threelayers">three layers. </aside><div id="container1" style="height:360px;width:720px;overflow:hidden;"></div>
+<!--<p style="height:360px;width:100%;overflow:hidden;">
+<img src="dcg2010-images/onelayer.png" style="width:432px;">
+<img src="dcg2010-images/threelayer.png" style="width:518px;"></p--!>
+<p>
+We describe next the contacts formed by each dimer in the packing,
+and they are illustrated in Figures 1 and 2. Each of the eight vertices
+of the inscribed parallelepiped corresponds to the center of a face-face
+contact between bipyramids of opposite orientations, accounting for
+all contacts between oppositely-oriented bipyramids. Four of these contacts
+are within one layer and four of them are with the layers above and below.
+The contacts formed between like-oriented bipyramids vary with the parameter $x$:
+for all values of $x$ there are two edge-edge contacts, a vertex-edge
+contact and an edge-vertex contact (all of these contacts occur on
+two-fold axes and are within one layer); for $x=29/56$ there are four
+additional edge-edge contacts with dimers in neighboring layers
+(which turn into overlaps for $x&lt;29/56$); and for $x=9/14$ there
+are instead two vertex-face contacts and two face-vertex contacts with dimers
+in neighboring layers (which again turn into overlaps
+for $x&gt;9/14$). Thus, each dimer makes respectively twelve, sixteen,
+or sixteen contacts in the three cases, and correspondingly, each
+tetrahedron makes eight, ten, or eleven contacts.
+</p><p style="height:380px;width:100%;overflow:hidden;">
+<img src="dcg2010-images/cont14.png" style="width:420px;">
+<img src="dcg2010-images/cont740.png" style="width:420px;">
+</p><aside><strong>Figure 2</strong>: The contacts on the surface of a dimer shown on a net diagram for
+$x=29/56$ (left) and $x=9/14$ (right): the face-face contacts
+(gray), whose centers (black dots) lie on inversion centers, four
+of which are fixed and four of which move as a function of $x$;
+the four point contacts made regardless of the value of $x$
+(blue squares), all lying on two-fold axes; the four point contacts formed
+only for $x=29/56$ (purple dots); and the four point contacts formed
+only for $x=9/14$ (green dots).</aside>
+<h2>III. Simple double-lattice packing</h2>
+<p>
+Our numerical search also yielded a packing with two tetrahedra
+per repeating unit, which we could identify as a simple double lattice
+(that is a double lattice of
+tetrahedra, not of dimers) with packing fraction
+$\frac{139+40\sqrt{10}}{369}\approx0.7194$. We present therefore a second theorem.
+</p><p class="thm">
+<strong>Theorem 2.</strong>
+There exists a packing of regular tetrahedra having packing
+fraction $\frac{139+40\sqrt{10}}{369}$. This packing is
+periodic, with each unit cell of the lattice containing two tetrahedra.
+The group of isometries leaving the packing invariant is a crystallographic space group
+of type $P\bar{1}$ and acts transitively on the individual tetrahedra of the packing.
+</p><table>
+    <tr>
+	<td style="width:200;">fundamental tetrahedron</td>
+	<td style="width:470;">$T_0=\mathrm{conv} \{\mathbf{r}_i \mid i=1,2,3,4\}$<br>
+	    $\mathbf{r}_{1}=[(433-86\sqrt{10})\mathbf{a}+(611-133\sqrt{10})\mathbf{b}+(188-22\sqrt{10})\mathbf{c}]/246$<br>
+	    $\mathbf{r}_{2}=[(111-30\sqrt{10})\mathbf{a}+(93-75\sqrt{10})\mathbf{b}+(-66-42\sqrt{10})\mathbf{c}]/246$<br> 
+	    $\mathbf{r}_{3}=[(-85-28\sqrt{10})\mathbf{a}+(13-29\sqrt{10})\mathbf{b}+(4+10\sqrt{10})\mathbf{c}]/246$<br>
+	    $\mathbf{r}_{4}=[(179-106\sqrt{10})\mathbf{a}+(427-101\sqrt{10})\mathbf{b}+(-20-50\sqrt{10})\mathbf{c}]/246$</td>
+    </tr><tr>
+	<td style="width:200;">other tetrahedron in the unit cell</td>
+	<td style="width:470;">$T_1=I(T_0)=-T_0$</td>
+    </tr><tr>
+	<td style="width:200;">space group generators</td>
+	<td style="width:470;">translations by $\mathbf{a}$, $\mathbf{b}$, $\mathbf{c}$<br>
+	    $I=$ inversion about $0$</td>
+    </tr><tr>
+	<td style="width:200;">packing fraction</td>
+	<td style="width:470;">$(139+40\sqrt{10})/369$</td>
+    </tr><tr>
+	<td style="width:200;">coordinate basis for which tetrahedra are regular with unit edge</td>
+	<td style="width:470;">$\mathbf{a}=(1,-(13-4\sqrt{10})/3,0)$<br>
+	    $\mathbf{b}=(-(4-\sqrt{10})/3,3-\sqrt{10},-1)$<br>
+	    $\mathbf{c}=(3-\sqrt{10},1,(4-\sqrt{10})/3)$</td>
+    </tr>
+</table>
+<aside><strong>Table 2</strong>:
+    The construction of the simple-double-lattice packing in a general
+    triclinic coordinate basis
+</aside>
+<p>
+The proof of this theorem proceeds equivalently to the proof of Theorem 1. The
+vertices of the initial tetrahedron $T_0$ are given in Table 2 in terms of a triclinic coordinate
+basis which is also given in Table 2. The group of isometries we use to construct the
+packing is generated by translation by the three vectors $\mathbf{a}$, $\mathbf{b}$, and $\mathbf{c}$ and by inversion
+about the origin. This is a space group of crystallographic type $P\bar{1}$, with a point group
+of order 2 and a triclinic lattice [<a href="#Mer92" name="Mer923">Mer92</a>]. Figure 3 shows a portion of the packing.
+</p>
+<aside><strong>Figure 3</strong>: Small portions of the simple-double-lattice packing:
+<input type="radio" name="layers2" id="onelayer2" checked>one layer; <input type="radio" name="layers2" id="threelayers2">three layers.
+</aside><div id="container2" style="height:360px;width:720px;overflow:hidden;"></div>
+<!--p style="height:360px;width:100%;overflow:hidden;">
+<img src="dcg2010-images/sdl-onelayer.png" style="width:360px;">
+<img src="dcg2010-images/sdl-threelayer.png" style="width:360px;"></p--!>
+<p>
+The simple-double-lattice packing again
+has eight inversion centers per primitive cell at
+the vertices of a parallelepiped. However, in this case only five of
+the vertices are on the surface of the tetrahedron. Each tetrahedron
+in the packing is in contact with nineteen others.
+</p><h2>IV. Discussion</h2><p>
+In Table 3, we compare the packings presented here to other studied
+packings of regular tetrahedra. Both packings are denser than the densest
+previously-reported transitive packing, a double lattice presented by
+Conway and Torquato (which we call the "warp-and-weft"
+packing due to the interweaving arrangement of its tetrahedra) [<a href="#CT06" name="CT062">CT06</a>],
+and the dimer double lattice is denser than any previously-reported
+packing.
+</p><aside><strong>Table 3</strong>:
+    Some studied transitive and non-transitive packings of regular tetrahedra with
+packing fraction $\phi$, number of tetrahedra in the repeating unit $N$, and
+average number of contacts per tetrahedron $\bar{Z}$ where available.</aside>
+<aside>[<a href="#Hoy701" name="Hoy70">Hoy70</a>] D. J. Hoylman, <a href="http://dx.doi.org/10.1090/S0002-9904-1970-12400-4"><em>The densest lattice packing of tetrahedra</em></a>,
+Bull. Amer. Math. Soc. <strong>76</strong>, 135 (1970).</aside>
+<table>
+<tr><td style="width:180;">Name </td><td style="width:130;"> $\phi$ </td><td style="width:60;"> $N$ </td><td style="width:60;"> $\bar{Z}$ </td><td style="width:60;"> Transitive</td></tr>
+<tr><td style="width:180;">Optimal lattice [<a href="#Hoy70" name="Hoy701">Hoy70</a>] </td><td style="width:130;"> $18/49\approx0.3673$ </td><td style="width:60;"> $1$ </td><td style="width:60;"> $14$ </td><td style="width:60;"> Yes </td></tr>
+<tr><td style="width:180;">Warp and weft [<a href="#CT06" name="CT063">CT06</a>] </td><td style="width:130;"> $2/3\approx0.6666$ </td><td style="width:60;"> $2$ </td><td style="width:60;"> $10$ </td><td style="width:60;"> Yes </td></tr>
+<tr><td style="width:180;">Welsh [<a href="#CT06" name="CT064">CT06</a>] </td><td style="width:130;"> $17/24\approx0.7083$ </td><td style="width:60;"> $34$ </td><td style="width:60;"> $25.9$ </td><td style="width:60;"> No </td></tr>
+<tr><td style="width:180;">Simple double lattice </td><td style="width:130;"> $\frac{139+40\sqrt{10}}{369}\approx0.7194$ </td><td style="width:60;"> $2$ </td><td style="width:60;"> $19$ </td><td style="width:60;"> Yes </td></tr>
+<tr><td style="width:180;">Wagon wheels [<a href="#Chen08" name="Chen082">Chen08</a>] </td><td style="width:130;"> $0.7786$ </td><td style="width:60;"> $18$ </td><td style="width:60;"> $7.1$ </td><td style="width:60;"> No </td></tr>
+<tr><td style="width:180;">Compressed wagon wheels [<a href="#TY09a" name="TY09a3">TY09a</a>] </td><td style="width:130;"> $0.7820$ </td><td style="width:60;"> $72$ </td><td style="width:60;"> $7.6$ </td><td style="width:60;"> No  </td></tr>
+<tr><td style="width:180;">Disordered wagon wheels [<a href="#TY09b" name="TY09b3">TY09b</a>] </td><td style="width:130;"> $0.8226$ </td><td style="width:60;"> $314$ </td><td style="width:60;"> $7.4$ </td><td style="width:60;"> No </td></tr>
+<tr><td style="width:180;">Quasicrystal approximant [<a href="#HEK09" name="HEK093">HEK09</a>] </td><td style="width:130;"> $0.8503$ </td><td style="width:60;"> $656$ </td><td style="width:60;"> </td><td style="width:60;"> No </td></tr>
+<tr><td style="width:180;">Dimer double lattice </td><td style="width:130;"> $100/117\approx0.8547$ </td><td style="width:60;"> $4$ </td><td style="width:60;"> $8$ to $11$ </td><td style="width:60;"> Yes </td></tr>
+</table><p>
+The results presented go against the recent trend of ever-growing
+repeating units in densest-known packings and demonstrate that a
+large repeating unit is not a necessary property
+of a dense packing of regular tetrahedra. It is curious that previous
+simulations, utilizing a more physical search
+dynamic [<a href="#TY09a" name="TY09a4">TY09a</a>,<a href="#TY09b" name="TY09b4">TY09b</a>,<a href="#HEK09" name="HEK094">HEK09</a>], yielded dense packings that
+were either disordered, had quasicrytalline order, or
+had crystalline order characterized by a very large repeating unit,
+and were not able to find the denser class of structures presented here,
+(reminiscent perhaps of Kurt Vonnegut's ice-nine,
+a fictional phase of water that is more stable, but kinetically unreachable).
+</p><p>
+Our results yield the surprising situation wherein the densest-known
+packing of icosahedra is now sparser than the corresponding packing
+of tetrahedra, a solid which just four years ago was a prime candidate
+for a counterexample of a conjecture by Ulam that the sphere is
+the sparsest-packing convex solid [<a href="#CT06" name="CT065">CT06</a>]. As the packing
+can be generally extended to any tetrahedron in a three-parameter family
+generated by deformations of the monoclinic coordinate basis,
+if any tetrahedron provides a counterexample
+of Ulam's conjecture, it is not a tetrahedron of that family.
+</p><aside>[<a href="#Dan941" name="Dan94">Dan94</a>] L. A. Danzer, "A family of 3D-spacefillers not permitting
+any periodic or quasiperiodic tiling", in <em>Aperiodic '94</em>, eds. G. Chapuis and W. Paciorek, World Scientific, Singapore, pp. 11-17 (1994).</aside>
+<p>
+The regular tetrahedron is no longer outcast, as it long was,
+from the respectable family of convex polyhedra whose largest-achieved packing
+density is realized by a transitive arrangement.
+While there are some convex solids whose maximum packing density clearly
+cannot be achieved by a transitive arrangement (the convex
+Schmitt-Conway-Danzer polyhedron can tile space, but only in
+aperiodic and non-transitive ways [<a href="#Dan94" name="Dan941">Dan94</a>]), the majority
+of regular and semi-regular polyhedra have been to-date packed most
+densely in transitive packings [<a href="#TY09a" name="TY09a5">TY09a</a>].
+Whether this situation is accidental, the result of bias favoring
+the discovery of transitive packings, or a more fundamental property
+governing the packing of a certain class of solids is still an open question.
+</p><p>
+This work was supported by grant <a href="http://www.nsf.gov/awardsearch/showAward?AWD_ID=0426568&HistoricalAwards=false">NSF-DMR-0426568</a>.
+</p>
+</div>
+    <script>
+	var scenex1, camerax1, rendererx1, containerx1, controlsx1, materialx1, lightx1, materialx2;
+	var scenex2, camerax2, rendererx2, containerx2, controlsx2, materialx3, materialx4;
+	var g1,g2,m1,m2;
+	var v1,v2,v3,v4,v5,abc,dx,a,b;
+	var u1,u2,u3,u4,u5;
+	var p1,p2,p3,p4,abc,a2,b2,c2;
+	var q1,q2,q3,q4;
+	var i,j,k,i1,st;
+	var ms = [];
+	var mt = [];
+
+	function init() {
+
+	   
+	    materialx1 = new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.FlatShading } );
+	    materialx2 = new THREE.MeshBasicMaterial({ color: new THREE.Color( 0x000000 ), wireframe: true, })
+	    materialx3 = new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.FlatShading } );
+	    materialx4 = new THREE.MeshBasicMaterial({ color: new THREE.Color( 0x000000 ), wireframe: true, })
+
+	    abc = new THREE.Matrix3();
+	    abc.set(2.*Math.sqrt(7.)/5., 0, 0, 0, Math.sqrt(3.)/2., 0, 0, 0, 13.*Math.sqrt(3./14.)/5.) ;
+	    a = (new THREE.Vector3( 1., 0., 0.).applyMatrix3(abc) );
+	    b = (new THREE.Vector3( 0., 1., 0.).applyMatrix3(abc) );
+	    dx = (new THREE.Vector3( 4./7., 1./2., 1./2.).applyMatrix3(abc) );
+	    
+	    st = Math.sqrt(10.);
+	    abc2 = new THREE.Matrix3();
+	    abc2.set(1.,-(13.-4.*st)/3., 0,
+		    -(4.-st)/3., 3.-st,-1.,
+		    3-st, 1, (4.-st)/3);
+	    abc2.transpose();
+	    a2 = (new THREE.Vector3( 1., 0., 0.).applyMatrix3(abc2) );
+	    b2 = (new THREE.Vector3( 0., 1., 0.).applyMatrix3(abc2) );
+	    c2 = (new THREE.Vector3( 1., 1., 1.).applyMatrix3(abc2) );
+	    
+	    v1 = (new THREE.Vector3( 27./28., -7./30., 10./39.)).applyMatrix3(abc) ;
+	    v2 = (new THREE.Vector3( 1./4., -9./10., 0.)).applyMatrix3(abc) ;
+	    v3 = (new THREE.Vector3( 1./14., 1./10., 5./13.)).applyMatrix3(abc) ;
+	    v4 = (new THREE.Vector3( 3./7., 1./10., -5./13.)).applyMatrix3(abc) ;
+	    v5 = (new THREE.Vector3( -13./28., -7./30., -10./39.)).applyMatrix3(abc) ;
+
+	    u1 = new THREE.Vector3(); u1.copy(v1); u1.negate();
+	    u2 = new THREE.Vector3(); u2.copy(v2); u2.negate();
+	    u3 = new THREE.Vector3(); u3.copy(v3); u3.negate();
+	    u4 = new THREE.Vector3(); u4.copy(v4); u4.negate();
+	    u5 = new THREE.Vector3(); u5.copy(v5); u5.negate();
+
+	    p1=(new THREE.Vector3(433.-86.*st, 611-133*st, 188.-22*st)).applyMatrix3(abc2);p1.multiplyScalar(1./246.);
+	    p2=(new THREE.Vector3(111.-30.*st, 93-75*st, -66.-42*st)).applyMatrix3(abc2);p2.multiplyScalar(1./246.);
+	    p3=(new THREE.Vector3(-85.-28.*st, 13-29*st, 4.+10*st)).applyMatrix3(abc2);p3.multiplyScalar(1./246.);
+	    p4=(new THREE.Vector3(179.-106.*st, 427-101*st, -20.-50*st)).applyMatrix3(abc2);p4.multiplyScalar(1./246.);
+	    q1 = new THREE.Vector3(); q1.copy(p1); q1.negate();
+	    q2 = new THREE.Vector3(); q2.copy(p2); q2.negate();
+	    q3 = new THREE.Vector3(); q3.copy(p3); q3.negate();
+	    q4 = new THREE.Vector3(); q4.copy(p4); q4.negate();
+
+	    g1 = new THREE.Geometry();
+	    g1.vertices.push(v1);g1.vertices.push(v2);g1.vertices.push(v3);
+	    g1.vertices.push(v4);g1.vertices.push(v5);
+	    g1.vertices.push(u1);g1.vertices.push(u2);g1.vertices.push(u3);
+	    g1.vertices.push(u4);g1.vertices.push(u5);
+	    g1.faces.push( new THREE.Face3(0,2,1) ); g1.faces.push( new THREE.Face3(2,0,3) );
+	    g1.faces.push( new THREE.Face3(3,0,1) ); g1.faces.push( new THREE.Face3(4,1,2) );
+	    g1.faces.push( new THREE.Face3(3,4,2) ); g1.faces.push( new THREE.Face3(3,1,4) );
+	    g1.faces.push( new THREE.Face3(7,5,6) ); g1.faces.push( new THREE.Face3(5,7,8) );
+	    g1.faces.push( new THREE.Face3(5,8,6) ); g1.faces.push( new THREE.Face3(6,9,7) );
+	    g1.faces.push( new THREE.Face3(9,8,7) ); g1.faces.push( new THREE.Face3(6,8,9) );
+	    g1.computeFaceNormals();
+
+	    g2 = new THREE.Geometry();
+	    g2.vertices.push(p1);g2.vertices.push(p2);g2.vertices.push(p3);g2.vertices.push(p4);
+	    g2.vertices.push(q1);g2.vertices.push(q2);g2.vertices.push(q3);g2.vertices.push(q4);
+	    g2.faces.push( new THREE.Face3(0,2,1) ); g2.faces.push( new THREE.Face3(2,0,3) );
+	    g2.faces.push( new THREE.Face3(3,0,1) ); g2.faces.push( new THREE.Face3(3,1,2) );
+	    g2.faces.push( new THREE.Face3(6,4,5) ); g2.faces.push( new THREE.Face3(4,6,7) );
+	    g2.faces.push( new THREE.Face3(4,7,5) ); g2.faces.push( new THREE.Face3(6,5,7) );
+	    g2.computeFaceNormals();
+
+	    for (i=0;i<3;i++){
+		for (j=0;j<3;j++){
+		    for (k=0;k<3;k++){
+			//m1=new THREE.Mesh( g1,  materialx1);
+			m1 = THREE.SceneUtils.createMultiMaterialObject(g1, [materialx1, materialx2]);
+			m1.position.sub(a);m1.position.sub(b);m1.position.sub(dx);
+			for (i1=0;i1<i;i1++) m1.position.add(dx);
+			for (i1=0;i1<j;i1++) m1.position.add(b);
+			for (i1=0;i1<k;i1++) m1.position.add(a);
+			ms.push(m1);
+		    }
+		}
+	    }
+	    for (i=0;i<3;i++){
+		for (j=0;j<3;j++){
+		    for (k=0;k<3;k++){
+			m1 = THREE.SceneUtils.createMultiMaterialObject(g2, [materialx3, materialx4]);
+			m1.position.sub(a2);m1.position.sub(b2);m1.position.sub(c2);
+			for (i1=0;i1<i;i1++) m1.position.add(c2);
+			for (i1=0;i1<j;i1++) m1.position.add(b2);
+			for (i1=0;i1<k;i1++) m1.position.add(a2);
+			mt.push(m1);
+		    }
+		}
+	    }
+
+	    scenex1 = new THREE.Scene();
+	    camerax1 = new THREE.PerspectiveCamera( 60, 2., 1., 10. );
+	    //camerax1.position.set( 1.3,-1.5,3 );
+	    camerax1.position.set( 0.14,-2.38,3.69 );
+	    for (i=0;i<27;i++) scenex1.add( ms[i] );
+
+	    scenex2 = new THREE.Scene();
+	    camerax2 = new THREE.PerspectiveCamera( 60, 2., 1., 10. );
+	    //camerax2.position.set( 1.3,-1.5,3 );
+	    camerax2.position.set( 0.34,2.28,4.69 );
+	    for (i=0;i<27;i++) scenex2.add( mt[i] );
+	    //scenex2.add( mt[13] );
+
+	    lightx1 = new THREE.DirectionalLight( 0xffdddd );
+	    lightx1.position.set( 10, 10, 10 );
+	    scenex1.add( lightx1 );
+	    lightx1 = new THREE.DirectionalLight( 0x002288 );
+	    lightx1.position.set( -10, -10, 10 );
+	    scenex1.add( lightx1 );
+	    lightx1 = new THREE.DirectionalLight( 0x444400 );
+	    lightx1.position.set( -10, 10, -10 );
+	    scenex1.add( lightx1 );
+	    lightx1 = new THREE.DirectionalLight( 0x440044 );
+	    lightx1.position.set( 10, -10, -10 );
+	    scenex1.add( lightx1 );
+	    lightx1 = new THREE.AmbientLight( 0x222222 );
+	    scenex1.add( lightx1 );
+
+	    lightx1 = new THREE.DirectionalLight( 0xffdddd );
+	    lightx1.position.set( 10, 10, 10 );
+	    scenex2.add( lightx1 );
+	    lightx1 = new THREE.DirectionalLight( 0x002288 );
+	    lightx1.position.set( -10, -10, 10 );
+	    scenex2.add( lightx1 );
+	    lightx1 = new THREE.DirectionalLight( 0x444400 );
+	    lightx1.position.set( -10, 10, -10 );
+	    scenex2.add( lightx1 );
+	    lightx1 = new THREE.DirectionalLight( 0x440044 );
+	    lightx1.position.set( 10, -10, -10 );
+	    scenex2.add( lightx1 );
+	    lightx1 = new THREE.AmbientLight( 0x222222 );
+	    scenex1.add( lightx1 );
+
+	    rendererx1 = new THREE.WebGLRenderer();
+	    rendererx1.setClearColor( 0xffffff, 1 );
+	    rendererx1.setSize( 720, 360 );
+	    controlsx1 = new THREE.OrbitControls( camerax1, rendererx1.domElement );
+	    controlsx1.damping = 0.2;
+	    controlsx1.addEventListener( 'change', renderx1 );
+	    containerx1 = document.getElementById('container1');
+	    containerx1.appendChild( rendererx1.domElement );
+
+	    rendererx2 = new THREE.WebGLRenderer();
+	    rendererx2.setClearColor( 0xffffff, 1 );
+	    rendererx2.setSize( 720, 360 );
+	    controlsx2 = new THREE.OrbitControls( camerax2, rendererx2.domElement );
+	    controlsx2.damping = 0.2;
+	    controlsx2.addEventListener( 'change', renderx2 );
+	    containerx2 = document.getElementById('container2');
+	    containerx2.appendChild( rendererx2.domElement );
+
+	}
+
+	var renderx1 = function () {
+		rendererx1.render( scenex1, camerax1 );
+	}
+	var renderx2 = function () {
+		rendererx2.render( scenex2, camerax2 );
+	}
+	
+	d3.select("#onelayer").on("change", function() {update1();});
+	d3.select("#threelayers").on("change", function() {update2();});
+	d3.select("#onelayer2").on("change", function() {update3();});
+	d3.select("#threelayers2").on("change", function() {update4();});
+
+	function update1() {
+	    for (i=9;i<27;i++) ms[i].visible=false;
+	    renderx1();
+	}
+	function update2() {
+	    for (i=9;i<27;i++) ms[i].visible=true;
+	    renderx1();
+	}
+	function update3() {
+	    for (i=9;i<27;i++) mt[i].visible=false;
+	    renderx2();
+	}
+	function update4() {
+	    for (i=9;i<27;i++) mt[i].visible=true;
+	    renderx2();
+	}
+	
+
+	init();
+	//renderx1();
+	update1();
+	update3();
+
+    </script> 
+</body>
+</html>

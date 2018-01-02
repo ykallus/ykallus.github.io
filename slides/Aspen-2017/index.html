@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Random, optimal, and thermal packing of aspherical shapes</title>
+
+		<meta name="description" content="Random, optimal, and thermal packing of aspherical shapes">
+		<meta name="author" content="Yoav Kallus">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="../../reveal.js/css/reveal.css">
+		<link rel="stylesheet" href="../../reveal.js/css/theme/solarized.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="../../reveal.js/lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? '../../reveal.js/css/print/pdf.css' : '../../reveal.js/css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+
+		<!-- <script type="text/javascript">
+		//(new Image()).src = "single-n=9-wiggler-anim.gif";
+		</script> --!>
+
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<div class="slides">
+				<section>
+					<h2>Random, optimal, and thermal packing of aspherical shapes</h2>
+					<table><tr><td style="vertical-align: middle;">
+					<img src="mimbres.png" width="200" \>
+					</td><td style="vertical-align: middle;">
+					<p><a href="http://tuvalu.santafe.edu/~yoav">Yoav Kallus</a></p>
+					<p>Packing of Continua Workshop<br>Aspen, June 21, 2017</p>
+					</td></tr></table>
+				</section>
+
+				<section>
+					<h3>Spheres vs. regular tetrahedra</h3>
+					<img src="oldslide.png" width="80%" \>
+				</section>
+				<section>
+					<h3>Equilibrium and metastability</h3>
+					<table><tr><td style="vertical-align: middle;" width="30%">
+						    <p><small>
+						    <img src="dimerdl.png" width="100%" style="margin-top: 0; margin-bottom: 0" \>
+						    <img src="qc2.jpg" width="100%" style="margin-top: 0; margin-bottom: 0" \>
+						    <img src="approximant.png" width="100%" style="margin-top: 0; margin-bottom: 0" \>
+						    </small></p>
+					</td><td class="fragment" style="vertical-align: middle;" width="70%">
+					    <p><small><img src="phase-diagram.png" width="100%" \>
+						Haji-Akbari, Engel, &amp; Glotzer. J Chem Phys (2011).
+					</td></tr></table>
+				</section>
+
+				<section>
+					<h3>Random close packing</h3>
+					<table><tr><td style="vertical-align: middle;" width="50%">
+					<p><small><img src="tet-rcp2.png" width="60%" \><br \>
+					Jiao &amp; Torquato, Phys Rev E (2011)</small></p>
+					</td><td style="vertical-align: middle;" width="50%">
+					<p><small><img src="chaikin-d4.jpg" width="100%" \><br \>
+					Jaoshvili, Esakia, Porrati, &amp; Chaikin. Phys Rev Lett, (2010)</small></p>
+					</td></tr></table>
+					<p><small>
+					    Isostatic if face-face = 3 contacts, face-edge = 2, vertex-face = 1, edge-edge = 1
+					</small></p>
+				</section>
+
+
+				<section>
+					<h3>Ellipsoids</h3>
+					<table><tr><td style="vertical-align: middle;" width="50%">
+						<p><small><img src="ellipsoid-opt-structure.png" style="margin-top: 0; margin-bottom: 0" width="55%" \><br \>
+						<img src="ellipsoid-opt-density.png" style="margin-top: 0; margin-bottom: 0" width="70%" \><br \>
+					Donev, Stillinger, Chaikin, &amp; Torquato. Phys. Rev. Lett. (2004)
+					</small></p>
+					</td><td style="vertical-align: middle;" width="50%">
+					<p><small><img src="Ellipsoids.jpg" style="margin-top: 0; margin-bottom: 0" width="60%" \><br \>
+					<img src="ellipsoid-random-density.png" style="margin-top: 0; margin-bottom: 0" width="70%" \><br \>
+					Donev, Connelly, Stillinger, &amp; Torquato. Phys. Rev. E (2007)
+					</small></p>
+					</td></tr></table>
+				</section>
+
+				<section>
+					<h3>Ulam's conjecture</h3>
+					<table><tr><td style="vertical-align: middle;" width="50%">
+					<p><small><img src="diversions.jpg" width="50%" /><br \>
+					&ldquo;Stanislaw Ulam told me in 1972 that he suspected the sphere was the worst case of dense packing of identical convex solids,
+					but that this would be difficult to prove.&rdquo;
+					</small></p>
+					</td><td style="vertical-align: middle;" width="50%">
+					<p><small><img src="scatter.png" width="80%" /><br />
+					Damasceno, Engel, Glotzer (2012)</small></p>
+					</td></tr></table>
+				</section>
+
+				<section>
+					<h3>Disk is not worst in 2D</h3>
+					<table><tr><td style="vertical-align: middle;" width="33%">
+					<p><small><img src="circles.png" width="100%" /><br \>$\phi=0.9069$</small></p>
+					</td><td style="vertical-align: middle;" width="33%">
+					<p><small><img src="regocts.png" width="100%" /><br \>$\phi=0.9062$</small></p>
+					</td><td style="vertical-align: middle;" width="33%">
+					<p><small><img src="octagons.png" width="100%" /><br \>$\phi=0.9024$</small></p>
+					</td></tr></table>
+				</section>
+
+				<section>
+				        <h3>Optimal packing of nearly-circular shapes</h3>
+					<p><img src="circ-neighborhood.png" width="60%"/></p>
+				</section>
+				<section>
+				        <h3>Optimal packing of nearly-circular shapes</h3>
+					<p><img src="hex-neighborhood.png" width="60%"/></p>
+				</section>
+				<section>
+				        <h3>Optimal packing of nearly-circular shapes</h3>
+					<p><img src="hex2-neighborhood.png" width="60%"/></p>
+				</section>
+				<section>
+				        <h3>Optimal packing of nearly-circular shapes</h3>
+					<table><tr><td style="vertical-align: middle;" width="40%">
+					<img src="oct-neighborhood.png" width="100%"/>
+					</td><td style="vertical-align: middle;" width="60%">
+					<p><small>
+					    In general, for centrally-symmetric shapes: <br \>
+					    if $r_K(\theta) = 1 + \delta r(\theta)$ describes the boundary of the shape<br \>
+					(i.e. $K=\{(\lambda\cos\theta,\lambda\sin\theta):\lambda\le 1, 0\le \theta\le 2\pi\}$), <br \>
+					then $\displaystyle{\frac{\phi(K) - \phi(C)}{\phi(C)} = 2\overline{\delta r} - 2\min_\omega \sum_{n=0}^{5}\delta r(\tfrac{n\pi}{3}+\omega) + o(\|\delta r\|)}$.<br \>
+					</small></p>
+					</td></tr></table>
+					<p class="fragment"> So, for a family $r_K(\theta) = 1 + \alpha \rho(\theta) + o(\alpha)$,<br \> we have $d\phi/d\alpha \ge 0$.</span>
+				    <p class="fragment"> <small> $d\phi/d\alpha = 0$ is possible, e.g., for $\rho(\theta) = \cos(8\theta)$.</small> </span>
+				</section>
+
+				<section>
+				        <h3>Optimal packing of nearly spherical shape</h3>
+					<table><tr><td style="vertical-align: middle;" width="20%">
+						    <img src="spokelet1.png" width="100%" style="margin-top: 0; margin-bottom: 0"/>
+					<img src="spokelet2.png" width="100%" style="margin-top: 0; margin-bottom: 0"/>
+					<img src="spokelet3.png" width="100%" style="margin-top: 0; margin-bottom: 0"/>
+					</td><td style="vertical-align: middle;" width="60%">
+					<p><small>In 3D, for centrally-symmetric shapes:
+					    $\displaystyle{\Delta\phi/\phi = 3\overline{\delta r} - 3\min_R \sum_{n=0}^{11}\delta r(R\mathbf{x}_i) + o(\|\delta r\|)}$,
+					    where $\delta R:S^2\to\mathbb{R}$, $R\in SO(3)$, and $\mathbf{x}_i$ are the 12 f.c.c. contact directions.
+					</small></p>
+					<p class="fragment"><small>
+					    Lemma: $\min_R \sum_{n=0}^{11}\delta r(R\mathbf{x}_i) = \overline{\delta r}$ iff $\delta r(\mathbf{x}) = a + (\mathbf{b}\cdot\mathbf{x})^2$.
+					</small></p>
+					<p class="fragment"><small>
+					    So, any centrally symmetric shape, apart from ellipsoids has $\phi(K)-\phi(B) \ge c \|\delta r\|$, for some constant $c$.
+					</small></p>
+					</td></tr></table>
+				</section>
+				
+				<section>
+				        <h3>Random close packing (no friction)</h3>
+					<p><small>Start from a RCP of spheres, then continuously to another shape, keeping particle $i$'s rotation $R_i$ locked:<br \>
+					    $\displaystyle{p\Delta V = \sum_i \sum_{j\in \partial i} f_{ij} \delta r(R_i \mathbf{n}_{ij}) + O(V\|\delta r\|^{3/2})}$</small></p>
+					<p><small>Rotation is free for spheres, but at start of deformation, particles under pressure will take rotation that minimizes volume, so</small></p>
+					<p><small>
+					    for $r(\mathbf{x}) = 1 + \alpha \rho(\mathbf{x}) + o(\alpha)$<br \>
+					    $\displaystyle{\frac{1}{3\phi}\frac{d\phi}{d\alpha} = \overline{\rho} - \frac{1}{\langle|\partial i|\rangle \langle f\rangle}
+					    \big\langle \min_R \sum_{j\in \partial i} f_{ij} \rho(R \mathbf{n}_{ij})\big\rangle}$
+					</small></p>
+					<p><small>$d\phi/d\alpha&gt;0$ for all nonconstant $\rho$ (and for all dimensions)
+					</small></p>
+					<p><small>We can numerically calculate $\eta=(\tfrac1{3\phi} \tfrac{d\phi}{d\alpha})/(\overline{|\rho-\overline{\rho}|})$ for given $\rho$</small></p>
+				</section>
+
+				<section>
+				        <h3>Some 1-parameter shape families</h3>
+					<table><tr><td style="vertical-align: middle;" width="25%">
+						    <!--$\eta=0.94$<br /><img src="shape-oblel.png" width="80%" style="margin-top: 0; margin-bottom: 0"/><br />--!>
+	      <div style="background: url(shape-oblel.png) no-repeat; background-size: 100% 100%; width:180px;height:180px">$\eta=0.94$</div>
+	      <div style="background: url(shape-prolel.png) no-repeat; background-size: 100% 100%; width:180px;height:180px">$\eta=0.79$</div>
+	      <div style="background: url(shape-lens.png) no-repeat; background-size: 100% 100%; width:180px;height:180px">$\eta=0.86$</div>
+					</td><td style="vertical-align: middle;" width="25%">
+	      <div style="background: url(shape-sphcyl.png) no-repeat; background-size: 100% 100%; width:180px;height:180px">$\eta=1.08$</div>
+	      <div style="background: url(shape-sphdisc.png) no-repeat; background-size: 100% 100%; width:180px;height:180px">$\eta=1.36$</div>
+	      <div style="background: url(shape-spindle.png) no-repeat; background-size: 100% 100%; width:180px;height:180px">$\eta=0.77$</div>
+					</td><td style="vertical-align: middle;" width="25%">
+	      <div style="background: url(shape-tetrnd.png) no-repeat; background-size: 100% 100%; width:180px;height:180px">$\eta=1.45$</div>
+	      <div style="background: url(shape-tetpuff.png) no-repeat; background-size: 100% 100%; width:180px;height:180px">$\eta=1.06$</div>
+	      <div style="background: url(shape-trirnd.png) no-repeat; background-size: 100% 100%; width:180px;height:180px">$\eta=1.31$</div>
+					</td><td style="vertical-align: middle;" width="25%">
+	      <div style="background: url(shape-tripuff.png) no-repeat; background-size: 100% 100%; width:180px;height:180px">$\eta=1.01$</div>
+	      <div style="background: url(shape-supcub.png) no-repeat; background-size: 100% 100%; width:180px;height:180px">$\eta=1.32$</div>
+	      <div style="background: url(shape-supoct.png) no-repeat; background-size: 100% 100%; width:180px;height:180px">$\eta=1.20$</div>
+					</td></tr></table>
+				</section>
+
+				<!--<section>
+				        <h3>Open issues</h3>
+					<p>Near-sphere expansion for RSA, hard particle fluid, other processes?</p>
+					<p>Friction?</p>
+					<p>How far from the near-sphere region can we go?</p>
+				</section>--!>
+
+			</div>
+
+		</div>
+
+		<script src="../../reveal.js/lib/js/head.min.js"></script>
+		<script src="../../reveal.js/js/reveal.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'none', // none/fade/slide/convex/concave/zoom
+
+				math: {
+				    // mathjax: 'http://cdn.mathjax.org/mathjax/latest/MathJax.js'
+				    mathjax: '../../MathJax/MathJax.js',
+				    config: 'TeX-AMS_HTML-full'
+				},
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: '../../reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../../reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../../reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../../reveal.js/plugin/zoom-js/zoom.js', async: true },
+					{ src: '../../reveal.js/plugin/notes/notes.js', async: true },
+					{ src: '../../reveal.js/plugin/math/math.js', async: true }
+				]
+			});
+
+		</script>
+		<!--<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+		      extensions: ["tex2jax.js"],
+		      jax: ["input/TeX","output/HTML-CSS"],
+		      tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]},
+		      TeX: { equationNumbers: { autoNumber: "AMS" } }
+		  });
+		</script>
+		<script type="text/javascript" src="../../MathJax/MathJax.js"></script>--!>
+
+	</body>
+</html>

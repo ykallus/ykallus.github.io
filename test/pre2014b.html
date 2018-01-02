@@ -1,0 +1,991 @@
+<html lang="en">
+<head>
+<title>Marginal stability in jammed packings: quasicontacts and weak contacts</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../images/article.css" type="text/css" />
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX","output/HTML-CSS"],
+    tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]},
+    TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+<script type="text/javascript" src="../MathJax/MathJax.js"></script>
+</head>
+<body>
+  <div id="header">
+     <h1 id="atitle">Marginal stability in jammed packings: quasicontacts and weak contacts</h1>
+     <h2 id="aauthors"><a href="http://tuvalu.santafe.edu/~yoav/">Yoav Kallus</a> and
+	 <a href="http://cherrypit.princeton.edu/sal.html">Salvatore Torquato</a>
+     </h2>
+     <p><a href="http://journals.aps.org/pre/abstract/10.1103/PhysRevE.90.022114">Physical Review E <strong>90</strong>, 022114 (2014)</a>;
+     <a href="http://arxiv.org/abs/1405.2087">arXiv:1405.2087</a></p>
+  </div>
+  <blockquote>
+    Maximally random jammed (MRJ) sphere packing is a prototypical example
+    of a system naturally poised at the margin between underconstraint and
+    overconstraint. This marginal stability has traditionally been understood
+    in terms of isostaticity, the equality of the number of mechanical
+    contacts and the number of degrees of freedom. Quasicontacts, pairs of spheres on the verge of
+    coming in contact, are irrelevant for static stability, but they come into play when
+    considering dynamic stability, as does the distribution of contact forces.
+    We show that the effects of marginal dynamic stability, as manifested in
+    the distributions of quasicontacts and weak contacts, are consequential
+    and nontrivial. We study these ideas first in the context of MRJ packing of $d$-dimensional
+    spheres, where we show that the abundance of quasicontacts grows at a faster
+    rate than that of contacts. We reexamine a calculation of Jin et al. 
+    (Phys. Rev. E <strong>82</strong>, 051126, 2010), where quasicontacts were originally
+    neglected, and we explore the effect of their inclusion in the calculation. This
+    analysis yields an estimate of the asymptotic behavior of the packing density
+    in high dimensions. We argue that this estimate should be reinterpreted as a
+    lower bound. The latter part of the paper is devoted to Bravais lattice
+    packings that possess the minimum number of contacts to maintain mechanical stability.
+    We show that quasicontacts play an even more important role in these packings.
+    We also show that jammed lattices are a useful setting for studying the
+    Edwards ensemble, which weights each mechanically stable configuration equally
+    and does not account for dynamics. This <em>ansatz</em> fails to predict the power-law
+    distribution of near-zero contact forces, $P(f)\sim f^\theta$.
+  </blockquote>
+<h2 class="section" id="sec_intro"><span class="sectionnumber"></span>Introduction</h2>
+<p>
+The margin between underconstraint and overconstraint in the stability of disordered systems
+is associated with many unusual and not completely understood phenomena, such as glass
+formation in covalently bonded materials [<span class="cite">glassconstraint</span>], peaks in computational complexity
+in NP-hard problems [<span class="cite">satunsat</span>], and critical
+heterogeneity in mechanical response of elastic networks [<span class="cite">fibre</span>].
+Randomly packed frictionless hard spheres at the jamming transition are a prototypical example of
+a system that is driven from the region of underconstraint just to the edge
+of overconstraint. Maximally random jammed (MRJ) packings are those that exhibit the
+least order, as measured by a variety of different order metrics, from the set
+of all strictly jammed (mechanically stable) packings [<span class="cite">torqmrj</span>]. Such packings
+are naturally poised at the critical margin without the need to tune parameters.
+The idea of marginal constraint in MRJ configurations
+has long been synonymous with <em>isostaticity</em>, the equality between the number
+of mechanical contacts between spheres and the number of translational degrees
+of freedom [<span class="cite">torqiso</span>]. Recently, however, it has been argued that in addition to marginal
+constraint from the point of view of mechanical stability, MRJ configurations
+might also exhibit marginal constraint from the point of view of dynamic
+stability [<span class="cite">wyart,lerner</span>]. Mechanical stability reflects the impossibility of reducing
+the volume occupied by the system through a continuous motion of its
+particles such that the volume does not increase at any time during the motion [<span class="cite">donevlp</span>].
+Dynamic stability reflects the impossibility of reducing
+the volume even through motions that cause small rearrangements in the contact network,
+and which might at first increase the volume. Wyart showed that
+marginal dynamic stability is associated with power-law distributions of
+the gaps between pairs of spheres that are <em>nearly</em> in contact &ndash; called quasicontacts &ndash;
+and of the forces between pairs of spheres that <em>are</em> in contact, but exert a nearly zero
+contact force on each other [<span class="cite">wyart</span>].
+</p><p>
+In Sections II&ndash;III, we will consider MRJ configurations of frictionless hard spheres in
+a Euclidean space of $d$ dimensions and study the abundance of quasicontacts.
+Recently, many works have been devoted to identifying the asymptotic scaling
+behavior of various densities associated with MRJ packings and the prejamming
+dynamics of hard-sphere fluids in the limit $d\to\infty$, and this question
+has lead to many advances in the theory of jamming and the glass transition
+[<span class="cite">charbcorwin,charbikeda,parisi10,jin,ikeda,charbzamp</span>].
+We will show that the abundance of quasicontact,
+required for reasons of dynamic stability, imposes strong structural constraints
+that are as important as those imposed by the network of mechanical contacts.
+The power-law singularities of active constraints on the verge of becoming inactive
+and <em>vice versa</em> are not unique to MRJ packings, and they arise in other
+disordered systems [<span class="cite">wyart-2014</span>]. In Sections IV&ndash;V, we analyze jammed
+Bravais lattice sphere packings, which are closely related to MRJ packings.
+</p><p>
+The dimensional dependence of the number of mechanical contacts around an
+average sphere can be easily derived from Maxwellian constraint
+counting: since each contact is incident on two spheres and imposes one constraint, and each sphere has
+$d$ translational degrees of freedom, each sphere should have, on average, $2d$
+contacts. Quasicontacts, on the other hand, 
+do not contribute to mechanical stability, but
+clearly participate in the trapping behavior as a configuration dynamically approaches
+the jamming point. These contacts show up as a power-law divergence of the pair-correlation
+function near the contact distance (historically, this was known as the ``square-root divergence,''
+but the power-law exponent is no longer agreed to be 1/2) [<span class="cite">donev05,silbert06,charbcorwin</span>].
+Quasicontacts are challenging to study, because unlike mechanical
+contacts, identifying specific pairs as quasicontacts requires the definition of
+an arbitrary cutoff distance [<span class="cite">jordey</span>] or another criterion, such as 
+adjacency of Voronoi regions [<span class="cite">KumarVor</span>]. 
+Since this divergent part of the pair correlation overlaps with the well-behaved part,
+we do not attempt to identify specific pairs as quasicontacts and only study 
+the influence of the abundance of pairs at small separations.
+</p>
+<h2 class="section" id="sec_mrj"><span class="sectionnumber"></span>Quasicontacts in disordered packings</h2>
+<p>
+We would like to understand the characteristics of the quasicontact and weak contact
+distributions as a function of dimension.
+The calculation of Ref. [<span class="cite">wyart</span>] is set in a fixed number of dimensions but
+applies equally well in any dimension. We must
+only reintroduce the dimensional dependence that was originally left out in order to determine
+the expected number of quasicontacts around the average sphere. 
+Consider an MRJ packing of $N$ unit-diameter spheres with centers $\mathbf{r}_k$, $k=1,\ldots, N$.
+Isostaticity guarantees that for any contact $(i,j)$, 
+there exists a continuous motion $\delta\mathbf{r}_k(s)$
+of the sphere centers such that the distance between the centers of the spheres $i$ and $j$
+is $1+s$, and the distance between the centers of any other pair originally in contact remains $1$.
+In the process of this motion, the work performed by the packing is given by
+\begin{equation}
+    \begin{aligned}
+	p\delta V &= f_{ij} s - \sum_{(k,l)\neq(i,j)}f_{kl}
+        %\left[||\delta \mathbf{r}_k-\delta \mathbf{r}_l||^2 -
+	%\langle\delta \mathbf{r}_k-\delta \mathbf{r}_l,\mathbf{n}_{lk}\rangle^2\right]\\
+	||(\delta \mathbf{r}_k-\delta \mathbf{r}_l)_\text{tang}||^2\\
+	&= f_{ij} s - C_{ij} s^2 + o(s^2)\text,
+    \end{aligned}
+    \label{eqn:cij}
+\end{equation}
+where $f_{kl}>0$ is the magnitude of the force between
+$k$ and $l$ in the original packing, and $(\mathbf{v})_\text{tang}$ denotes the component
+of the vector $\mathbf{v}$ in the plane tangent to the spheres $k$ and $l$ in the original packing [<span class="cite">wyart</span>].
+At some value of $s=s_c$, a pair that was previously separated
+by a gap will come into contact, and the motion is unphysical beyond this terminal point.
+At a value $s^*\sim f_{ij}/C_{ij}$, the volume will start to decrease beyond its original value.
+The packing is considered stable if for every single-contact-breaking motion, the volume at the
+terminal point $s_c$, is increased compared to the original volume, i.e., if $s_c$ is of the order of $s^*$ or smaller
+for all contacts. If violated at all,
+this stability criterion will be violated by a contact whose force is of the same order
+as the weakest
+contact, and the gap closed will have a width of the same order as the smallest gap.
+We will assume that the average number of non-contact-neighbor centers at a distance
+of $r=1+\xi$ or less from the center of a randomly chosen sphere is
+\begin{equation}
+    Z_\text{nc}(\xi) \simeq A_d \xi^{1-\gamma}\text{ for }0&lt;\xi\ll 1\text,
+    \label{eq:qua}
+\end{equation}
+where $A_d$ is the dimension-dependent amplitude of the quasicontact singularity.
+Similarly, we assume that the probability density of the force at a randomly chosen contact
+is given by 
+\begin{equation}
+    P(f)\simeq f^\theta/\langle f\rangle^{1+\theta}\text{ for }0&lt;f\ll\langle f\rangle\text,
+    \label{eq:weak}
+\end{equation}
+where $\langle f\rangle$ is the average contact force and is proportional to the
+externally applied pressure $p$. Then the smallest gap is of size roughly such that
+$\tfrac{1}{2}N [Z(\xi_\text{min})-2d] = 1$, and so $\xi_\text{min} \sim (A_d N)^{-1/(1-\gamma)}$.
+Similarly, as the total number of contacts is $dN$, the weakest contact is
+roughly of strength $f_\text{min} \sim (dN)^{-1/(1+\theta)}\langle f\rangle$.
+We assume, as in Ref. [<span class="cite">wyart</span>], that all single-contact-breaking motions extend to the entire system, and that each sphere moves by a
+distance proportional to $s$ along each coordinate in a roughly uncorrelated way.
+We therefore have that $C_{ij}\sim  d^2 N\langle f\rangle$, irrespective
+of the strength of the contact broken. Therefore, for stability, we require that $s_c\sim\xi_\text{min}\sim (A_d N)^{-1/(1-\gamma)}$
+be of the same order or smaller order than $s^*\sim d^{-1/(1+\theta)-2} N^{-1/(1+\theta)-1}$. From the dependence
+on $N$, we obtain the inequality derived in Ref. [<span class="cite">wyart</span>], $\gamma \ge 1/(2+\theta)$.
+</p>
+<div style="height:420px;width:960px;overflow:hidden;">
+<img src="pre2014b-images/vor2.png" style="width:450px;padding:10px">
+<img src="pre2014b-images/vor3.png" style="width:450px;padding:10px">
+</div>
+    <aside>
+    <strong>Figure <span class="figlabel">fig_vor</span>.</strong>
+	Calculation of the (expected) volume of the Voronoi region around an arbitrary sphere.
+	    The Voronoi region (medium gray) is the set of all points that are closer to the center of a given sphere
+	    than to the center of any other (left). Point $A$ is in the Voronoi region of the sphere with center $O$
+	    if and only if the (light gray) spherical region centered at $A$ and such that $O$ is on its
+	    boundary has no sphere centers in its interior (right). Since the probability that this region
+	    is empty depends only on the distance $c=|AO|$, we denote the region by $\Omega(c)$. The fraction
+	    of a spherical surface $S$ (dotted line) of radius $r$ centered at $O$ that intersects $\Omega(c)$
+	    (thick line) is denoted by $f(\tfrac{r}{2c})$.
+    </aside>
+<p>
+Recall that mechanical stability required more contacts than degrees of freedom, and
+the fact that MRJ packings lie at the margin between instability and stability implied
+that this criterion would be satisfied with equality. Here, too, we may predict that
+the inequalities we derive as criteria for dynamical stability will be satisfied with
+equality, as a sign of marginal stability.
+From the dependence on $d$, we have that the amplitude of the quasicontact singularity $A_d$ must increase
+as $d^{\tilde{\nu}}$ with ${\tilde{\nu}} \ge (1 - \gamma)(3 + 2 \theta)/(1 + \theta)$, with equality under the
+assumption of marginal stability. If we assume equality in both cases, we obtain ${\tilde{\nu}} = 2-\gamma$.
+Note that we assume that the exponents $\gamma$ and $\theta$ are independent of dimension. We do not
+know of any arguments from first principles that justify this assumption, but it is supported by
+simulation results [<span class="cite">charbcorwin,iel</span>], and theoretical calculations in the limit $d\to\infty$ [<span class="cite">charbzamp</span>].
+</p><p>
+In a later paper, Lerner, D&uuml;ring, and Wyart also analyzed the case of contacts that are weak because
+their contact-breaking motion does not extend to the entire system. We address that case in Appendix A,
+where we find that $\tilde{\nu}=2-\gamma$ also in the case that this type of contacts dominates.
+As typical values for the power-law exponents seem to be not much different from
+$\gamma\approx0.4$ and $\theta\approx0.3$ [<span class="cite">donev05,silbert06,charbcorwin</span>],
+we expect the number of quasicontacts to rise much faster
+as a function of dimension than the number of contacts does. The mechanical description
+of a packing depends only on the force-carrying contacts, not quasicontacts.
+However, from a geometric point of view, contacts and quasicontacts are nearly indistinguishable. Therefore,
+the number of quasicontacts, not only the number of mechanical contacts, is likely to be a key determinant of the
+structure of MRJ packings in high dimensions.
+</p>
+<h2 class="section" id="sec_dens"><span class="sectionnumber"></span>Effect of quasicontacts on density</h2>
+<p>
+To study the effect of quasicontacts, we will revisit a calculation of Jin et al. [<span class="cite">jin</span>],
+in which quasicontacts are originally neglected. Specifically, we will introduce their
+presence into the calculation. The original calculation, presented in Ref. [<span class="cite">jin</span>], was
+inspired by an earlier calculation [<span class="cite">song</span>]
+limited to three dimensions, and derives the density of a disordered packing in $d$ dimensions
+based on the expectation value of the Voronoi region surrounding an arbitrary sphere.
+The calculation is based on two assumptions: (i) a simplified form for the pair correlation function,
+\begin{equation}
+    g(r) = \Theta(r-1) +\frac{z \delta(r-1)}{\rho S_{d-1}}\text,
+    \label{eq:grjin}
+\end{equation}
+where $z=2d$ is the average contact number, $\Theta$ is the Heaviside step function,
+$\delta$ is the Dirac delta function, $S_{d-1}$ is the $(d-1)$-dimensional surface area of the
+unit sphere, and $\rho=N/V$ is the number density of the packing; and (ii) after choosing
+the origin to be the center of the sphere whose Voronoi region is to be calculated,
+the centers of all other spheres are assumed to be uncorrelated with each other,
+distributed according to a random
+process whose radius-dependent density is given by $\rho g(r)$<sup><a href="#footnote1">*</a></sup>.
+The two assumptions are motivated by the principle of decorrelation in high dimensions,
+which posits that as the spatial dimension increases, unconstrained
+spatial correlations tend to vanish [<span class="cite">disorderwins</span>]. Indeed, the features
+of the pair correlation function away from $r=1$ appear to flatten out as the dimension
+increases (see, e.g., Figure 7 of Ref. [<span class="cite">skoge</span>]). However, the quasicontact
+divergence, which is neglected in the form of $g(r)$ given in \eqref{eq:grjin},
+remains prominent.
+</p>
+<aside>
+    <sup><a name="footnote1"></a>*</sup>Despite the title of Ref. [<span class="cite">jin</span>], the calculation does not use the Edwards ensemble as an assumption.
+</aside>
+<p>
+The calculation proceeds by noting that a point at a distance $c$
+from the origin is within the Voronoi region if and only if the
+spherical region of radius $c$ surrounding that
+point does not contain any sphere centers in its interior (see <span class="figref">fig_vor</span>, where
+this region is denoted as $\Omega(c)$).
+The assumption (ii) gives rise to the rule that the probability that a region of space $\Omega$ contains
+no sphere centers is given by
+\begin{equation}
+    P(N_\Omega=0) = \exp\left(-\langle N_\Omega\rangle\right)\text,
+    \label{eq:pexp}
+\end{equation}
+where $N_\Omega$ is the number of sphere centers in $\Omega$.
+This <em>ansatz</em> ignores all correlations between different spheres.
+In reality, the hard-core repulsion interaction implies a negative correlation between different spheres
+[<span class="cite">torqvoid</span>], and so \eqref{eq:pexp} should be taken as an upper bound in the two-sided inequality
+\begin{equation}
+    1 - \langle N_\Omega\rangle&lt; P(N_\Omega=0) &lt; \exp\left(-\langle N_\Omega\rangle\right)\text,
+    \label{eq:pbnd}
+\end{equation}
+where the left-hand side represents perfect anticorrelation and the right-hand side represents
+no correlations. Note that the right-hand side is a particularly poor approximation
+of $P(N_{\Omega(c)}=0)$ when $\tfrac12 &lt; c \le \sqrt{1/3}$. In that case, the left-hand
+side is actually exact, since $\Omega(c)$ can contain at most one sphere center.
+</p><p>
+In the limit of very high dimensions, Jin et al. are able to show that,
+given their assumptions, the density of the packing is given asymptotically
+by $\varphi \sim d^\nu 2^{-d}$ with $\nu=1$.
+Indeed, it has been shown that this density is a rigorous upper bound for any
+packing that possesses a $g(r)$ specified by \eqref{eq:grjin} [<span class="cite">disorderwins</span>].
+In Appendix B, we replace the
+assumption (i) with (i') a somewhat less simplified form for the pair correlation
+that includes both contacts and quasicontacts:
+\begin{equation}
+    g(r) = \Theta(r-1) \left(1+\frac{(1-\gamma)A_d (r-1)^{-\gamma}}{\rho S_{d-1} r^{d-1}}\right)
+    +\frac{z \delta(r-1)}{\rho S_{d-1}}\text,
+    \label{eq:grq}
+\end{equation}
+where $A_d\sim d^{\tilde{\nu}}$ is the amplitude of the quasicontact singularity.
+We show in Appendix B that under this modified assumption,
+$\nu = \max(1,\, \tilde{\nu}+\gamma-1)$, where the first argument
+of the maximum represents the effect of contacts, the second represents the effect
+of quasicontacts, and the larger of the two dominates. Since we have seen that
+marginal stability implies that $\tilde{\nu}=2-\gamma$, we have the unexpected
+result that in marginally stable packings, neither contacts nor quasicontacts
+dominate the effect of the other on the scaling of the density derived
+in this calculation.
+</p><p>
+The presence of
+quasicontacts does affect the prefactor of the asymptotic form of the density.
+The calculation of Jin et al. predicts $2^d \varphi \approx 1.33 d$. Using
+a value of $\gamma=0.42$, the calculation of Appendix B gives
+$2^d \varphi \approx (1.33 + 1.00 c) d$, where $A_d \approx c d^{2-\gamma}$. To approximate
+the magnitude of the added term, we estimate $c\approx 3.7$ by fitting $A_d=c d^{1.58}$
+to values of $A_d$ measured in numerical simulations in dimensions $3-10$ [<span class="cite">charbcorwin</span>].
+Therefore, it appears that the quasicontact contribution is considerably more
+significant than the contact contribution in this calculation. It also helps
+close the large gap that has been present between the prediction of Jin et al.
+and other theoretical predictions that give the same scaling exponent but a much larger
+prefactor, such as the prediction $2^d \varphi_\text{th} \approx 6.26 d$ of Ref. [<span class="cite">parisi10</span>].
+Note that in cases in which the dynamic stability
+criteria of <span class="secref">sec_mrj</span> are satisfied with inequality rather than equality,
+quasicontacts are predicted to dominate.
+Note also that if the assumption (ii) is reinterpreted as an upper bound
+as in \eqref{eq:pbnd}, then the calculated density can be seen as a lower bound,
+$\nu\ge\max(1,\, \tilde{\nu}+\gamma-1)$.
+</p>
+<h2 class="section" id="sec_bravais"><span class="sectionnumber"></span>Quasicontacts in lattice packings</h2>
+<p>
+While the presence of quasicontacts turns out not necessarily to affect the
+asymptotic scaling exponent of the density in MRJ packings, 
+we show next that it does likely have an effect in marginally stable jammed
+Bravais lattice packings.
+Bravais lattice packings are periodic packings of spheres with one sphere
+per unit cell. Recently, we explored an ensemble of jammed (mechanically stable)
+Bravais lattices generated by a sequence of compressions in dimensions $d=15-24$ [<span class="cite">statlatt,marcotte,iel</span>].
+Almost all of these lattices were found to possess the bare minimum number
+of contacts required for mechanical stability of a Bravais lattice, namely $z=d(d+1)$,
+and the pair correlation and force distribution of these jammed lattices exhibited power-law tails.
+These findings suggest that these lattices are marginally stable with respect to both
+static and dynamics stability, and should therefore be regarded as
+an analog of MRJ packings in the context of Bravais lattices.
+Bravais lattices with the minimal contact number $z=d(d+1)$ are hyperstatic, since $z>2d$, and
+indeed they can remain mechanically stable even after an extensive number
+of contact constraints are relaxed. However, if any contact constraint is relaxed
+together with all of its periodic images, then the system loses its mechanical
+stability. Therefore, with the idea of considering a single unit cell as our
+system and the removal of one constraint entailing the removal of its images in
+all other unit cells, we will refer to these lattices as isostatic in this specific
+context, despite the fact that the packing as a whole is hyperstatic [<span class="cite">iel</span>]. 
+</p><p>
+The power-law tails of the pair correlation and force distribution function 
+were found to have dimensionally-independent exponents $\gamma=0.314\pm0.004$ and $\theta=0.371\pm0.010$ 
+respectively, and The prefactor of the quasicontact
+singularity was found to grow as a power law $A_d\sim d^{\tilde{\nu}}$,
+with $\tilde{\nu}=3.30\pm0.05$ [<span class="cite">iel</span>]. Before considering the effect of quasicontacts on the
+typical density of these lattices, we begin by translating the calculation of
+Ref. [<span class="cite">wyart</span>] to the context of Bravais lattices in order to derive a stability criterion
+in terms of the exponents $\gamma$, $\theta$, and $\tilde\nu$.
+</p><p>
+The problem of lattice sphere packing can be formulated as the problem of determining a symmetric, positive
+definite matrix $G$ of minimal determinant, such that $\langle\mathbf{n},G\mathbf{n}\rangle\ge1$
+for all nonzero integer vectors $\mathbf{n}\in\mathbb{Z}^d$ [<span class="cite">SPLAG</span>]. The centers of the spheres then
+take the positions $M\mathbf{n}$, where $M$ is some matrix such that $G=M^T M$, and
+the density is $\varphi=\tfrac{1}{d} 2^{-d} S_{d-1} (\det G)^{-1/2}$. The jammed packings occur as locally optimal
+solutions of this optimization problem, and such lattices are known as <em>extreme</em> lattices [<span class="cite">perfect</span>].
+The minimum number of contacts in an extreme lattice
+is $d(d+1)$, corresponding to equality between the number of degrees of freedom in $G$,
+$\tfrac{1}{2}d(d+1)$, and the number of active constraints
+(the constraints $\langle\mathbf{n},G\mathbf{n}\rangle\ge1$ and $\langle-\mathbf{n},G(-\mathbf{n})\rangle\ge1$
+are equivalent) [<span class="cite">perfect</span>]. Extreme lattices with this minimum
+contact number are called isostatic lattices [<span class="cite">iel</span>] or <em>minimally extreme</em> lattices [<span class="cite">kalluspack</span>].
+We label a set of integer vectors responsible for all inequivalent
+contacts as $\mathbf{n}_k$, $k=1,\ldots,d(d+1)/2$. From the method of Lagrange multipliers we
+have that at a local minimum 
+\begin{equation}
+    (\det G) G^{-1} = \sum f_k \mathbf{n}_k \mathbf{n}_k^T\text,
+    \label{eqn:force}
+\end{equation}
+where the contact forces $f_k$ are positive. The average force
+is $\langle f\rangle = 2(\det G)/(d+1)$ [<span class="cite">iel</span>].
+</p><p>
+For any contact $\mathbf{n}_i$ in a minimally extreme lattice, there is a motion
+$\delta G_i(s) = s G'_i$, such that
+$\langle \mathbf{n}_k, \delta G_i(s) \mathbf{n}_k\rangle = s \delta_{ik}$ for all $k=1,\ldots,d(d+1)/2$.
+This motion can continue until at some $s_c$, there is an integer vector $\mathbf{n}_c$ that does
+not correspond to an original contact and becomes a contact $\langle \mathbf{n}_c, (G+sG'_i)\mathbf{n}_c\rangle=1$.
+The identity $\det(1+X) = \exp(\sum_{n=1}^\infty\tfrac{(-1)^{n+1}}{n} \mathrm{tr} X^n)$ allows us to expand the determinant of $G+sG'_i$ 
+as a power series:
+\begin{equation}
+    \begin{aligned}
+	\frac{\det (G+sG'_i)}{\det G} %=& \det (1+s G^{-1} G'_i)\\
+	=&1 + s\mathrm{tr} G^{-1} G'_i \\
+	+\tfrac{s^2}{2} \left[(\mathrm{tr} G^{-1} G'_i)^2 -\right.
+	&\left.\mathrm{tr} G^{-1} G'_i G^{-1} G'_i \right] + o(s^2)\text.
+    \end{aligned}
+    \label{eqn:dV}
+\end{equation}
+We use <span class="eqnref">eqn_force</span> to obtain
+\begin{equation*}
+    \begin{aligned}
+	&(\det G)(\mathrm{tr} G^{-1} G'_i) =
+	\sum_k f_k \langle \mathbf{n}_k, G'_i \mathbf{n}_k\rangle = f_i\text, \\
+	&(\det G)^2(\mathrm{tr} G^{-1} G'_i G^{-1} G'_i) =
+	\sum_{j,k} f_j f_k \langle \mathbf{n}_j, G'_i \mathbf{n}_k\rangle^2\text.
+    \end{aligned}
+    \label{eqn:tr1} %\label{eqn:tr2}
+\end{equation*}
+Therefore, the change in the determinant of $G$ along the
+single-contact-breaking motion is given by $\delta(\det G) = f_i s - C_i s^2 +o(s^2)$, where
+\begin{equation}
+    C_i = \frac{1}{2\det G} \sum_{j\neq k} f_j f_k \langle \mathbf{n}_j, G'_i \mathbf{n}_k\rangle^2\text.
+\end{equation}
+The typical magnitude of $C_i$ is given by $C_i\sim d^4 (\det G)^{-1} \langle f\rangle^2$.
+For stability, we need $s_c$, the maximum physical extent of the motion associated with breaking a contact
+carrying a force of the order of the weakest force, to be smaller than the extent $s^*$ for which $\delta(\det G)=0$.
+Since we have $\sim d^2$ contacts, the smallest force is typically $f_\text{min}\sim d^{-2/(1+\theta)} \langle f\rangle$,
+where $\langle f\rangle \sim (\det G)/d$. If the average number of non-contact lattice points at a distance
+less than $r=1+\xi$ is $Z_\text{nc}(\xi) = A_d \xi^{1-\gamma}$ for $0&lt;\xi\ll 1$, then the width of the smallest gap is of order
+$\xi_\text{min} \sim A_d^{-1/(1-\gamma)}\sim d^{-{\tilde{\nu}}/(1-\gamma)}$. Therefore, for stability we require that
+$s^*\sim (d^{-2/(1+\theta)} \langle f\rangle)/(d^{4} \langle f\rangle^{2} (\det G)^{-1}) \sim d^{(5+3\theta)/(1+\theta)}$
+be of the same order or larger order than $d^{-{\tilde{\nu}}/(1-\gamma)}$. We have stability if
+${\tilde{\nu}} \ge (1-\gamma)(5+3\theta)/(1+\theta)$, and marginal stability in the case of equality.
+This inequality appears to be satisfied and nearly saturated based on the values of the
+exponents derived from numerical simulations in dimensions $d=15-24$: 
+$\tilde{\nu}=3.30\pm0.05$, $\gamma=0.314\pm0.004$, $\theta=0.371\pm0.010$
+and $(1-\gamma)(5+3\theta)/(1+\theta)=3.06\pm0.02$.
+</p>
+	<aside>
+	<strong>Figure <span class="figlabel">fig_dens</span>.</strong>
+	    Red circles: densities of disordered jammed packings as a function of dimension
+	    from Ref. [<span class="cite">charbcorwin</span>]. Blue crosses: densities of jammed Bravais lattice
+	    packings from Ref. [<span class="cite">iel</span>]. The black lines illustrate the scaling exponent
+	    predicted as a lower bound by the calculation of Appendix B.
+	</aside>
+	<div id="figdens"></div>
+<p>
+Since the principle of decorrelation applies also to lattice configurations
+[<span class="cite">decorr, iel</span>], the assumptions of the calculation of Jin et al. should
+apply for lattices in high dimensions to the same extent that they do for MRJ packings.
+For lattices with the minimum number of contacts required for mechanical stability,
+the contact number is $z=d(d+1)$. Therefore the
+calculation yields the density estimate (or lower bound, if the second
+assumption is interpreted as a bound) $\varphi\sim d^\nu 2^{-d}$,
+where $\nu = \max(2,\tilde{\nu}+\gamma-1)\approx2.61$.
+In this case the second term
+of the maximum dominates and the quasicontact abundance is predicted
+to have a significant effect on the asymptotic scaling of the density.
+However, as we observe in Appendix B, the effect of quasicontacts is
+only expected to dominate the effect of contacts in relatively high
+dimensions. The calculation
+suggests that the former overtakes the latter around $d\approx5000$,
+much higher than the dimensions explored thus far in simulations.
+</p><p>
+With this observation in mind, we should be careful in using
+low-dimensional data to extract high-dimensional scaling.
+However, it seems clear from the data that the densities
+of both MRJ packings and jammed Bravais lattice packings increase at a
+much higher rate than predicted by our calculation
+(see <span class="figref">fig_dens</span>). It is reasonable
+to conclude that the assumption (ii) neglects important anti-correlations
+in these packings. Nevertheless, the interpretation of our calculation
+as a lower bound is sound, since it is not expected that a less simplified
+approximation of $g(r)$ than that of assumption (i') would yield a
+dramatic decrease in the predicted density.
+</p>
+<h2 class="section" id="sec_edw"><span class="sectionnumber"></span>Breakdown of the Edwards ensemble <em>ansatz</em></h2>
+<p>
+Jammed lattice packings also provide a useful system for studying Edwards
+statistical mechanics. Edwards proposed to investigate granular materials by considering ensembles
+that bear a formal resemblance to classical thermodynamic ensembles but replace
+energy conservation with volume conservation [<span class="cite">edwards</span>]. The Edwards canonical ensemble
+gives a weight proportional to $\exp(-XV)$ to any mechanically stable configuration
+occupying a volume $V$ and zero weight to non-stable configurations.
+The compactivity $X$ takes the role of inverse-temperature in the classical
+canonical ensemble.
+For the case of lattices, the mechanically stable configurations correspond
+to extreme lattices. Voronoi proposed an algorithm to completely
+enumerate perfect lattices, a superset of extreme lattices, in a given dimension,
+and this full enumeration has been performed in dimensions up to $d=8$ 
+[<span class="cite">perfect8</span>]. In eight
+dimensions, there are 10,916 perfect lattices, out of which 858 are minimally
+extreme [<span class="cite">extreme8</span>]. We can therefore study the Edwards ensemble exactly for $d=8$.
+We focus on the distribution of contact forces, since the distribution
+of gaps is still far from continuous for $d=8$. In <span class="figref">fig_iso8f</span>, we show
+the distribution of contact forces in the Edwards ensemble for zero compactivity.
+Note that there appears to be a finite probability density at $f=0$, in contrast with
+the expected power-law behavior. We suspect that this is not only
+the case for zero compactivity, but unfortunately the available sample
+in $d=8$ is not large
+enough to discern a clear-cut violation of the power-law behavior
+for compactivities large enough so that only a small part of the
+sample has statistical weight. However, we note that the violation appears to persist even
+when looking at only the 200 densest minimally extreme lattices, but the statistical
+significance is much lower due to larger fluctuations.
+</p>
+	<aside>
+	<strong>Figure <span class="figlabel">fig_iso8f</span>.</strong>
+	    The distribution of contact forces over all contacts of all minimally extreme eight-dimensional lattices (green triangles)
+	    and in the 200 densest lattices (purple circles). The line shows the best fit truncated Gaussian as a guide for the eye.
+	</aside>
+	<div id="figiso8"></div>
+<p>
+<h2 class="section" id="sec_conc"><span class="sectionnumber"></span>Conclusion</h2>
+</p><p>
+In this paper we have investigated from a few different directions the power-law singularities
+of the pair correlation function near the contact distance and of contact force probability density
+near zero force. These singularities arise in MRJ packings and in their recently identified
+relatives, jammed Bravais lattice packings. In both cases, they appear to be signatures of
+the fact that these configurations lie at the margin between overconstraint and underconstraint
+in terms of dynamic stability, much like isostaticity is related to marginal mechanical stability.
+As we have seen in the case of Bravais lattice packings, power-law tails in the distributions
+of active constraints on the verge of becoming inactive and <em>vice versa</em> might also arise
+in other scenarios in which cost is minimized in a quenched frustrated system subject to many competing
+inequality constraints.
+</p><p>
+We showed that quasicontacts, the pairs of spheres contributing to the power-law singularity in the
+pair correlation function, become much more abundant at high dimensions than actual contacts. Since
+from a geometric, rather than a mechanical, perspective, quasicontacts can be nearly indistinguishable
+from contacts, they could have a significant effect on the geometric structure of MRJ packings
+in high dimension. Indeed, we show that a calculation of the density based on a simplified model
+of correlations predicts that contacts and quasicontacts both contribute to the leading term of
+the asymptotic dependence of the density on dimension, which is calculated to be $\varphi \sim d^\nu 2^{-d}$,
+with $\nu = 1$. In fact, it seems that the contribution due to quasicontacts is significantly
+larger than that due to contacts.
+Moreover, in the case of Bravais lattices, the calculation predicts that
+the quasicontact contribution dominates asymptotically.
+</p><p>
+Finally, we showed that in the case of Bravais lattices of dimensions not too high, it is possible to
+directly study the Edwards ensemble. We considered the distribution of contact forces in the Edwards ensemble
+of Bravais lattices in $d=8$, but we were unable to reproduce a power-law behavior for near-zero forces.
+As we have argued, the power-law behavior of weak contacts and quasicontacts is a consequence of dynamic effects,
+an end product of an unstable system driven out of equilibrium to the edge of stability, and we should not
+be surprised that a theory based on equilibrium methods positing only static stability does not reproduce it.
+</p><p>
+<strong>Acknowledgements.</strong> We thank &Eacute;tienne Marcotte for fruitful
+discussion and feedback.
+Y. K. would like to thank Patrick Charbonneau,
+Matthieu Wyart, and Francesco Zamponi for useful comments. 
+S. T. was supported in part
+by the Materials Research Science and Engineering Center
+Program of the National Science Foundation under Grant No.
+DMR-0820341 and by the Division of Mathematical Sciences
+at the National Science Foundation under Award No. DMS-1211087.
+This work was partially supported by a grant from the
+Simons Foundation (Grant No. 231015 to Salvatore Torquato).
+</p>
+<h2 class="appendix" id="app_A">Appendix <span class="appendixnumber"></span></h2>
+<p>
+In the main text we considered the stability of a disordered packing with
+respect to motions that break a weak contact and extend to the entire
+packing. In Ref. [<span class="cite">lerner</span>], the authors demonstrated the existence
+of contacts that lead to localized contact-breaking motions and claim
+that such contacts dominate the distribution of weakest contacts.
+As we showed in the main text, the contact force $f_{ij}$ is identified
+with the first-order derivative $\lim_{s\to 0} p\delta V(s)/s$ of the
+rate of work done upon opening the contact into a gap of width $s$,
+maintaining all other contacts. Lerner et al. decomposed the contact force
+$f_{ij}=b_{ij}w_{ij}$ into two factors: $b_{ij}$ measures how strongly
+the contact-breaking motion couples to the bulk, i.e., the extent to
+which a typical sphere in the packing moves in proportion to $s$; $w_{ij}$
+measures how much the bulk motion tends to increase the volume of the packing,
+i.e., how strongly it is coupled to the movement of spheres at the boundary in
+the direction orthogonal to the boundary. The case treated in the main
+text corresponds to the case in which the weak contact distribution is dominated
+by contacts with $b_{ij}\sim1$ and $w_{ij}$ is distributed according to 
+$P(w)\sim w^\theta$. In this appendix we treat the case in which $w_{ij}\sim1$
+and $b_{ij}$ is distributed according to $P(b)\sim b^\theta$.
+</p><p>
+While spheres in the bulk move by distances $\sim b s$, where $b\ll N^{-1/2}$,
+the number of spheres that move by distances $\sim s$ does not increase with
+the system size.
+However, because the average number of contacts around a sphere is $2d$,
+the number of spheres involved in the localized motion will increase with
+dimension as $\sim d$. Since the gap whose closing defines the physical
+extent $s_c$ of the motion is likely to be far away from the contact being
+opened, we have
+$s_c\sim\xi_{\text{min}}/b_{ij}\sim\xi_{\text{min}}/(f_{ij}/\langle f\rangle)$,
+where $\xi_\text{min}\sim (A_d N)^{-1/(1-\gamma)}$ is the smallest gap in the packing.
+Meanwhile, $C_{ij} = \lim_{s\to 0} \sum_{(k,l)\neq(i,j)} f_{kl}
+	||(\delta \mathbf{r}_k-\delta \mathbf{r}_l)_\text{tang}||^2/s^2$,
+the coefficient that controls the second-order change in volume,
+is dominated by the $\sim d$ spheres involved in the localized motion,
+which move a distance $\sim s$. Therefore, the typical value
+of $C_{ij}$ for these contacts is $\sim d \langle f\rangle$
+and $s^*\sim f_{ij}/C_{ij} \sim d^{-1}(f_{ij}/\langle f\rangle)$. For contact forces
+of the same order as the weakest contact,
+$f_\text{min}\sim(dN)^{-1/(1+\theta)}$, stability requires
+that $s_c\sim d^{-\tilde{\nu}/(1-\gamma)+1/(1+\theta)} N^{-1/(1-\gamma)+1/(1+\theta)}$
+be of the same order or smaller order than $s^*\sim d^{-1-1/(1+\theta)} N^{1/(1+\theta)}$.
+The conclusion is that the criteria for stability are
+$\gamma \ge (1-\theta)/2$ and $\tilde{\nu}\ge(1-\gamma)(3+\theta)/(1+\theta)$.
+If we assume equality in both cases, we obtain $\tilde{\nu}=2-\gamma$.
+Therefore, no matter which kind of contacts dominate the
+distribution of weakest contacts, we obtain the same prediction
+for the exponent controlling the dimensional growth of the
+abundance of quasicontacts.
+</p>
+<h2 class="appendix" id="app_B">Appendix <span class="appendixnumber"></span></h2>
+<p>
+In this appendix, we derive an asymptotic expression for the density
+of an MRJ packing in the limit of high dimensions by calculating
+the expected volume of the Voronoi region associated with a typical
+sphere in the packing. The calculation is based on two assumptions:
+(i') a simplified form \eqref{eq:grq} for the pair correlation that includes terms
+corresponding to contacts, quasicontacts, and bulk spheres, and (ii)
+a lack of significant correlations between spheres other than the pair correlations
+involving the central sphere whose Voronoi volume is being calculated. This
+latter assumption is expressed by the <em>ansatz</em> \eqref{eq:pexp}, which can alternatively
+be interpreted as a bound \eqref{eq:pbnd}.
+</p><p>
+The expected volume of the Voronoi region is given by
+\begin{equation}
+    \rho^{-1} = \langle v\rangle = \frac{2^{-d}S_{d-1}}{d} + \int_{c=\tfrac{1}{2}}^{\infty}  S_{d-1}c^{d-1} P(c) dc\text,
+    \label{eq:vint}
+\end{equation}
+where $P(c)$ is the probability that a point at a distance $c$ from the origin
+is inside the Voronoi region. Note that \eqref{eq:vint} simply reflects the
+additivity of the expectation value of the volume of intersection of the Voronoi region
+with any region of space, regardless of correlations. Therefore, it is exact in every
+dimension, provided a correct form of the function $P(c)$.
+</p><p>
+We use assumption (ii) to give an approximation of $P(c)$, the probability that
+the region $\Omega(c)$ contains no sphere centers (see <span class="figref">fig_vor</span>):
+\begin{equation}\begin{aligned}
+    P(c) &= \exp (-\langle N_{\Omega(c)}\rangle)\\
+    &= \exp\left(-\int_{r=1}^{2c} r^{d-1} \rho g(r) S_{d-1} f(\tfrac{r}{2c}) dr\right)\text,
+    \end{aligned}\label{eq:pcint}
+\end{equation}
+where $\Omega(c)$ is a spherical region of radius $c$ whose center is a distance $c$ from
+the origin, and $0\le f(\tfrac{r}{2c})\le1$ is the fraction of a spherical surface of radius $r$
+centered at the origin that intersects $\Omega(c)$. The fraction $f(x)$
+of the sphere at a latitude of less than $\arccos x$ from the pole
+is given by the integral
+\begin{equation}
+    f(x) = \frac{S_{d-2}}{S_{d-1}} \int_{t=x}^{1} (1-t^2)^{\tfrac{d-3}{2}}dt\text.
+    \label{eq:ft}
+\end{equation}
+</p><p>
+We may decompose $P(c)=P_B(c)P_C(c)P_Q(c)$ into independent terms
+corresponding to spheres in the bulk, contacts, and quasicontacts respectively.
+We have
+\begin{equation}\begin{aligned}
+    \log P_B(c) &= -\rho S_{d-1} \int_{r=1}^{2c} r^{d-1} f(\tfrac{r}{2c}) dr\\
+    &=-\tfrac{\rho}{d} S_{d-2} \int_{t=1/2c}^1(1-t^2)^{\tfrac{d-3}{2}}(2^d t^d c^d -1)dt\\
+    &=-\tfrac{\rho}{d} S_{d-1} [c^d(1-f(1-\tfrac{1}{2c^2}))  \\
+    &\quad + \tfrac{c S_{d-2}}{(d-1)S_{d-1}} (1-\tfrac{1}{4c^2})^{\tfrac{d-1}{2}} - f(\tfrac{1}{2c})]\text;
+    \end{aligned}\label{eq:pbc}
+\end{equation}
+</p><p>
+\begin{equation}
+    \log P_C(c) = -z f(\tfrac{1}{2c})\text;
+\end{equation}
+and
+\begin{equation}\begin{aligned}
+    \log P_Q(c) &= -(1-\gamma)A_d\int_{r=1}^{2c} (r-1)^{-\gamma} f(\tfrac{r}{2c}) dr\\& = - A_d h_\gamma(\tfrac{1}{2c})\text,
+    \end{aligned}\label{eq:pqc}
+\end{equation}
+where
+\begin{equation}
+    h_\gamma(x) = \frac{S_{d-2}}{S_{d-1}} \int_{t=x}^{1}(1-t^2)^{\tfrac{d-3}{2}} (\tfrac{t}{x}-1)^{1-\gamma}dt\text.
+\end{equation}
+Note that $f(x)=h_1(x)$.
+</p><p>
+We let $w=(2^d\varphi)^{-1}=d/(\rho S_{d-1})$ and obtain the equation which determines $w$ implicitly,
+\begin{equation}\begin{aligned}
+	1 &= \tfrac{2^{-d}}{w} + \tfrac{d}{w} \int_{c=\tfrac{1}{2}}^{\infty} c^{d-1} e^{-\tfrac{c^d}{w}+H(c;w)}dc\\
+	&=\tfrac{2^{-d}}{w} + \int_{y=\tfrac{2^{-d}}{w}}^{\infty} e^{-y+H(y^{1/d}w^{1/d};w)}dy\text,
+    \label{eq:sfy}\end{aligned}
+\end{equation}
+where 
+\begin{equation}\begin{aligned}
+    H(c;w) &= \frac{c^d}{w} f(1-\tfrac{1}{2c^2}) - \frac{cS_{d-2}}{(d-1)wS_{d-1}}(1-\tfrac{1}{4c^2})^{\tfrac{d-1}{2}}\\
+    &\quad+(\tfrac{1}{w} -z) f(\tfrac{1}{2c}) - A_d h_\gamma (\tfrac{1}{2c})\text.
+    \end{aligned}
+\end{equation}
+For large $d$, we expect that $2^{-d}/w\to0$ and we may write $\int_{y=0}^{\infty}e^{-y}e^H(y^{1/d}w^{1/d};w)dy\approx1$. Using
+the fact that $H(c;w)$ behaves nicely, we conclude that $w$ is such that $H(y^{1/d}w^{1/d};w)\approx0$ when $y\approx 1$.
+</p><p>
+We now turn to the task of approximating the functions $h_\gamma(x)$ and $f(x)=h_1(x)$ when $d\gg1$ and
+$x\mathrel{\mkern2.1mu\not\mkern-2.1mu\ll}1$. We write
+$(1-t^2)^{\tfrac{d-3}{2}}$ as $\tfrac{d-3}{2}\exp(\log (1-t^2))$ and use Laplace's
+method by expanding the argument of the exponential function about the point where it takes its largest 
+value in the integration domain, which in this case is the lower bound $t=x$:
+\begin{equation}\begin{aligned}
+    \log (1-t^2) &\approx \log(1-x^2) +\frac{x^2}{1+x^2}\\&- \frac{1+x^2}{(1-x^2)^2}\left[(t-x)+\frac{x(1-x^2)}{1+x^2}\right]^2\text.
+    \end{aligned}
+\end{equation}
+If we let $s = (d-3)^{\tfrac12}(1+x^2)^{\tfrac12}(t-x)/(1-x^2)$, we obtain an integral of the form
+\begin{equation}\begin{aligned}
+	h_\gamma(x)&\approx\frac{S_{d-2}(1-x^2)^{\tfrac{d-3}{2}+2-\gamma}} %e^{\tfrac{d-3}{2}\tfrac{x^2}{1+x^2}}
+	{S_{d-1}(d-3)^{\tfrac{2-\gamma}{2}}(1+x^2)^{\tfrac{2-\gamma}{2}}x^{1-\gamma}}\\
+		    &\quad\times e^{\tfrac{s_0^2}{2}}\int_{s=0}^{\infty} e^{-\tfrac{(s+s_0)^2}{2}}s^{1-\gamma}ds\text,
+    \end{aligned}
+\end{equation}
+where $s_0 = (d-3)^{\tfrac12}x/(1+x^2)^{\tfrac12}$. The last integral can be asymptotically expanded in
+powers of $1/s_0$ by performing a change of variables, expanding the resulting binomials,
+and integrating term by term. We only require the first term of the expansion:
+\begin{equation}\begin{aligned}
+    &e^{\tfrac{s_0^2}{2}}\int_{s=0}^{\infty}e^{-\tfrac{(s+s_0)^2}{2}}s^{1-\gamma}ds \\
+    &=\tfrac12 s_0^{2-\gamma}\int_{u=0}^{\infty}e^{-\tfrac{s_0^2}{2}u}
+    \left((1+u)^{\tfrac12}-1\right)^{1-\gamma} (1+u)^{-\tfrac12}du\\
+    &\approx \tfrac12 s_0^{2-\gamma}\int_{u=0}^{\infty}e^{-\tfrac{s_0^2}{2}u}(\tfrac12u)^{1-\gamma}du=s_0^{\gamma-2}\Gamma(2-\gamma)
+    \end{aligned}
+\end{equation}
+We therefore obtain the asymptotic forms for $h_\gamma(x)$ and $f(x)=h_1(x)$:
+\begin{align}
+%\begin{equation}\begin{aligned}
+    h_\gamma(x) &\approx \frac{S_{d-2}\Gamma(2-\gamma)(1-x^2)^{\tfrac{d+1}{2}-\gamma}}
+    {S_{d-1} (d-3)^{2-\gamma} x^{3-2\gamma}}\\
+    f(x) &\approx \frac{S_{d-2}(1-x^2)^{\tfrac{d-1}{2}}}{S_{d-1} (d-3) x}\text.
+    %\end{aligned}
+%\end{equation}
+\end{align}
+The latter of these agrees with the asymptotic form derived in Ref. [<span class="cite">jin</span>].
+Finally, then, we have that $H(w^{1/d};w)\approx0$, when
+\begin{equation}\begin{aligned}
+    &\frac{1}{2-w^{-\tfrac{2}{d}}}-\frac{d-3}{2d-2}+1-wz\\
+    &\quad-wA_d\Gamma(2-\gamma)\frac{(1-\tfrac14w^{-\tfrac{2}{d}})(2w^{\tfrac1d})^{2-2\gamma}}{(d-3)^{1-\gamma}}\approx0\text.
+    \end{aligned}
+\end{equation}
+So if $A_d\sim d^{\tilde{\nu}}$ and $z\sim d^{\nu_z}$, then $w\sim d^{-\nu}$, where $\nu=\max(\nu_z, \tilde{\nu}+\gamma-1)$.
+If the first argument of the maximum dominates we have $\varphi=2^{-d}/w\approx2^{-d}(2z/3)$,
+and if the second dominates we have $\varphi\approx2^{-d}(2^{1-2\gamma} \Gamma(2-\gamma)A_d d^{\gamma-1})$.
+</p><p>
+For jammed minimally extreme Bravais lattices, where $z=d(d+1)$,
+numerical data for $d=15-24$ suggests that $A_d\approx (1.43\times10^{-3})d^{3.30}$
+and $\gamma\approx0.314$. These values imply that in the limit of high dimensions, the density
+estimate given by this calculation is dominated by the effect of quasicontacts. However,
+note that $2^{1-2\gamma}\Gamma(2-\gamma)A_d d^{\gamma-1}\gg\tfrac23z$ only when
+$d\gg5000$. For lower dimensions, the effect of contacts dominates or the two effects are comparable.
+</p>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
+
+d3.selectAll("p").html(function(d) {
+    return d3.select(this).html()
+                          .replace(/``/,"\u201c")
+                          .replace(/''/,"\u201d");
+} );
+
+function funci() {
+    return function my(d) { 
+	    if (d>-1) return d;
+	    else {
+	       my.dat[my.ctr] = d3.select(this).text();
+	       return my.ctr++;
+	    }
+       };
+}
+
+var figd=[];
+var sel = d3.selectAll(".figlabel");
+var ff = funci(); ff.ctr = 1; ff.dat=figd;
+var figlabs = sel.data(d3.range(1,sel[0].length+1), ff);
+figlabs.text(function(d) {return d;});
+figlabs.append("a").attr("name",function(d) {return figd[d];});
+var figr=[], i=1;
+sel = d3.selectAll(".figref");
+ff = funci(); ff.ctr = 1; ff.dat=figr;
+var figrefs = sel.data(d3.range(1,sel[0].length+1), ff);
+figrefs.text("");
+figrefs.append("a").attr("href",function(d) {return "#"+figr[d];}).text(function(d) {return "Figure "+figd.indexOf(figr[d]);});
+
+</script>
+<script>
+
+var margin = {top: 20, right: 20, bottom: 30, left: 40},
+    width = 640 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+var xValue = function(d) { return d[0]; },
+    xScale = d3.scale.log().domain([2.,50.]).range([0,width]),
+    xMap = function(d) { return xScale(xValue(d)); },
+    xAxis = d3.svg.axis().scale(xScale).orient("bottom")
+            .tickValues([2,5,10,20,50]).tickFormat(d3.format("0f"));
+
+var yValue = function(d) { return d[1]; },
+    yScale = d3.scale.log().domain([3.,1100.]).range([height,0]),
+    yMap = function(d) { return yScale(yValue(d)); },
+    yAxis = d3.svg.axis().scale(yScale).orient("left").ticks(0,"e");
+
+var svg=d3.select("#figdens").append("svg")
+	.attr("width",width+margin.left+margin.right).attr("height",height+margin.top+margin.bottom)
+	.append("g").attr("transform","translate("+margin.left+","+margin.top+")");
+
+svg.append("g")
+    .attr("class","x axis")
+    .attr("transform","translate(0,"+height+")")
+    .call(xAxis)
+    .append("text")
+    .attr("class", "label")
+    .attr("x", width)
+    .attr("y",-6)
+    .style("text-anchor","end")
+    .style("font-size","1.4em")
+    .style("font-style","italic")
+    .text("d")
+
+var yk=svg.append("g")
+    .attr("class","y axis")
+    .call(yAxis);
+
+yk.selectAll(".tick text")
+    .text(null)
+    .filter(powerOfTen)
+    .text(10)
+    .append("tspan")
+    .attr("dy","-.7em")
+    .text(function(d) {return Math.round(Math.log(d) / Math.LN10); });
+
+function powerOfTen(d) {
+    return d / Math.pow(10, Math.ceil(Math.log(d) / Math.LN10 -1e-12)) === 1;
+}
+
+var yl=yk.append("text")
+    .attr("class", "label")
+    //.attr("transform","rotate(-90)")
+    .attr("x", 38)
+    .attr("y", 20)
+    //.attr("dy",".71em")
+    .style("text-anchor","end")
+    .style("font-size","1.4em")
+    .style("font-style","italic");
+yl.append("tspan").text("2");
+yl.append("tspan").attr("baseline-shift","super").text("d");
+yl.append("tspan").text("\u03C6");
+
+d3.text("pre2014b-images/charbonneau-phi.dat",function(text) {
+    var data = d3.tsv.parseRows(text).map(function(row) {
+	return row.map(function(value) {
+	    return +value;
+	});
+    });
+
+    svg.selectAll(".dot1")
+	.data(data)
+	.enter().append("circle")
+	.attr("class","dot")
+	.attr("r",2.5)
+	.attr("cx",xMap)
+	.attr("cy",yMap)
+	.style("fill","none").style("stroke","red");
+
+});
+
+d3.text("pre2014b-images/phid.dat",function(text) {
+    var data = d3.tsv.parseRows(text).map(function(row) {
+	return row.map(function(value) {
+	    return +value;
+	});
+    });
+
+    svg.selectAll(".dot2")
+	.data(data)
+	.enter().append("path")
+	.attr("class","dot")
+	.attr("d","M -2 -2 L 2 2 M -2 2 L 2 -2")
+	.attr("transform",function(d) {return "translate("+xMap(d)+","+yMap(d)+")";})
+	.style("fill","none").style("stroke","blue");
+
+});
+
+var pt = [[4,5],[14.5,18.125],[14,130],[29.96,946.94],[9.4,6.5],[35,300]];
+svg.append("path").attr("d","M "+xMap(pt[0])+" "+yMap(pt[0])+" L "+xMap(pt[1])+" "+yMap(pt[1]))
+   .style("fill","none").style("stroke","black");
+svg.append("path").attr("d","M "+xMap(pt[2])+" "+yMap(pt[2])+" L "+xMap(pt[3])+" "+yMap(pt[3]))
+   .style("fill","none").style("stroke","black");
+svg.append("text").attr("class",".tick text").style("text-anchor","end")
+   .attr("x",xMap(pt[4])).attr("y",yMap(pt[4])).text("slope = 1");
+svg.append("text").attr("class",".tick text").style("text-anchor","end")
+   .attr("x",xMap(pt[5])).attr("y",yMap(pt[5])).text("slope = 2.61");
+
+
+
+//\begin{figure}[t]
+//    \centering
+//    \scalebox{1.}{
+//	\tikzsetnextfilename{dens}
+//	\begin{tikzpicture}
+//	    \begin{loglogaxis}[
+//		    xlabel={$d$}, ylabel={$2^d\varphi$},
+//		    xmin=2., xmax=50.,
+//		    ymin=3, ymax=1100,
+//		    y label style={at={(0.05,0.5)}},
+//		    xticklabels = {$2$,$5$,$10$,$20$,$50$},
+//		    xtick={2,5,10,20,50}
+//		]
+//		\addplot[mark=o, color=red, only marks] table[x index=0,y index=1] {charbonneau-phi.dat};
+//		\addplot[mark=x, color=blue, only marks] table[x index=0,y index=1] {phid.dat};
+//		\node[] at (axis cs:8.4,6.5) {\scriptsize $\text{slope}=1$};
+//		\addplot[] coordinates { (4,5) (14.5,18.125)};
+//		\node[] at (axis cs:30,300) {\scriptsize $\text{slope}=2.61$};
+//		%\addplot[] coordinates { (14,130) (14.*2.14,130.*7.28417)};
+//		\addplot[] coordinates { (14,130) (29.96,946.94)};
+//		%\addplot[] {exp(-1.74758 + 3.0149*x - 1.58905*x^2)};
+//	    \end{loglogaxis}
+//	\end{tikzpicture}
+//    }
+//\end{figure}
+
+var svg2=d3.select("#figiso8").append("svg")
+	.attr("width",width+margin.left+margin.right).attr("height",height+margin.top+margin.bottom)
+	.append("g").attr("transform","translate("+margin.left+","+margin.top+")");
+
+margin = {top: 20, right: 20, bottom: 30, left: 40};
+width = 640 - margin.left - margin.right;
+height = 500 - margin.top - margin.bottom;
+
+var xValue2 = function(d) { return d[0]; },
+    xScale2 = d3.scale.linear().domain([0.,3.]).range([0,width]),
+    xMap2 = function(d) { return xScale2(xValue2(d)); },
+    xAxis2 = d3.svg.axis().scale(xScale2).orient("bottom");
+//            .tickValues([2,5,10,20,50]).tickFormat(d3.format("0f"));
+
+var yScale2 = d3.scale.linear().domain([0.,1.1]).range([height,0]),
+    yValue1 = function(d) { return d[1]; },
+    yValue2 = function(d) { return d[2]; },
+    yMap1 = function(d) { return yScale2(yValue1(d)); },
+    yMap2 = function(d) { return yScale2(yValue2(d)); },
+    yAxis2 = d3.svg.axis().scale(yScale2).orient("left");
+
+svg2.append("g")
+    .attr("class","x axis")
+    .attr("transform","translate(0,"+height+")")
+    .call(xAxis2)
+    .append("text")
+    .attr("class", "label")
+    .attr("x", width+margin.right-3)
+    .attr("y",-30)
+    .style("text-anchor","end")
+    .style("font-size","1.4em")
+    .style("font-style","italic")
+    .text("f/\u2329f\u232A")
+
+svg2.append("g")
+    .attr("class","y axis")
+    .call(yAxis2)
+    .append("text")
+    .attr("class", "label")
+    //.attr("transform","rotate(-90)")
+    .attr("x", 58)
+    .attr("y", 20)
+    //.attr("dy",".71em")
+    .style("text-anchor","end")
+    .style("font-size","1.4em")
+    .style("font-style","italic")
+    .text("\u2329f\u232AP(f)");
+
+d3.text("pre2014b-images/iso8f.dat",function(text) {
+    var data = d3.tsv.parseRows(text).map(function(row) {
+	return row.map(function(value) {
+	    return +value;
+	});
+    });
+
+    svg2.selectAll(".dot3")
+	.data(data)
+	.enter().append("circle")
+	.attr("class","dot")
+	.attr("r",1.5)
+	.attr("cx",xMap2)
+	.attr("cy",yMap2)
+	.style("fill","purple").style("stroke","none");
+    svg2.selectAll(".dot4")
+	.data(data)
+	.enter().append("path")
+	.attr("class","dot")
+	.attr("d","M -3 1.732 L 3 1.732 L 0 -3.464 L -3 1.732")
+	.attr("transform",function(d) {return "translate("+xMap2(d)+","+yMap1(d)+")";})
+	.style("fill","green").style("stroke","none");
+
+});
+
+var lineFunction = d3.svg.line().x(function(d) {return xScale2(d);})
+		    .y(function(d) {return yScale2(Math.exp(-1.74758 + 3.0149*d - 1.58905*d*d));})
+		    .interpolate("cardinal");
+
+var lineData = d3.range(0,3,0.1);
+
+svg2.append("path").attr("d", lineFunction(lineData)).attr("stroke","black").attr("fill","none").attr("stroke-width","2");
+
+
+
+//\begin{figure}[t]
+//    \centering
+//    \scalebox{1.}{
+//	\tikzsetnextfilename{iso8f}
+//	\begin{tikzpicture}
+//	    \begin{axis}[
+//		    xlabel={$f/\langle f\rangle$}, ylabel={$\langle f\rangle P(f)$},
+//		    xmin=0, xmax=3.,
+//		    ymin=0, ymax=1.1,
+//		    y label style={at={(0.05,0.5)}},
+//		    domain=0:3.
+//		]
+//		\addplot[mark=triangle*, mark size=1., color=green, only marks] table[x index=0,y index=1] {iso8f.dat};
+//		\addplot[mark=*, mark size=0.5, color=purple, only marks] table[x index=0,y index=2] {iso8f.dat};
+//		%\addplot[] {500*exp(-6.45811 + 13.5671 * x - 32.1783 * x^2)};
+//		\addplot[] {exp(-1.74758 + 3.0149*x - 1.58905*x^2)};
+//	    \end{axis}
+//	\end{tikzpicture}
+//    }
+//\end{figure}
+</script>
+</body>
+</html>

@@ -1,0 +1,351 @@
+<html> 
+  <head> 
+    <title>Tammes Cylinders</title> 
+    <link rel="stylesheet" href="../images/article.css" type="text/css" />
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+	extensions: ["tex2jax.js"],
+	jax: ["input/TeX","output/HTML-CSS"],
+	tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+      });
+    </script>
+    <script type="text/javascript" src="../MathJax/MathJax.js"></script>
+    <style> .par {font-size:1.2em} </style>
+
+  </head> 
+  <body> 
+    <script src="../js/three.min.js"></script> 
+    <script src="../js/OrbitControls.js"></script> 
+    <h1>Tammes cylinders</h1>
+    <p class="par">Arrange $k$ infinite cylinders of unit radius so that they are all tangent to a common sphere and no two overlap.
+    How small can the sphere be? For $k=6$ there are a couple of natural arrangements around a sphere of unit radius.
+    The first one is with all cylinders parallel and tangent at the equator:
+    </p>
+    <div id="container1" style="height:360px;width:720px;overflow:hidden;"></div>
+    <p class="par">The other one has cylinders tangent at the six vertices of an inscribed regular octahedron:</p>
+    <div id="container2" style="height:360px;width:720px;overflow:hidden;"></div>
+    <p class="par">Note that the first configuration is not stuck in place. Any three adjacent cylinders can start to rotate
+    together:</p>
+    <div id="container3" style="height:360px;width:720px;overflow:hidden;"></div>
+    <p class="par">Even though the configuration is not rigid, there does not seem to be a way to decrease the radius of the central sphere while
+    keeping all the tangencies. Is a unit-radius sphere the smallest one that allows six tangent unit cylinders without overlaps?</p>
+    <p class="par">Well, apparently not. The following configuration, found by <a href="http://page.mi.fu-berlin.de/moritz/">Moritz Firsching</a>,
+    has six unit cylinders around a sphere of radius $0.952690$. The configuration does not seem to have any symmetry. Is there a way to arrange
+    six unit cylinders around an even smaller sphere?</p>
+    <div id="container4" style="height:360px;width:720px;overflow:hidden;"></div>
+    <p class="par">Further reading: MathOverflow.net "<a href="http://mathoverflow.net/questions/156008/how-many-unit-cylinders-can-touch-a-unit-ball">How many unit cylinders can touch a unit ball?</a>"</p>
+<p>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/us/">Creative Commons Attribution 3.0 United States License</a></p>
+    <script>
+	var scenex1, camerax1, rendererx1, containerx1, controlsx1;
+	var materialx1, cylx1, sphrx1, lightx1;
+	var ms1x1,ms2x1,ms3x1,ms4x1,ms5x1,ms6x1,ms0x1;
+
+	var materialx2, cylx2, sphrx2, lightx2;
+	var scenex2, camerax2, rendererx2, containerx2, controlsx2;
+	var ms1x2,ms2x2,ms3x2,ms4x2,ms5x2,ms6x2,ms0x2;
+
+	var materialx3, cylx3, sphrx3, lightx3;
+	var scenex3, camerax3, rendererx3, containerx3, controlsx3;
+	var ms1x3,ms2x3,ms3x3,ms4x3,ms5x3,ms6x3,ms0x3;
+	var qx3;
+
+	var materialx4, cylx4, sphrx4, lightx4;
+	var scenex4, camerax4, rendererx4, containerx4, controlsx4;
+	var ms1x4,ms2x4,ms3x4,ms4x4,ms5x4,ms6x4,ms0x4;
+
+	function init() {
+
+	    materialx1 = new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.FlatShading } );
+	    cylx1 = new THREE.CylinderGeometry(20,20,200,48,24);
+	    sphrx1 = new THREE.SphereGeometry(20,32,32)
+	    materialx2 = new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.FlatShading } );
+	    cylx2 = new THREE.CylinderGeometry(20,20,200,48,24);
+	    sphrx2 = new THREE.SphereGeometry(20,32,32);
+	    materialx3 = new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.FlatShading } );
+	    cylx3 = new THREE.CylinderGeometry(20,20,200,48,24);
+	    sphrx3 = new THREE.SphereGeometry(20,32,32);
+	    materialx4 = new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.FlatShading } );
+	    cylx4 = new THREE.CylinderGeometry(20,20,200,48,24);
+	    sphrx4 = new THREE.SphereGeometry(20*0.952690,32,32);
+
+	    scenex1 = new THREE.Scene();
+	    camerax1 = new THREE.PerspectiveCamera( 60, 2., 1, 1000 );
+	    camerax1.position.z = 200;
+	    camerax1.position.x = 100;
+	    camerax1.position.y = 50;
+	    ms0x1 = new THREE.Mesh( sphrx1, materialx1 );
+	    ms1x1 = new THREE.Mesh( cylx1, materialx1 );
+	    ms2x1 = new THREE.Mesh( cylx1, materialx1 );
+	    ms3x1 = new THREE.Mesh( cylx1, materialx1 );
+	    ms4x1 = new THREE.Mesh( cylx1, materialx1 );
+	    ms5x1 = new THREE.Mesh( cylx1, materialx1 );
+	    ms6x1 = new THREE.Mesh( cylx1, materialx1 );
+	    ms1x1.position.x += 40;
+	    ms2x1.position.x += 40*0.5;
+	    ms2x1.position.z += 40*0.5*Math.sqrt(3);
+	    ms3x1.position.x += 40*0.5;
+	    ms3x1.position.z -= 40*0.5*Math.sqrt(3);
+	    ms4x1.position.x -= 40;
+	    ms5x1.position.x -= 40*0.5;
+	    ms5x1.position.z -= 40*0.5*Math.sqrt(3);
+	    ms6x1.position.x -= 40*0.5;
+	    ms6x1.position.z += 40*0.5*Math.sqrt(3);
+	    scenex1.add( ms0x1 );
+	    scenex1.add( ms1x1 );
+	    scenex1.add( ms2x1 );
+	    scenex1.add( ms3x1 );
+	    scenex1.add( ms4x1 );
+	    scenex1.add( ms5x1 );
+	    scenex1.add( ms6x1 );
+
+	    scenex2 = new THREE.Scene();
+	    camerax2 = new THREE.PerspectiveCamera( 60, 2., 1, 1000 );
+	    camerax2.position.z = 200;
+	    camerax2.position.x = 100;
+	    camerax2.position.y = 50;
+	    ms0x2 = new THREE.Mesh( sphrx2, materialx2 );
+	    ms1x2 = new THREE.Mesh( cylx2, materialx2 );
+	    ms2x2 = new THREE.Mesh( cylx2, materialx2 );
+	    ms3x2 = new THREE.Mesh( cylx2, materialx2 );
+	    ms4x2 = new THREE.Mesh( cylx2, materialx2 );
+	    ms5x2 = new THREE.Mesh( cylx2, materialx2 );
+	    ms6x2 = new THREE.Mesh( cylx2, materialx2 );
+	    ms1x2.position.x += 40;
+	    ms2x2.rotation.z += Math.PI/2.;
+	    ms2x2.position.z += 40;
+	    ms3x2.position.y += 40;
+	    ms3x2.rotation.x += Math.PI/2.;
+	    ms4x2.position.x -= 40;
+	    ms5x2.position.z -= 40;
+	    ms5x2.rotation.z += Math.PI/2.;
+	    ms6x2.position.y -= 40;
+	    ms6x2.rotation.x += Math.PI/2.;
+	    scenex2.add( ms0x2 );
+	    scenex2.add( ms1x2 );
+	    scenex2.add( ms2x2 );
+	    scenex2.add( ms3x2 );
+	    scenex2.add( ms4x2 );
+	    scenex2.add( ms5x2 );
+	    scenex2.add( ms6x2 );
+
+	    scenex3 = new THREE.Scene();
+	    camerax3 = new THREE.PerspectiveCamera( 60, 2., 1, 1000 );
+	    camerax3.position.set( 100,50,200 );
+	    camerax3.up = new THREE.Vector3(0,1,0);
+	    camerax3.lookAt( new THREE.Vector3(0,0,0) );
+	    ms0x3 = new THREE.Mesh( sphrx3, materialx3 );
+	    ms1x3 = new THREE.Mesh( cylx3, materialx3 );
+	    ms2x3 = new THREE.Mesh( cylx3, materialx3 );
+	    ms3x3 = new THREE.Mesh( cylx3, materialx3 );
+	    ms4x3 = new THREE.Mesh( cylx3, materialx3 );
+	    ms5x3 = new THREE.Mesh( cylx3, materialx3 );
+	    ms6x3 = new THREE.Mesh( cylx3, materialx3 );
+	    ms1x3.position.x += 40;
+	    ms2x3.position.x += 40*0.5;
+	    ms2x3.position.z += 40*0.5*Math.sqrt(3);
+	    ms3x3.position.x += 40*0.5;
+	    ms3x3.position.z -= 40*0.5*Math.sqrt(3);
+	    ms4x3.position.x -= 40;
+	    ms5x3.position.x -= 40*0.5;
+	    ms5x3.position.z -= 40*0.5*Math.sqrt(3);
+	    ms6x3.position.x -= 40*0.5;
+	    ms6x3.position.z += 40*0.5*Math.sqrt(3);
+	    scenex3.add( ms0x3 );
+	    scenex3.add( ms1x3 );
+	    scenex3.add( ms2x3 );
+	    scenex3.add( ms3x3 );
+	    scenex3.add( ms4x3 );
+	    scenex3.add( ms5x3 );
+	    scenex3.add( ms6x3 );
+
+	    scenex4 = new THREE.Scene();
+	    camerax4 = new THREE.PerspectiveCamera( 60, 2., 1, 1000 );
+	    camerax4.position.z = 240;
+	    ms0x4 = new THREE.Mesh( sphrx4, materialx4 );
+	    ms1x4 = new THREE.Mesh( cylx4, materialx4 );
+	    ms2x4 = new THREE.Mesh( cylx4, materialx4 );
+	    ms3x4 = new THREE.Mesh( cylx4, materialx4 );
+	    ms4x4 = new THREE.Mesh( cylx4, materialx4 );
+	    ms5x4 = new THREE.Mesh( cylx4, materialx4 );
+	    ms6x4 = new THREE.Mesh( cylx4, materialx4 );
+	    ms1x4.quaternion.multiply(new THREE.Quaternion(0., 1., 0., 0.));
+	    ms1x4.position.add(new THREE.Vector3(20*1.9526898378018518, 20*0, 20*0));
+	    ms2x4.quaternion.multiply(new THREE.Quaternion(-0.37045551977148083, 0.5784499530900988, 0.7267450444556911, 0.));
+	    ms2x4.position.add(new THREE.Vector3(20*-1.4861533249955103, 20*-0.7211529661267418, 20*-1.0412896652258363));
+	    ms3x4.quaternion.multiply(new THREE.Quaternion(-0.1704594318354019, 0.704807713097084, 0.6886143112492004, 0.));
+	    ms3x4.position.add(new THREE.Vector3(20*-0.09841628164227009, 20*-1.9498495328045022, 20*-0.037403369564537846));
+	    ms4x4.quaternion.multiply(new THREE.Quaternion(0.2661527085220711,0.6142989014503965, 0.7428321448505051, 0.));
+	    ms4x4.position.add(new THREE.Vector3(20*-1.599583060603791, 20*0.7966304016941671, 20*0.7872174315236062));
+	    ms5x4.quaternion.multiply(new THREE.Quaternion(-0.1292558129651874, 0.9881335877916132, -0.08297558371462524, 0.));
+	    ms5x4.position.add(new THREE.Vector3(20*0.8595161506777886, 20*0.5186804678590008, 20*1.6748731474015963));
+	    ms6x4.quaternion.multiply(new THREE.Quaternion(-0.32758259880916935, 0.924052471882259, 0.19701946646389495, 0.));
+	    ms6x4.position.add(new THREE.Vector3(20*0.5074430621195446, 20*1.18757640157299, 20*-1.464636893200778));
+	    scenex4.add( ms0x4 );
+	    scenex4.add( ms1x4 );
+	    scenex4.add( ms2x4 );
+	    scenex4.add( ms3x4 );
+	    scenex4.add( ms4x4 );
+	    scenex4.add( ms5x4 );
+	    scenex4.add( ms6x4 );
+
+	    lightx1 = new THREE.DirectionalLight( 0xffffff );
+	    lightx1.position.set( 1, 1, 1 );
+	    scenex1.add( lightx1 );
+	    lightx1 = new THREE.DirectionalLight( 0x002288 );
+	    lightx1.position.set( -1, -1, -1 );
+	    scenex1.add( lightx1 );
+	    lightx1 = new THREE.AmbientLight( 0x222222 );
+	    scenex1.add( lightx1 );
+
+	    lightx2 = new THREE.DirectionalLight( 0xffffff );
+	    lightx2.position.set( 1, 1, 1 );
+	    scenex2.add( lightx2 );
+	    lightx2 = new THREE.DirectionalLight( 0x002288 );
+	    lightx2.position.set( -1, -1, -1 );
+	    scenex2.add( lightx2 );
+	    lightx2 = new THREE.AmbientLight( 0x222222 );
+	    scenex2.add( lightx2 );
+
+	    lightx3 = new THREE.DirectionalLight( 0xffffff );
+	    lightx3.position.set( 1, 1, 1 );
+	    scenex3.add( lightx3 );
+	    lightx3 = new THREE.DirectionalLight( 0x002288 );
+	    lightx3.position.set( -1, -1, -1 );
+	    scenex3.add( lightx3 );
+	    lightx3 = new THREE.AmbientLight( 0x322222 );
+	    scenex3.add( lightx3 );
+
+	    lightx4 = new THREE.DirectionalLight( 0xffffff );
+	    lightx4.position.set( 1, 1, 1 );
+	    scenex4.add( lightx4 );
+	    lightx4 = new THREE.DirectionalLight( 0x002288 );
+	    lightx4.position.set( -1, -1, -1 );
+	    scenex4.add( lightx4 );
+	    lightx4 = new THREE.AmbientLight( 0x422222 );
+	    scenex4.add( lightx4 );
+
+	    rendererx1 = new THREE.WebGLRenderer();
+	    rendererx1.setClearColor( 0xddffdd, 1 );
+	    rendererx1.setSize( 720, 360 );
+	    controlsx1 = new THREE.OrbitControls( camerax1, rendererx1.domElement );
+	    controlsx1.damping = 0.2;
+	    controlsx1.addEventListener( 'change', renderx1 );
+	    containerx1 = document.getElementById('container1');
+	    containerx1.appendChild( rendererx1.domElement );
+
+	    rendererx2 = new THREE.WebGLRenderer();
+	    rendererx2.setClearColor( 0xddffdd, 1 );
+	    rendererx2.setSize( 720, 360 );
+	    controlsx2 = new THREE.OrbitControls( camerax2, rendererx2.domElement );
+	    controlsx2.damping = 0.2;
+	    controlsx2.addEventListener( 'change', renderx2 );
+	    containerx2 = document.getElementById('container2');
+	    containerx2.appendChild( rendererx2.domElement );
+
+	    rendererx3 = new THREE.WebGLRenderer();
+	    rendererx3.setClearColor( 0xddffdd, 1 );
+	    rendererx3.setSize( 720, 360 );
+	    //controlsx3 = new THREE.OrbitControls( camerax3, rendererx3.domElement );
+	    //controlsx3.damping = 0.2;
+	    //controlsx3.addEventListener( 'change', renderx3 );
+	    containerx3 = document.getElementById('container3');
+	    containerx3.appendChild( rendererx3.domElement );
+	    qx3 = new THREE.Quaternion();
+	    qx3.set(0.01,0,0,Math.sqrt(0.9999));
+
+	    rendererx4 = new THREE.WebGLRenderer();
+	    rendererx4.setClearColor( 0xddffdd, 1 );
+	    rendererx4.setSize( 720, 360 );
+	    controlsx4 = new THREE.OrbitControls( camerax4, rendererx4.domElement );
+	    controlsx4.damping = 0.2;
+	    controlsx4.addEventListener( 'change', renderx4 );
+	    containerx4 = document.getElementById('container4');
+	    containerx4.appendChild( rendererx4.domElement );
+
+	    /*controlsx1.rotateSpeed = 1.0;
+	    controlsx1.zoomSpeed = 1.2;
+	    controlsx1.panSpeed = 0.8;
+	    controlsx1.noZoom = false;
+	    controlsx1.noPan = false;
+	    controlsx1.staticMoving = true;
+	    controlsx1.dynamicDampingFactor = 0.3;
+	    controlsx1.keys = [ 65, 83, 68 ];
+	    controlsx1.addEventListener( 'change', renderx1 );
+
+	    controlsx2.rotateSpeed = 1.0;
+	    controlsx2.zoomSpeed = 1.2;
+	    controlsx2.panSpeed = 0.8;
+	    controlsx2.noZoom = false;
+	    controlsx2.noPan = false;
+	    controlsx2.staticMoving = true;
+	    controlsx2.dynamicDampingFactor = 0.3;
+	    controlsx2.keys = [ 65, 83, 68 ];
+	    controlsx2.addEventListener( 'change', renderx2 );
+
+	    controlsx4.rotateSpeed = 1.0;
+	    controlsx4.zoomSpeed = 1.2;
+	    controlsx4.panSpeed = 0.8;
+	    controlsx4.noZoom = false;
+	    controlsx4.noPan = false;
+	    controlsx4.staticMoving = true;
+	    controlsx4.dynamicDampingFactor = 0.3;
+	    controlsx4.keys = [ 65, 83, 68 ];
+	    controlsx4.addEventListener( 'change', renderx4 );*/
+
+	}
+
+	var renderx1 = function () {
+		rendererx1.render( scenex1, camerax1 );
+	}
+
+	var renderx2 = function () {
+		rendererx2.render( scenex2, camerax2 );
+	}
+
+	var renderx3 = function () {
+		rendererx3.render( scenex3, camerax3 );
+	}
+
+	var renderx4 = function () {
+		rendererx4.render( scenex4, camerax4 );
+	}
+
+	var animatex1 = function () {
+	    requestAnimationFrame( animatex1 );
+	    controlsx1.update()
+	}
+
+	var animatex2 = function () {
+	    requestAnimationFrame( animatex2 );
+	    controlsx2.update()
+	}
+
+	var animatex4 = function () {
+	    requestAnimationFrame( animatex4 );
+	    controlsx4.update()
+	}
+
+	var animatex3 = function () {
+	    requestAnimationFrame( animatex3 );
+	    ms1x3.quaternion.multiply(qx3);
+	    ms2x3.quaternion.multiply(qx3);
+	    ms3x3.quaternion.multiply(qx3);
+	    ms1x3.position.applyQuaternion(qx3);
+	    ms2x3.position.applyQuaternion(qx3);
+	    ms3x3.position.applyQuaternion(qx3);
+	    ms1x3.updateMatrix();
+	    ms2x3.updateMatrix();
+	    ms3x3.updateMatrix();
+	    //controlsx3.update()
+	    renderx3();
+	}
+
+	init();
+	renderx1();
+	renderx2();
+	renderx4();
+	animatex3();
+
+    </script> 
+  </body> 
+</html>

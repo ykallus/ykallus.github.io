@@ -1,0 +1,278 @@
+<html lang="en">
+<head>
+<title>The Arctic Circle</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="../images/article.css" type="text/css" />
+<body>
+    <h1>The Arctic Circle</h1>
+    <p class="par"> This Markov Chain Monte Carlo simulation converges at large enough times to the uniform
+    distribution over tilings of the hexagon by 60&deg; rhombuses. It has been shown by
+    <a href="http://www.emis.ams.org/journals/NYJM/j/1998/4-10.html">Cohn, Larsen, and Propp</a> that in the
+    limit of large hexagons, the tiles outside the inscribed circle are frozen, forming an arctic circle</p>
+
+    <div id="fig"><svg></svg></div>
+
+    <p>N = <input type="text" value="12" onkeydown="clearTimeout(nto); nto=setTimeout(changen,1000);" id="inpn" style="width:6em">
+    redraws = <input type="text" value="10" onkeyup="mxit=this.value;" id="mxit" style="width:6em"></p>
+    <p>MC steps per redraw = <input type="text" value="1" onkeyup="mcst=this.value;" id="mcst" style="width:6em"></p>
+    <p><input type="checkbox" id="shlm" onchange="ch.lm.attr('visibility',this.checked?'visible':'hidden');"> show limit shape
+    <input type="checkbox" id="shmn" onchange="chshmn=this.checked; if(chshmn) ch.updatem(ch.data,false); else ch.update(ch.data,false); this.checked=chshmn;"> show means</p>
+    <p><button onclick="mcf.iter=0;mcf.max_iter=mxit;d3.timer(mcf)">run</button>
+    <button onclick="mcf.max_iter=-1;">stop</button>
+    <button onclick="ch.data=init(5,ch.rang,chart.N);ch.update(ch.data,true);">init1</button>
+    <button onclick="ch.data=init(2,ch.rang,chart.N);ch.update(ch.data,true);">init2</button>
+    <button onclick="ch.data=init(3,ch.rang,chart.N);ch.update(ch.data,true);">init3</button>
+    <button onclick="denum=0;">clear means</button></p>
+
+<p>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/us/">Creative Commons Attribution 3.0 United States License</a></p>
+
+<script src="../js/d3.v3.min.js"></script>
+<script>
+
+var nto = null;
+var mxit=10;
+var mcst=1;
+var chshmn=false;
+
+colors = ["steelblue","indianred","gold"];
+chex = [ [0x46,0x82,0xB4], [0xCD,0x5C,0x5C], [0xFF,0xD7,0x00] ];
+directions = [ [0,0,0], [0,0,1], [-1,0,0], [-1,-1,1], [-1,-1,0], [0,-1,1] ];
+
+function make_rng(mode,N) {
+    var rng = [];
+    if (mode==1) {
+	d3.range(N).forEach(function(i) {
+	    d3.range(N+i+1).forEach(function(j) {
+		rng.push([i,j,0]);
+		if (j<N+i) rng.push([i,j,1]);
+	    });
+	});
+	d3.range(N,2*N).forEach(function(i) {
+	    d3.range(i-N,2*N).forEach(function(j) {
+		if (j>i-N) rng.push([i,j,0]);
+		rng.push([i,j,1]);
+	    });
+	});
+    }
+    else if (mode==2) {
+	var M = ~~(N/2);
+	d3.range(M).forEach(function(i) {
+	    d3.range(M-i-1,M+2*i+1).forEach(function(j) {
+		rng.push([i,j,0]);
+		if (j<M+2*i) rng.push([i,j,1]);
+	    });
+	});
+	d3.range(M-1,3*M-1).forEach(function(i) {
+	    d3.range(~~((i+1-M)/2),~~((i-1+5*M)/2)).forEach(function(j) {
+		if ((j>(~~((i+1-M)/2))) || (i%2)==(M+1)%2) rng.push([i,j,0]);
+		if ((j<(~~((i-1+5*M)/2))-1) || (i%2)==(M+0)%2) rng.push([i,j,1]);
+	    });
+	});
+    	d3.range(3*M-2,4*M-2).forEach(function(i) {
+	    d3.range(2*i-5*M+3,7*M-i-4).forEach(function(j) {
+		if (j>2*i-5*M+3) rng.push([i,j,0]);
+		rng.push([i,j,1]);
+	    });
+	});
+    }
+    else if (mode==3) {
+	var M = ~~(N/2);
+	d3.range(M).forEach(function(i) {
+	    d3.range(M-i-1,M+2*i+2).forEach(function(j) {
+		rng.push([i,j,0]);
+		if (j<M+2*i+1) rng.push([i,j,1]);
+	    });
+	});
+	d3.range(M-1,3*M+1).forEach(function(i) {
+	    d3.range(~~((i+1-M)/2),~~((i+1+5*M)/2)).forEach(function(j) {
+		if ((j>(~~((i+1-M)/2))) || (i%2)==(M+1)%2) rng.push([i,j,0]);
+		if ((j<(~~((i+1+5*M)/2))-1) || (i%2)==(M+0)%2) rng.push([i,j,1]);
+	    });
+	});
+    	d3.range(3*M+1,4*M).forEach(function(i) {
+	    d3.range(2*i-5*M,7*M-i).forEach(function(j) {
+		if (j>2*i-5*M) rng.push([i,j,0]);
+		rng.push([i,j,1]);
+	    });
+	});
+    }
+    return rng;
+}
+
+function init(mode,rng,N){
+    var i,j,k;
+    var fr = function(d) {return d[0]+","+d[1]+","+d[2];};
+    var r = make_rng(3,N).map(fr);
+    return rng.reduce(function(dat,d) {
+	    if (mode==0) dat[d] = 0;
+	    if (mode==1) {
+		var M = ~~(N/2);
+		if (d[0]+d[1]<2*N) {i = d[0]; j= d[1]; k=d[2];}
+		else {i = 2*N-1-d[0]; j = 2*N-1-d[1]; k=1-d[2];}
+		if ((i<M) && (j<M)) dat[d]=(k==0?1:1);
+		else if ((i>=M) && (j<i)) {
+		    if (j<i-M) {
+			if (j>=M) dat[d]=1;
+			else dat[d]=(k==0?0:0);
+		    }
+		    else if (j==i-M) {
+			if (j<M) dat[d]=(k==0?0:2);
+	                else dat[d]=1
+		    }
+		    else {
+	                if (i<2*M) dat[d]=(k==0?2:2);
+	                else dat[d]=1;
+		    }
+		}
+		else if ((i>=M) && (j==i)) dat[d]=(k==0?2:0);
+		else if ((j>i)) {
+		    if (j>i+M) {
+			if (i<M) dat[d]=2;
+			else dat[d]=1;
+		    }
+		    else if (j==i+M) {
+			if (i<M) dat[d]=(k==0?0:2);
+			else dat[d]=1;
+		    }
+		    else {
+			if (j<2*M) dat[d]=0;
+			else dat[d]=1;
+		    }
+		}
+	    }
+	    if (mode==2) {
+		i = d[0]; j= d[1];
+		if ((i<N) && (j<N)) dat[d]=(d[2]==0?1:1);
+		else if ((i>=N) && (j<i)) dat[d]=(d[2]==0?2:2);
+		else if ((i>=N) && (j==i)) dat[d]=(d[2]==0?2:0);
+		else dat[d]=0;
+	    }
+	    if (mode==3) {
+		i = 2*N-1-d[0]; j= 2*N-1-d[1];
+		if ((i<N) && (j<N)) dat[d]=(d[2]==0?1:1);
+		else if ((i>=N) && (j<i)) dat[d]=(d[2]==0?2:2);
+		else if ((i>=N) && (j==i)) dat[d]=(d[2]==0?0:2);
+		else dat[d]=0;
+	    }
+	    if (mode==4) {
+		i = d[0]+d[1]+N;
+		if (i%3==0) dat[d]=(d[2]==0?0:1);
+		else if (i%3==1) dat[d]=(d[2]==0?1:0);
+		else if (i%3==2) dat[d]=(d[2]==0?2:2);
+	    }
+	    if (mode==5) {
+		if (r.indexOf(fr(d))>-1) {
+		    i = d[0]+d[1]+N;
+		    if (i%3==0) dat[d]=(d[2]==0?0:1);
+		    else if (i%3==1) dat[d]=(d[2]==0?1:0);
+		    else if (i%3==2) dat[d]=(d[2]==0?2:2);
+		}
+		else {
+		    if (d[0]+d[1]<N/2) dat[d]=2;
+		    else if (d[0]+d[1]>=7*N/2) dat[d]=2;
+		    else if (d[1]<N/2) dat[d]=0;
+		    else if (d[1]>=3*N/2) dat[d]=0;
+		    else dat[d]=1;
+		}
+	    }
+	    return dat;
+    },{});
+}
+
+function dimera() {
+    return function my() {
+	var width = 640,
+	    height = ~~(width*Math.sqrt(3.)/2.)+1;
+	var s = width/(2.*my.N);
+
+	var svg=d3.select("#fig").append("svg")
+		.attr("width",width).attr("height",height)
+		.append("g").attr("transform","matrix("+s+",0,"+(-s/2.)+(-s*Math.sqrt(3.)/2.)+","+(s*my.N/2.)+","+height+")");
+	var rng = make_rng(1,my.N);
+	var pm = svg.selectAll("path").data(rng);
+	var dt = init(5,rng,my.N);
+	pm.enter().append("path").attr("d",function(d) {
+	    if (d[2]==0) return "M "+d[0]+","+d[1]+" l 1,0 l 0,1 l -1,-1";
+	    else return "M "+d[0]+","+d[1]+" l 0,1 l 1,0 l -1,-1";
+	}).attr("fill",function(d) {return colors[dt[d]];}).attr("stroke",function(d) {return colors[dt[d]];})
+        .attr("stroke-width",1./s);
+
+	var upd = function(dtt,tr) {
+	    document.getElementById("shmn").checked = false; 
+	    pm.attr("fill",function(d) {return colors[dtt[d]];}).attr("stroke",function(d) {return colors[dtt[d]];});
+	};
+
+	var updm = function(dtt,tr) {
+	    var fnc = function(d) {
+		var c = 256*256*(~~(mean0[d]*chex[0][0]+mean1[d]*chex[1][0]+mean2[d]*chex[2][0]));
+		c += 256*(~~(mean0[d]*chex[0][1]+mean1[d]*chex[1][1]+mean2[d]*chex[2][1]));
+		c += (~~(mean0[d]*chex[0][2]+mean1[d]*chex[1][2]+mean2[d]*chex[2][2]));
+		return "#"+c.toString(16)
+	    };
+	    pm.attr("fill",fnc).attr("stroke",fnc);
+
+	}
+
+	/*var lineFunction = d3.svg.line().x(function(d) {return my.N*(1.+Math.sin(d+Math.PI/3.));})
+			    .y(function(d) {return my.N*(1.+Math.sin(d));})
+			    .interpolate("cardinal");*/
+
+	var lineFunction = d3.svg.line().x(function(d) {return my.N*(1.+(1.-1./my.N)*Math.sin(d+Math.PI/3.));})
+			    .y(function(d) {return my.N*(1.+(1.-1./my.N)*Math.sin(d));})
+			    .interpolate("cardinal");
+
+	var pathlm=svg.append("path").attr("d", lineFunction(d3.range(0.,2.*Math.PI,0.01))).attr("stroke","black").attr("fill","none").attr("stroke-width",2./s).attr("visibility",document.getElementById("shlm").checked?'visible':'hidden');
+
+	return {data: dt, dots: pm, rang:rng, area: svg, update: upd, updatem: updm, lm: pathlm};
+    };
+}
+
+var chart = dimera();
+var ch, mean0, mean1, mean2, denum;
+
+function changen() {
+    d3.select("#fig").select("svg").remove();
+    chart.N = 2*(~~(document.getElementById("inpn").value/2));
+    ch = chart();
+    mean0 = init(0,ch.rang,chart.N);
+    mean1 = init(0,ch.rang,chart.N);
+    mean2 = init(0,ch.rang,chart.N);
+    denum = 0;
+}
+changen();
+
+function mcmc_callback() {
+    return function my() {
+	var dt = ch.data;
+	var N = chart.N;
+	var x,y,ng,t;
+	d3.range(mcst).forEach(function(i) {
+	  x = ~~(2*N*Math.random());
+	  y = ~~(2*N*Math.random());
+	  ng = directions.map(function(d) { return [x+d[0],y+d[1],d[2]]; });
+	  if (ng.every(function(d) {return (d in dt);})) {
+	      if (ng.reduce(function(cnt,d) { cnt[dt[d]]++; return cnt; }, [0,0,0]).every(function (d) {return d==2;})) {
+		  d3.range(3).forEach(function (i) {
+		      t=dt[ng[i]]; dt[ng[i]]=dt[ng[i+3]]; dt[ng[i+3]]=t;
+		  });
+	      }
+	  }
+	});
+	ch.rang.forEach(function(d) {
+	    mean0[d] = (mean0[d]*denum+(dt[d]==0?1:0))/(denum+1.);
+	    mean1[d] = (mean1[d]*denum+(dt[d]==1?1:0))/(denum+1.);
+	    mean2[d] = (mean2[d]*denum+(dt[d]==2?1:0))/(denum+1.);
+	});
+	denum++;
+	ch.update(dt,false);
+	my.iter++;
+      
+	return (my.iter >= my.max_iter);
+    }
+}
+
+var mcf = mcmc_callback();
+
+</script>
+</body>
+</html>

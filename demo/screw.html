@@ -1,0 +1,139 @@
+<html> 
+  <head> 
+    <title>Screw Packing</title> 
+    <link rel="stylesheet" href="../images/article.css" type="text/css" />
+    </script>
+    <style> .par {font-size:1.2em} </style>
+
+  </head> 
+  <body> 
+    <script src="../js/three.min.js"></script> 
+    <script src="../js/TrackballControls.js"></script> 
+    <input type="range" min="0" max="100" id="angle" value="0" style="width:720px" oninput="slide(this.value)">
+    <div id="container1" style="height:720px;width:720px;overflow:hidden;"></div>
+    <!--<p><img onclick="showcap(this);" src="images/header-image.jpg" id="cap" style="height:720px;width:720x;overflow:hidden;"></img></p>--!>
+    <script>
+	var scenex1, camerax1, rendererx1, containerx1, controlsx1;
+	var materialx1, cylx1, cylx2, lightx1, shape, scrx1, opts, spline;
+	var pts1,pts2;
+	var ms1,mt1,mk1,ob;
+
+	var r0=50,r1=20,r2=5,h0=100,h1=60,t1=2,c0=100,c1=100,c2=20,h2=50;
+	var r3=10,r4=40,h3=10;
+	var i,j,k,l;
+	var clock = new THREE.Clock();
+
+	function init() {
+
+	    materialx1 = [];
+	    materialx1.push( new THREE.MeshLambertMaterial( { color: 0x00ffff, shading: THREE.FlatShading } ) );
+	    materialx1.push( new THREE.MeshLambertMaterial( { color: 0xffff00, shading: THREE.FlatShading } ) );
+	    cylx1 = new THREE.CylinderGeometry(r0,r0,h0,c0,1);
+	    cylx2 = new THREE.CylinderGeometry(r3,r3,h3,c2,1);
+	    pts1 = [];
+	    pts2 = [];
+	    for ( i=0; i<c1; i++ ) {
+		pts1.push( new THREE.Vector3 ( Math.cos(2*i/c1*t1*Math.PI)*r1, i*h1/c1, Math.sin(2*i*t1/c1*Math.PI)*r1) );
+	    }
+	    for ( i=0; i<c2; i++ ) {
+		pts2.push( new THREE.Vector2 ( Math.cos(2*i*Math.PI/c2)*r2, Math.sin(2*i*Math.PI/c2)*r2) );
+	    }
+
+            spline = new THREE.SplineCurve3(pts1);
+	    shape = new THREE.Shape(pts2);
+	    opts = { steps : c1*10, extrudePath : spline }
+	    scrx1 = new THREE.ExtrudeGeometry(shape,opts)
+
+	    scenex1 = new THREE.Scene();
+	    camerax1 = new THREE.PerspectiveCamera( 60, 1., 1, 1000 );
+	    camerax1.position.x = 0;
+	    camerax1.position.y = 0;
+	    camerax1.position.z = 550;
+	    ms1 = []; mt1 = []; mk1 = []; ob = [];
+	    l=0;
+	    for (k=-1; k<2; k++) { for (i=-1; i<2; i++) { for (j=-1; j<2; j++) {
+		ms1.push( new THREE.Mesh( scrx1, materialx1[(k+2)%2] ) );
+		mt1.push( new THREE.Mesh( cylx1, materialx1[(k+2)%2] ) );
+		mk1.push( new THREE.Mesh( cylx2, materialx1[(k+2)%2] ) );
+		ms1[l].position.add(new THREE.Vector3(0,h0/2.-r2,0));
+		mk1[l].position.add(new THREE.Vector3(r4,(h0+h3)/2.,0));
+		//mt1[l].rotation.x += Math.PI/2.;
+		ob.push( new THREE.Object3D() );
+		ob[l].add(ms1[l]);
+		ob[l].add(mt1[l]);
+		ob[l].add(mk1[l]);
+
+		//mt1[l].position.add(new THREE.Vector3(j*r0,0,j*r0*Math.sqrt(3.)));
+		//mt1[l].position.add(new THREE.Vector3(0,k*(h0+h2),0));
+		//mt1[l].position.add(new THREE.Vector3(2*i*r0,0,0));
+		ob[l].position.add(new THREE.Vector3(0,k*(h0+h2),0));
+		ob[l].position.add(new THREE.Vector3(2*i*r0,0,0));
+		ob[l].position.add(new THREE.Vector3(j*r0,0,j*r0*Math.sqrt(3.)));
+		scenex1.add( ob[l] );
+		l++;
+	    }	}    }
+
+	    lightx1 = new THREE.DirectionalLight( 0xffffff );
+	    lightx1.position.set( 1, 1, 1 );
+	    scenex1.add( lightx1 );
+	    lightx1 = new THREE.DirectionalLight( 0x002288 );
+	    lightx1.position.set( -1, -1, -1 );
+	    scenex1.add( lightx1 );
+	    lightx1 = new THREE.AmbientLight( 0x222222 );
+	    scenex1.add( lightx1 );
+
+	    rendererx1 = new THREE.WebGLRenderer({preserveDrawingBuffer:true});
+	    rendererx1.setClearColor( 0xffffff, 1 );
+	    rendererx1.setSize( 720, 720 );
+	    //controlsx1.damping = 0.2;
+	    containerx1 = document.getElementById('container1');
+	    containerx1.appendChild( rendererx1.domElement );
+	    controlsx1 = new THREE.TrackballControls( camerax1, rendererx1.domElement );
+	    controlsx1.rotateSpeed = 10.0; controlsx1.zoomSpeed = 12; controlsx1.panSpeed = 8;
+	    controlsx1.noZoom = false; controlsx1.noPan = false;
+	    controlsx1.staticMoving = true; controlsx1.dynamicDampingFactor=0.3;
+	    controlsx1.target.set(0,0,0);
+	    //controlsx1.addEventListener( 'change', renderx1 );
+
+	}
+
+	function renderx1() {
+		rendererx1.render( scenex1, camerax1 );
+	}
+
+	function animatex1() {
+	    var delta = clock.getDelta();
+	    requestAnimationFrame( animatex1 );
+	    controlsx1.update(delta)
+	    renderx1();
+	}
+
+	var oldval = 0;
+	function slide(val) {
+	    var dval = 0.01*(val - oldval)*(h2-h3);
+	    l=0;
+	    for (k=-1; k<2; k++) { for (i=-1; i<2; i++) { for (j=-1; j<2; j++) {
+		//mt1[l].position.add(new THREE.Vector3(0,-k*dval,0));
+		//ms1[l].position.add(new THREE.Vector3(0,-k*dval,0));
+		//mt1[l].rotation.y += 2*Math.PI*t1*dval*k/h2;
+		//ms1[l].rotation.y += 2*Math.PI*t1*dval*k/h2;
+		ob[l].position.add(new THREE.Vector3(0,-k*dval,0));
+		//ob[l].rotation.y += 2*Math.PI*t1*dval*k/h2;
+		ob[l].rotateOnAxis(new THREE.Vector3(0,1,0), 2*Math.PI*t1*dval*k/h2);
+		l++;
+	    }	}    }
+
+	    oldval = val;
+	    renderx1();
+	}
+        function showcap(img){
+	    img.src = rendererx1.domElement.toDataURL("image/png");
+	}
+
+	init();
+	renderx1();
+	animatex1();
+
+    </script> 
+  </body> 
+</html>

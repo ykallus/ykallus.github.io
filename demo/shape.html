@@ -1,0 +1,279 @@
+<html> 
+  <head> 
+    <title>Pessimal Packing Shape in the Plane</title> 
+    <link rel="stylesheet" href="../images/article.css" type="text/css" />
+    <style> .par {font-size:1.2em} </style>
+
+  </head> 
+  <body> 
+    <h1>Pessimal Packing Shape in the Plane</h1>
+    <p class="par">In my paper <a href="http://tuvalu.santafe.edu/~yoav/gt2014.html">Pessimal Packing Shapes</a>,
+    I put forward a conjecture that any convex shape in the plane can be packed more densely than
+    can regular heptagons using a <a href="https://en.wikipedia.org/wiki/Double_lattice">double lattice</a> construction.
+    However, I would be delighted to be proven wrong. I wrote this little javascript program to construct
+    double lattice packing arrangements of convex shapes.</p>
+    
+    <p class="par">I give you control of 14 polygon vertices. You cannot make an arbitrary convex shape, but you have
+    considerable freedom. (If you want more control points, feel free to download and modify the page source code).
+    A packing arrangement is constructed in real time and the density is displayed
+    at the bottom of the page.</p>
+
+    <p class="par">Can you make a convex shape whose best packing is not as dense as the best packing of the regular heptagon?
+    The number to beat is 0.892690686&#8230;. If you succeed, copy the coordinates specifying the shape you constructed.</p>
+    <div style="width:720;height:370;border:1px solid #000000;overflow:hidden;" id="svg1">
+    </div>
+    <p id="res">
+    shape area: <span id="area"></span><br>
+    unit cell area: <span id="det"></span><br>
+    density: <span id="dens"></span><br>
+    coordinates: <span id="crd"></span>
+    </p>
+
+    <p class="par"> Further reading: <a href="https://golem.ph.utexas.edu/category/2014/09/a_packing_pessimization_proble.html">A packing pessimization problem</a>, by John Baez.
+<p>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/us/">Creative Commons Attribution 3.0 United States License</a></p>
+    <script src="../js/d3.v3.min.js"></script>
+    <script>
+	var width=720,height=360;
+	var pts0=[];
+	var j,k,l;
+	var nv = 14;
+
+	var s = d3.select("#svg1").append("svg")
+	    .attr("width", width)
+	    .attr("height", height);
+
+	var spa = d3.select("#area");
+	var spt = d3.select("#det");
+	var spd = d3.select("#dens");
+	var spc = d3.select("#crd");
+
+	var defs=s.append("defs");
+	var pArc="",pL="",pP="";
+
+	var ds=[];
+
+	for (j=0;j<14;j+=2) {
+	    pts0[j]={x:Math.cos(Math.PI*j/7.),y:Math.sin(Math.PI*j/7.)};
+	}
+	for (j=1;j<14;j+=2) {
+	    pts0[j]={x:(pts0[j-1].x+pts0[(j+1)%nv].x)/2.,y:(pts0[j-1].y+pts0[(j+1)%nv].y)/2.};
+	}
+
+	pArc="M "+pts0[0].x+" "+pts0[0].y;
+	for (j=1;j<nv;j++) pArc+=" L "+pts0[j].x+" "+pts0[j].y;
+	pArc+=" L "+pts0[0].x+" "+pts0[0].y;
+
+	var r1,a1,la1,c1,c2,c3,a2,a3,ax1=[],ax2=[],lm;
+	
+	var g1=s.append("g").attr("transform","matrix(60,0,0,60,"+(width/2)+","+(height/2)+")");
+        var drag = d3.behavior.drag().origin(function(d) { return d.xx; }).on("drag", dragmove);
+	var crcs = s.append("g").selectAll("g").data(d3.range(14).map(function(i) {
+	    return {xx: {x:0,y:0}, id: i}; 
+	} )).enter().append("g").attr("transform","matrix(60,0,0,60,"+(width/2)+","+(height/2)+")");    
+        crcs.each(function(d,i) {
+	    d.xx.x = pts0[d.id].x;
+	    d.xx.y = pts0[d.id].y;
+	});
+	crcs.each(function(d,i) { ds[d.id] = d; });
+	var hept = defs.append("path").attr("d","").attr("id","myHept");
+
+	var kk={x:0,y:0}, p1={x:0,y:0}, p2={x:0,y:0}, p3={x:0,y:0}, p4={x:0,y:0},det=1.,jk=0;
+
+	crcs.append("circle").attr("cx",function(d) { return d.xx.x })
+	                  .attr("cy",function(d) { return d.xx.y })
+			  .attr("id",function(d) { return d.id })
+			  .attr("r","0.1").attr("fill","blue")
+			  .call(drag);
+	redefHept();
+
+	for (j=0;j<ax1.length;j++){
+	    g1.append("use")
+		.attr("xlink:href","#myHept")
+		.attr("transform","translate("+(2*ax1[j].x)+","+(2*ax1[j].y)+")")
+		.attr("fill","#dddddd").attr("stroke","black")
+		.attr("stroke-width","0.02")
+		.attr("id","oct"+j);
+	}
+	for (j=0;j<ax2.length;j++){
+	    g1.append("use")
+		.attr("xlink:href","#myHept")
+		.attr("transform","translate("+(2*ax2[j].x)+","+(2*ax2[j].y)+") rotate(180)")
+		.attr("fill","#dddddd").attr("stroke","black")
+		.attr("stroke-width","0.02")
+		.attr("id","roct"+j);
+	}
+	g1.append("path").attr("id","lengt").attr("d","").attr("stroke","#333333").attr("stroke-width","0.02");
+	g1.append("path").attr("id","paral").attr("d","")
+	    .attr("stroke","#333333").attr("stroke-width","0.02").attr("fill","none");
+
+
+	reposition();
+
+	var eps = 0.25, dx,dy,rr;
+	var xl,xe,xr;
+	function dragmove(d) {
+	    dx = d3.event.x - pts0[d.id].x;
+	    dy = d3.event.y - pts0[d.id].y;
+	    rr = dx*dx+dy*dy;
+	    if (rr < eps*eps) rr=1.;
+	    else rr = Math.sqrt(rr)/eps;
+	    xe = {x: pts0[d.id].x + (dx/rr), y: pts0[d.id].y + (dy/rr)};
+	    xl = ds[(d.id+1)%nv].xx;
+	    xr = ds[(d.id+nv-1)%nv].xx;
+	    if (xr.y*xe.x+xe.y*xl.x+xl.y*xr.x>xr.x*xe.y+xe.x*xl.y+xl.x*xr.y) { xe.x = d.xx.x; xe.y=d.xx.y; }
+	    xl = ds[(d.id+1)%nv].xx;
+	    xr = ds[(d.id+2)%nv].xx;
+	    if (xr.y*xe.x+xe.y*xl.x+xl.y*xr.x>xr.x*xe.y+xe.x*xl.y+xl.x*xr.y) { xe.x = d.xx.x; xe.y=d.xx.y; }
+	    xl = ds[(d.id+nv-2)%nv].xx;
+	    xr = ds[(d.id+nv-1)%nv].xx;
+	    if (xr.y*xe.x+xe.y*xl.x+xl.y*xr.x>xr.x*xe.y+xe.x*xl.y+xl.x*xr.y) { xe.x = d.xx.x; xe.y=d.xx.y; }
+
+	    d3.select(this).attr("cx",d.xx.x = xe.x);
+	    d3.select(this).attr("cy",d.xx.y = xe.y);
+	    redefHept();
+	    reposition();
+	}
+
+        function redefHept() {
+	    var crd="{";crcs.each(function(d,i) { crd+="{"+d.xx.x +","+ d.xx.y +"}"; if (d.id<nv-1) crd+=","; });crd+="}";
+            pArc="M "; crcs.each(function(d,i) { pArc+=d.xx.x +" "+ d.xx.y +" L "; });
+	    crcs.each(function(d,i) { if (d.id==0) pArc+=d.xx.x +" "+ d.xx.y; });
+	    hept.attr("d",pArc);
+	    var mindet=9999., im=-1, ar=0.,mindetx;
+	    var tt = {t1:0., t2:0.}, u=0.;
+	    var maxlen = 0.;
+	    lm=-1;
+	    for (j=0;j<360;j++) { 
+		maxlen = 0.;
+		jk=-1;
+		for (k=0;k<nv;k++) {
+		    for (l=0;l<nv-2;l++) {
+			u=lngt(ds[(k+l+1)%nv].xx,ds[(k+l+2)%nv].xx,ds[k].xx,j*Math.PI/360.);
+			if ((u>=0)&&(u<=1)) {
+			    dx = ds[(k+l+1)%nv].xx.x + (u) * (ds[(k+l+2)%nv].xx.x - ds[(k+l+1)%nv].xx.x);
+			    dy = ds[(k+l+1)%nv].xx.y + (u) * (ds[(k+l+2)%nv].xx.y - ds[(k+l+1)%nv].xx.y);
+			    rr = (dx-ds[k].xx.x)*(dx-ds[k].xx.x)+(dy-ds[k].xx.y)*(dy-ds[k].xx.y);
+			    if (rr>maxlen) {
+				jk = k;
+				maxlen = rr;
+				kk.x = dx;
+				kk.y = dy;
+			    }
+			}
+		    }
+		}
+		//console.log("rr["+j+"]="+maxlen+", jk="+jk);
+		var k1=-10,k2=-10,l1=-10,l2=-10;
+		for (k=-1;k<6;k++) {
+		    for (l=-1;l<6;l++) {
+			chrd(ds[jk].xx,kk,ds[(jk+k+nv)%nv].xx,ds[(jk+k+1+nv)%nv].xx,ds[(jk+l+2+nv)%nv].xx,ds[(jk+l+3+nv)%nv].xx,tt);
+			//console.log("("+k+","+l+") t1="+tt.t1+",t2="+tt.t2);
+			if ((tt.t1>=0)&&(tt.t2>=0)&&(tt.t1<=1)&&(tt.t2<=1)) {
+			    //console.log("k1="+k+",l1="+l);
+			    //console.log("t1="+tt.t1+",t2="+tt.t2);
+			    k1=k;l1=l;
+			    p1.x = tt.t1*ds[(jk+k+1+nv)%nv].xx.x+(1.-tt.t1)*ds[(jk+k+0+nv)%nv].xx.x;
+			    p1.y = tt.t1*ds[(jk+k+1+nv)%nv].xx.y+(1.-tt.t1)*ds[(jk+k+0+nv)%nv].xx.y;
+			    p2.x = tt.t2*ds[(jk+l+3+nv)%nv].xx.x+(1.-tt.t2)*ds[(jk+l+2+nv)%nv].xx.x;
+			    p2.y = tt.t2*ds[(jk+l+3+nv)%nv].xx.y+(1.-tt.t2)*ds[(jk+l+2+nv)%nv].xx.y;
+			}
+			chrd(ds[jk].xx,kk,ds[(jk+nv-k+nv)%nv].xx,ds[(jk+(nv-1)-k+nv)%nv].xx,ds[(jk+(nv-2)-l+nv)%nv].xx,ds[(jk+(nv-3)-l+nv)%nv].xx,tt);
+			if ((tt.t1>=0)&&(tt.t2>=0)&&(tt.t1<=1)&&(tt.t2<=1)) {
+			    //console.log("k2="+k+",l2="+l);
+			    //console.log("t1="+tt.t1+",t2="+tt.t2);
+			    k2=k;l2=l;
+			    p4.x = tt.t1*ds[(jk+(nv-1)-k+nv)%nv].xx.x+(1.-tt.t1)*ds[(jk+nv-k+nv)%nv].xx.x;
+			    p4.y = tt.t1*ds[(jk+(nv-1)-k+nv)%nv].xx.y+(1.-tt.t1)*ds[(jk+nv-k+nv)%nv].xx.y;
+			    p3.x = tt.t2*ds[(jk+(nv-3)-l+nv)%nv].xx.x+(1.-tt.t2)*ds[(jk+(nv-2)-l+nv)%nv].xx.x;
+			    p3.y = tt.t2*ds[(jk+(nv-3)-l+nv)%nv].xx.y+(1.-tt.t2)*ds[(jk+(nv-2)-l+nv)%nv].xx.y;
+			}
+		    }
+		}
+		det = (p4.x-p3.x)*(p2.y-p3.y)-(p4.y-p3.y)*(p2.x-p3.x);
+		//console.log("det["+j+"]="+det);
+		if (det<mindet) {
+		    lm = j;
+		    mindet = det;
+		    pL = "M "+ds[jk].xx.x+" "+ds[jk].xx.y+" L "+kk.x+" "+kk.y;
+		    pP = "M "+p1.x+" "+p1.y+" L "+p2.x+" "+p2.y+" L "+p3.x+" "+p3.y+" L "+p4.x+" "+p4.y+" L "+p1.x+" "+p1.y;
+		    a3={x: 0.5*ds[jk].xx.x-0.5*kk.x, y: 0.5*ds[jk].xx.y-0.5*kk.y};
+		    c3={x: p1.x-p4.x, y: p1.y-p4.y};
+		    ax1=[{x:0,y:0},{x: ds[jk].xx.x-kk.x, y: ds[jk].xx.y-kk.y},
+			 {x: -ds[jk].xx.x+kk.x, y: -ds[jk].xx.y+kk.y},
+			 {x: 0.5*ds[jk].xx.x-0.5*kk.x, y: 0.5*ds[jk].xx.y-0.5*kk.y},
+			 {x: -0.5*ds[jk].xx.x+0.5*kk.x, y: -0.5*ds[jk].xx.y+0.5*kk.y},c3,
+			 {x: -c3.x, y: -c3.y},
+			 {x: c3.x+a3.x, y: c3.y+a3.y},
+			 {x: c3.x-a3.x, y: c3.y-a3.y},
+			 {x: -c3.x+a3.x, y: -c3.y+a3.y},
+			 {x: -c3.x-a3.x, y: -c3.y-a3.y}
+		    ];
+		    ax2=[{x: p1.x, y: p1.y},
+			{x: p2.x, y: p2.y},
+			{x: p3.x, y: p3.y},
+			{x: p4.x, y: p4.y},
+			{x: p1.x+a3.x, y:p1.y+a3.y},
+			{x: p2.x-a3.x, y:p2.y-a3.y},
+			{x: p3.x-a3.x, y:p3.y-a3.y},
+			{x: p4.x+a3.x, y:p4.y+a3.y},
+			];
+		}
+	    }
+	    //console.log("lm="+lm);
+	    ar=0.;
+	    for (j=0;j<nv;j++) {
+		ar = ar + ds[j].xx.x*ds[(j+1)%nv].xx.y - ds[j].xx.y*ds[(j+1)%nv].xx.x;
+	    }
+	    spt.text(mindet);
+	    spa.text(ar/2.);
+	    spd.text(ar/mindet/4.);
+	    spc.text(crd);
+	}
+	
+        function reposition() {
+	    for (j=0;j<ax1.length;j++){
+		d3.select("#oct"+j)
+		    .attr("transform","translate("+(-2*ax1[j].x)+","+(-2*ax1[j].y)+")");
+	   }
+	    for (j=0;j<ax2.length;j++){
+		d3.select("#roct"+j)
+		    .attr("transform","rotate(180) translate("+(-2*ax2[j].x)+","+(-2*ax2[j].y)+")");
+	   }
+           g1.select("#lengt").attr("d",pL);
+           g1.select("#paral").attr("d",pP);
+	}
+
+	function lngt(a1, a2, b1, th) {
+	    var cs = Math.cos(th), sn = Math.sin(th);
+	    var b2 = {x: b1.x + cs, y: b1.y + sn};
+	    var ua_t = (b2.x - b1.x) * (a1.y - b1.y) - (b2.y - b1.y) * (a1.x - b1.x);
+	    var ub_t = (a2.x - a1.x) * (a1.y - b1.y) - (a2.y - a1.y) * (a1.x - b1.x);
+	    var u_b  = (b2.y - b1.y) * (a2.x - a1.x) - (b2.x - b1.x) * (a2.y - a1.y);
+	    if ( u_b != 0 ) {
+		var ua = ua_t / u_b;
+		var ub = ub_t / u_b;
+
+		//ret.x = a1.x + ua * (a2.x - a1.x);
+		//ret.y = a1.y + ua * (a2.y - a1.y);
+		return ua;
+	    } 
+	}
+
+        function chrd(a1,a2,b1,b2,c1,c2,tt) {
+	    var dxb=b2.x-b1.x,dyb=b2.y-b1.y;
+	    var dxc=c2.x-c1.x,dyc=c2.y-c1.y;
+	    var dxa=(a2.x-a1.x)/2.,dya=(a2.y-a1.y)/2.;
+	    tt.t1=(-b1.y*c1.x+b1.x*c1.y+b1.y*c2.x-c1.y*c2.x-b1.x*c2.y+c1.x*c2.y+c1.y*dxa-c2.y*dxa-c1.x*dya+c2.x*dya)/(-dyb*dxc+dxb*dyc);
+	         //-b1yc1x+   b1xc1y+   b1yc2x   -c1yc2x   -b1xc2y   +c1xc2y  +c1ydxa  -c2ydxa  -c1xdya  +c2xdya
+	    tt.t2=(b1.y*b2.x-b1.x*b2.y-b1.y*c1.x+b2.y*c1.x+b1.x*c1.y-b2.x*c1.y+b1.y*dxa-b2.y*dxa-b1.x*dya+b2.x*dya)/(-dyb*dxc+dxb*dyc);
+       		 //b1yb2x     -b1xb2y   -b1yc1x   +b2yc1x   +b1xc1y   -b2xc1y  +b1ydxa  -b2ydxa  -b1xdya  +b2xdya
+	    //tt.t1 = - (dxc*(b2.y-c2.y+dya)-dyc*(b2.x-c2.x+dxa))/(-dyb*dxc+dxb*dyc);
+	    //tt.t2 = - (dxb*(c2.y-b2.y-dya)-dyb*(c2.x-b2.x-dxa))/(-dyc*dxb+dxc*dyb);
+	    //d1.x = t1*b1.x+(1.-t1)*b2.x;
+	    //d1.y = t1*b1.y+(1.-t1)*b2.y;
+	    //d2.x = d1.x+dxa; d2.y = d1.y+dya;
+	}
+
+    </script> 
+  </body> 
+</html>
