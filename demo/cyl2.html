@@ -1,0 +1,197 @@
+<html> 
+  <head> 
+    <title>The six cylinder problem Cylinders</title> 
+    <link rel="stylesheet" href="../images/article.css" type="text/css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="theme-color" content="#ffffff">
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+	extensions: ["tex2jax.js"],
+	jax: ["input/TeX","output/HTML-CSS"],
+	tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]}
+      });
+    </script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js"></script>
+    <style> .par {font-size:1.2em} </style>
+
+  </head> 
+  <body> 
+    <script src="../js/three.min.js"></script> 
+    <script src="../js/OrbitControls.js"></script> 
+    <h1>The six cylinder problem</h1>
+    <p class="par">
+    A continuous path of configurations of six cylinders of radius 1 in contact with a ball of radius 1.
+    The cylinders only touch each other at the two endpoints of this path. At the largest separation,
+    the closest pairs have a gap between them of size (&radic;33-5)/4.</p><p>
+
+    This family of configurations was found by Oleg Ogievetsky and Senya Shlosman.
+    See <a href="https://arxiv.org/abs/1805.09833">arXiv:1805.09833</a>.
+    </p>
+
+    <input type="range" min="100" max="400" id="param" value="200" style="width:720px" oninput="slide(this.value)">
+    <div id="container1" style="height:360px;width:720px;overflow:hidden;"></div>
+<p>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/3.0/us/">Creative Commons Attribution 3.0 United States License</a></p>
+    <script>
+	var scenex1, camerax1, rendererx1, containerx1, controlsx1;
+	var materialx1, cylx1, sphrx1, lightx1;
+	var ms1x1,ms2x1,ms3x1,ms4x1,ms5x1,ms6x1,ms0x1;
+
+        var x, k, d, f;
+        var yax;
+
+
+	function init() {
+
+	    materialx1 = new THREE.MeshLambertMaterial( { color: 0xffffff, shading: THREE.FlatShading } );
+	    cylx1 = new THREE.CylinderGeometry(20,20,200,48,24);
+	    sphrx1 = new THREE.SphereGeometry(20,32,32)
+
+	    scenex1 = new THREE.Scene();
+	    camerax1 = new THREE.PerspectiveCamera( 60, 2., 1, 1000 );
+	    camerax1.position.z = 200;
+	    camerax1.position.x = 100;
+	    camerax1.position.y = 50;
+	    ms0x1 = new THREE.Mesh( sphrx1, materialx1 );
+	    ms1x1 = new THREE.Mesh( cylx1, materialx1 );
+	    ms2x1 = new THREE.Mesh( cylx1, materialx1 );
+	    ms3x1 = new THREE.Mesh( cylx1, materialx1 );
+	    ms4x1 = new THREE.Mesh( cylx1, materialx1 );
+	    ms5x1 = new THREE.Mesh( cylx1, materialx1 );
+	    ms6x1 = new THREE.Mesh( cylx1, materialx1 );
+	    ms1x1.position.x += 40;
+	    ms2x1.position.x += 40*0.5;
+	    ms2x1.position.z += 40*0.5*Math.sqrt(3);
+	    ms3x1.position.x += 40*0.5;
+	    ms3x1.position.z -= 40*0.5*Math.sqrt(3);
+	    ms4x1.position.x -= 40;
+	    ms5x1.position.x -= 40*0.5;
+	    ms5x1.position.z -= 40*0.5*Math.sqrt(3);
+	    ms6x1.position.x -= 40*0.5;
+	    ms6x1.position.z += 40*0.5*Math.sqrt(3);
+	    scenex1.add( ms0x1 );
+	    scenex1.add( ms1x1 );
+	    scenex1.add( ms2x1 );
+	    scenex1.add( ms3x1 );
+	    scenex1.add( ms4x1 );
+	    scenex1.add( ms5x1 );
+	    scenex1.add( ms6x1 );
+	    lightx1 = new THREE.DirectionalLight( 0xffffff );
+	    lightx1.position.set( 1, 1, 1 );
+	    scenex1.add( lightx1 );
+	    lightx1 = new THREE.DirectionalLight( 0x002288 );
+	    lightx1.position.set( -1, -1, -1 );
+	    scenex1.add( lightx1 );
+	    lightx1 = new THREE.AmbientLight( 0x222222 );
+	    scenex1.add( lightx1 );
+	    rendererx1 = new THREE.WebGLRenderer();
+	    rendererx1.setClearColor( 0xddffdd, 1 );
+	    rendererx1.setSize( 720, 360 );
+	    controlsx1 = new THREE.OrbitControls( camerax1, rendererx1.domElement );
+	    controlsx1.damping = 0.2;
+	    controlsx1.addEventListener( 'change', renderx1 );
+	    containerx1 = document.getElementById('container1');
+	    containerx1.appendChild( rendererx1.domElement );
+	    yax = new THREE.Vector3(0, 1, 0);
+	    slide(200.);
+	}
+	
+        function slide(val) { 
+	    x = val/400.;
+	    f = Math.asin(2*Math.sqrt((1-x)*x*(1+x)/(1+7*x+4*x*x)));
+	    d = Math.atan(Math.sqrt((1-x)*(1+3*x)/(x+7*x*x+4*x*x*x)));
+	    k = Math.atan(-(x-1)/Math.sqrt((1+x)*(1+3*x)));
+	    change();
+	}
+        
+        function change() {
+	    ms1x1.position.set(
+		40.*Math.cos(f)*Math.cos(Math.PI/6.-k),
+		40.*Math.sin(f),
+		40.*Math.cos(f)*Math.sin(Math.PI/6.-k)
+	    );
+	    ms2x1.position.set(
+		40.*Math.cos(f)*Math.cos(5.*Math.PI/6.-k),
+		40.*Math.sin(f),
+		40.*Math.cos(f)*Math.sin(5.*Math.PI/6.-k)
+	    );
+	    ms3x1.position.set(
+		40.*Math.cos(f)*Math.cos(9.*Math.PI/6.-k),
+		40.*Math.sin(f),
+		40.*Math.cos(f)*Math.sin(9.*Math.PI/6.-k)
+	    );
+	    ms4x1.position.set(
+		40.*Math.cos(f)*Math.cos(3.*Math.PI/6.+k),
+		-40.*Math.sin(f),
+		40.*Math.cos(f)*Math.sin(3.*Math.PI/6.+k)
+	    );
+	    ms5x1.position.set(
+		40.*Math.cos(f)*Math.cos(7.*Math.PI/6.+k),
+		-40.*Math.sin(f),
+		40.*Math.cos(f)*Math.sin(7.*Math.PI/6.+k)
+	    );
+	    ms6x1.position.set(
+		40.*Math.cos(f)*Math.cos(11.*Math.PI/6.+k),
+		-40.*Math.sin(f),
+		40.*Math.cos(f)*Math.sin(11.*Math.PI/6.+k),
+	    );
+
+	    ms1x1.quaternion.setFromUnitVectors(yax, new THREE.Vector3(
+		0.5*(-Math.cos(d)*Math.sin(f)*(Math.sqrt(3.)*Math.cos(k)+Math.sin(k))
+		                 +Math.sin(d)*(Math.cos(k)-Math.sqrt(3.)*Math.sin(k))),
+		Math.cos(d)*Math.cos(f),
+		0.5*(Math.cos(d)*Math.sin(f)*(-Math.cos(k)+Math.sqrt(3.)*Math.sin(k))
+		                -Math.sin(d)*(Math.sqrt(3.)*Math.cos(k)+Math.sin(k)))
+	    ));
+	    ms2x1.quaternion.setFromUnitVectors(yax, new THREE.Vector3(
+		0.5*(Math.cos(d)*Math.sin(f)*(Math.sqrt(3.)*Math.cos(k)-Math.sin(k))
+		                +Math.sin(d)*(Math.cos(k)+Math.sqrt(3.)*Math.sin(k))),
+		Math.cos(d)*Math.cos(f),
+		0.5*(-Math.cos(d)*Math.sin(f)*(Math.cos(k)+Math.sqrt(3.)*Math.sin(k))
+		                 +Math.sin(d)*(Math.sqrt(3.)*Math.cos(k)-Math.sin(k)))
+	    ));
+	    ms3x1.quaternion.setFromUnitVectors(yax, new THREE.Vector3(
+		-Math.cos(k)*Math.sin(d)+Math.cos(d)*Math.sin(f)*Math.sin(k),
+		Math.cos(d)*Math.cos(f),
+		+Math.sin(k)*Math.sin(d)+Math.cos(d)*Math.sin(f)*Math.cos(k)
+	    ));
+	    ms4x1.quaternion.setFromUnitVectors(yax, new THREE.Vector3(
+		+Math.cos(k)*Math.sin(d)-Math.cos(d)*Math.sin(f)*Math.sin(k),
+		Math.cos(d)*Math.cos(f),
+		+Math.sin(k)*Math.sin(d)+Math.cos(d)*Math.sin(f)*Math.cos(k)
+	    ));
+	    ms5x1.quaternion.setFromUnitVectors(yax, new THREE.Vector3(
+		-0.5*(Math.cos(d)*Math.sin(f)*(Math.sqrt(3.)*Math.cos(k)-Math.sin(k))
+		                +Math.sin(d)*(Math.cos(k)+Math.sqrt(3.)*Math.sin(k))),
+		Math.cos(d)*Math.cos(f),
+		0.5*(-Math.cos(d)*Math.sin(f)*(Math.cos(k)+Math.sqrt(3.)*Math.sin(k))
+		                 +Math.sin(d)*(Math.sqrt(3.)*Math.cos(k)-Math.sin(k)))
+	    ));
+	    ms6x1.quaternion.setFromUnitVectors(yax, new THREE.Vector3(
+		-0.5*(-Math.cos(d)*Math.sin(f)*(Math.sqrt(3.)*Math.cos(k)+Math.sin(k))
+		                 +Math.sin(d)*(Math.cos(k)-Math.sqrt(3.)*Math.sin(k))),
+		Math.cos(d)*Math.cos(f),
+		0.5*(Math.cos(d)*Math.sin(f)*(-Math.cos(k)+Math.sqrt(3.)*Math.sin(k))
+		                -Math.sin(d)*(Math.sqrt(3.)*Math.cos(k)+Math.sin(k)))
+	    ));
+	    renderx1();
+	}
+
+	var renderx1 = function () {
+		rendererx1.render( scenex1, camerax1 );
+	}
+
+	var animatex1 = function () {
+	    requestAnimationFrame( animatex1 );
+	    controlsx1.update()
+	}
+
+	init();
+	renderx1();
+
+    </script> 
+  </body> 
+</html>
