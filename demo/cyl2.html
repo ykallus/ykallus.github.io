@@ -32,6 +32,7 @@
     See <a href="https://arxiv.org/abs/1805.09833">arXiv:1805.09833</a>.</p><p>
 
     Drag the model to rotate it. Use the slider to move along the path of configurations.
+    The current gap size is <span id="gap"></span>.
     </p>
 
     <input type="range" min="100" max="400" id="param" value="200" style="width:720px" oninput="slide(this.value)">
@@ -44,7 +45,6 @@
 
         var x, k, d, f;
         var yax;
-
 
 	function init() {
 
@@ -110,6 +110,8 @@
 	}
         
         function change() {
+	    document.getElementById("gap").textContent= (2*12*x/(1+7*x+4*x*x)-2.).toFixed(5);
+
 	    ms1x1.position.set(
 		40.*Math.cos(f)*Math.cos(Math.PI/6.-k),
 		40.*Math.sin(f),
